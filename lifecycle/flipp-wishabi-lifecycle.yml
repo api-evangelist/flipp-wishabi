@@ -1,0 +1,107 @@
+generated: '2026-08-12'
+method: searched
+source: https://api.flipp.com/flyerkit/v4.0/documentation
+docs: https://api.flipp.com/flyerkit/apidocs_v4
+versioning:
+  published: true
+  scheme: semantic (major.minor)
+  location: uri-path
+  current: '4.0'
+  base_path: /flyerkit/v4.0
+  quoted: >-
+    "FlyerKit uses a semantic versioning scheme with a major and minor version number. Requests are
+    made against a major version as part of the base path in the URI. All backward compatible
+    changes will be made in minor versions. Clients will not be able to request a specific minor
+    version as the server will always serve the latest version for a major release. Any changes in
+    the API that are not backward compatible will use an updated major version."
+  implications:
+  - A caller cannot pin a minor version - the server always serves the newest minor for the
+    requested major, so additive changes arrive without opt-in.
+  - Breaking changes are signalled only by the appearance of a new major path segment; nothing in
+    a response tells a client its major is aging.
+versions:
+- version: '2.0'
+  base_path: /flyerkit/v2.0
+  status: retired
+  evidence:
+    docs_url: https://api.flipp.com/flyerkit/v2.0/documentation
+    spec_url: https://api.flipp.com/flyerkit/apidocs_v2
+    spec_status: 404
+    probed: '2026-08-12'
+- version: '3.0'
+  base_path: /flyerkit/v3.0
+  status: retired
+  evidence:
+    docs_url: https://api.flipp.com/flyerkit/v3.0/documentation
+    spec_url: https://api.flipp.com/flyerkit/apidocs_v3
+    spec_status: 404
+    probed: '2026-08-12'
+  note: >-
+    The v3.0 machine-readable document is gone, yet the public FlyerKit for Android README still
+    directs integrators to the v3.0 documentation - a live dangling reference from a first-party
+    repo into a retired version.
+- version: '4.0'
+  base_path: /flyerkit/v4.0
+  status: current
+  evidence:
+    docs_url: https://api.flipp.com/flyerkit/v4.0/documentation
+    docs_status: 200
+    spec_url: https://api.flipp.com/flyerkit/apidocs_v4
+    spec_status: 200
+    probed: '2026-08-12'
+  breaking_changes:
+  - >-
+    "access tokens from previous FlyerKit versions will no longer work in v4.0 and new ones will
+    need to be issued by your Flipp technical contact." A credential invalidation across a major
+    boundary - the upgrade cannot be done by the integrator alone.
+  - >-
+    "Changed the `category` field returned in item models from a string to an array containing all
+    of the item's categories and renamed it `categories`." A rename plus a type change on the same
+    field.
+deprecation_policy:
+  published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    Flipp publishes a VERSIONING policy but not a DEPRECATION policy. Nothing states how long a
+    retired major remains callable, what notice partners receive, or how an end-of-life is
+    announced. No `Sunset` or `Deprecation` response header was observed on any live probe
+    (2026-08-12), and no operation in the v4.0 contract carries `deprecated: true`. The observed
+    behaviour - v2.0 and v3.0 machine-readable documents now 404 with no tombstone and no
+    redirect - is what a partner has instead of a policy. NO `Deprecation` pointer is emitted in
+    apis.yml because there is no published policy to point at.
+deprecated_operations: []
+deprecated_operations_note: Derived from openapi/flipp-wishabi-flyerkit-openapi.yml - zero of 11
+  operations are marked deprecated.
+status_page:
+  published: false
+  probed:
+  - url: https://status.flipp.com/
+    result: NXDOMAIN
+    date: '2026-08-12'
+  note: >-
+    No status page, no uptime history and no incident feed could be found on any Flipp host.
+    status.flipp.com does not resolve. NO `StatusPage` pointer is emitted in apis.yml.
+sla:
+  published: false
+  note: No SLA, uptime commitment or support-response target is published for the FlyerKit API.
+    Commercial terms live in the partner agreement.
+support:
+  channel: Flipp technical contact / account manager
+  public_help_center: https://help.flipp.com/hc/en-ca
+  help_center_note: The public help center serves CONSUMERS of the Flipp app. It has no developer
+    or API section.
+  developer_channel: none published
+sdk_lifecycle:
+  active_line: DVM (Digital Visual Merchandising) - iOS 3.5.1 released 2026-08-11, Android 2.1.0
+  maintenance_line: SKit / SFML - iOS 1.28.3 released 2025-08-05
+  dormant_line: >-
+    FlyerKit rendering SDKs - the Android binaries repo (flyerkit-2.1.1.aar) and iOS binaries repo
+    were last pushed in February 2025 and carry no releases or tags.
+  source: packages/flipp-wishabi-packages.yml
+cross_links:
+  changelog: changelog/flipp-wishabi-changelog.yml
+  authentication: authentication/flipp-wishabi-authentication.yml
+  conventions: conventions/flipp-wishabi-conventions.yml
+  packages: packages/flipp-wishabi-packages.yml

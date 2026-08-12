@@ -1,0 +1,72 @@
+generated: '2026-08-12'
+method: probed
+source: https://api.flipp.com/flyerkit/v4.0/documentation
+probed:
+- url: 'https://api.flipp.com/flyerkit/v4.0/publications/walmart?locale=en-CA&postal_code=M5V2T6'
+  status: 422
+  date: '2026-08-12'
+- url: https://api.flipp.com/flyerkit/v4.0/copyright
+  status: 200
+  date: '2026-08-12'
+limit_count: 0
+limits: []
+documented: false
+note: >-
+  Flipp publishes NO rate limits for the FlyerKit API. The v4.0 Swagger document contains no
+  rate-limit language, declares no 429 response on any of its 11 operations, and the narrative
+  sections (Overview, Access Token Management, Supported Formats, Versioning) are silent on
+  throughput. Two live responses were captured on 2026-08-12 - a 422 from the authorized surface
+  and a 200 from the unauthenticated GET /copyright - and NEITHER carried a rate-limit header of
+  any family. limit_count: 0 is a measured zero, not an unchecked field.
+response_headers:
+  ratelimit_family: none
+  observed:
+  - X-RateLimit-Limit: absent
+  - X-RateLimit-Remaining: absent
+  - X-RateLimit-Reset: absent
+  - RateLimit-Limit: absent
+  - RateLimit-Remaining: absent
+  - RateLimit-Reset: absent
+  - RateLimit-Policy: absent
+  - Retry-After: absent
+  exhaustion_status: unknown
+  exhaustion_note: >-
+    No 429 is declared in the contract and none was provoked. A caller has no runtime signal - no
+    header to read, no documented status to branch on - and would discover any ceiling only by
+    hitting it.
+observed_headers_200:
+  endpoint: GET /flyerkit/v4.0/copyright
+  server: nginx (behind CloudFront)
+  cache-control: max-age=3600, public
+  etag: W/"432069bb994d9b1c649be8f9a041c486"
+  strict-transport-security: max-age=31536000; includeSubdomains;
+  access-control-allow-origin: '*'
+  x-request-id: present (per-request UUID)
+  x-runtime: present
+observed_headers_422:
+  endpoint: GET /flyerkit/v4.0/publications/{merchant_identifier}
+  server: istio-envoy (behind CloudFront)
+  cache-control: no-cache
+  x-request-id: present
+  x-envoy-upstream-service-time: present
+  access-control-allow-origin: '*'
+governing_controls:
+  - control: per-token issuance
+    detail: >-
+      Throughput is governed contractually rather than technically. Access tokens are issued
+      one-to-one by a Flipp technical contact to a named retailer partner, and v4.0 added multiple
+      tokens per retailer "with different levels of permission" - so abuse control lives in the
+      account relationship, not in a published quota.
+  - control: CDN caching
+    detail: >-
+      Responses are fronted by CloudFront and the cacheable endpoint returns
+      `Cache-Control: max-age=3600, public` with a weak ETag, so conditional requests and edge
+      caching absorb repeat reads. Authorized publication endpoints returned `no-cache`.
+recommendation_to_provider: >-
+  Publish a documented per-token limit and emit the IETF `RateLimit-Limit` / `RateLimit-Remaining`
+  / `RateLimit-Reset` header trio plus `Retry-After` on a 429. Retail circular data is bursty -
+  a weekly flyer drop makes every partner poll at once - and partners currently have no way to
+  back off gracefully.
+cross_links:
+  conventions: conventions/flipp-wishabi-conventions.yml
+  errors: errors/flipp-wishabi-problem-types.yml

@@ -10,10 +10,15 @@ description: >-
   media platform - content collection, curation, and distribution of "full
   fidelity" shoppable merchandising experiences reaching over 100 million
   high-intent households - plus sponsored video and shoppable-item ad solutions
-  built on 400B+ intent-based shopping signals. Flipp publishes no public
-  developer API or portal; this profile captures the company's public web,
-  merchant, and open-source (github.com/wishabi) surface for the API Evangelist
-  network.
+  built on 400B+ intent-based shopping signals. For retail partners Flipp
+  publishes the FlyerKit API - a public, versioned HTTPS/JSON API at
+  api.flipp.com that exposes publications, pages, highlights, categories,
+  products, store locators and geo lookup so retailers can embed their own
+  circular content in web, email and native experiences - alongside the Flipp
+  Platform SDKs (FlyerKit for iOS/Android, StorefrontsKit/SKit for SFML
+  rendering, and the DVM digital-visual-merchandising SDK) distributed from
+  github.com/wishabi and a credentialed JFrog Artifactory. Access tokens are
+  issued by a Flipp technical contact rather than through self-service signup.
 url: https://raw.githubusercontent.com/api-evangelist/flipp-wishabi/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -23,18 +28,19 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 accessModel:
   pricing: unknown
-  onboarding: unknown
+  onboarding: contact
   trial: false
   try_now: false
-  public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  public: true
+  label: Partner
+  confidence: medium
+  source:
+  - https://api.flipp.com/flyerkit/v4.0/documentation
+  generated: '2026-08-12'
+  method: searched
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-08-12'
 image: https://corp.flipp.com/wp-content/uploads/2024/03/cropped-cropped-blue-1000-192x192.png
 tags:
 - Company
@@ -46,7 +52,58 @@ tags:
 - E-commerce
 - Shopping
 - Marketing
-apis: []
+- Digital Circulars
+- Publications
+- Merchandising
+- Product Data
+- Store Locator
+apis:
+- name: Flipp FlyerKit API
+  description: >-
+    Public HTTPS/JSON API that gives retailers programmatic access to the structured
+    circular ("publication") data that powers the Flipp platform - publications by
+    merchant and store/postal code, publication pages, highlights, categories,
+    products across or within a publication, detailed product records with matched
+    coupons, sub-item inventory, the five closest stores to a postal/zip code, and
+    normalized geo FSA lookup. Responses are JSON, requests are authorized with an
+    access_token query parameter issued by a Flipp technical contact, CORS is
+    supported, and versions are pinned in the URI path (v2.0, v3.0, v4.0). v4.0 adds
+    multi-token permissions, future-publication visibility, and keyword/tag filtering.
+  humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
+  baseURL: https://api.flipp.com/flyerkit/v4.0
+  tags:
+  - retail-media
+  - digital-circulars
+  - flyers
+  - publications
+  - product-data
+  - coupons
+  - store-locator
+  - merchandising
+  - retail
+  properties:
+  - type: Documentation
+    url: https://api.flipp.com/flyerkit/v4.0/documentation
+  - type: APIReference
+    url: https://api.flipp.com/flyerkit/v4.0/documentation
+  - type: OpenAPI
+    url: openapi/flipp-wishabi-flyerkit-openapi.yml
+  - type: Swagger
+    url: openapi/_original/flipp-wishabi-flyerkit-v4-openapi-original.json
+  - type: Authentication
+    url: authentication/flipp-wishabi-authentication.yml
+  - type: Conventions
+    url: conventions/flipp-wishabi-conventions.yml
+  - type: ErrorCatalog
+    url: errors/flipp-wishabi-problem-types.yml
+  - type: DataModel
+    url: data-model/flipp-wishabi-data-model.yml
+  - type: Overlay
+    url: overlays/flipp-wishabi-flyerkit-overlay.yaml
+  - type: RateLimits
+    url: rate-limits/flipp-wishabi-rate-limits.yml
+  - type: Plans
+    url: plans/flipp-wishabi-plans-pricing.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -61,16 +118,85 @@ common:
   url: https://blog.flipp.com/
 - type: HelpCenter
   url: https://help.flipp.com/hc/en-ca
+- type: Support
+  url: https://help.flipp.com/hc/en-ca
 - type: GitHubOrganization
   url: https://github.com/wishabi
 - type: PrivacyPolicy
   url: https://corp.flipp.com/legal/privacy/
 - type: TermsOfService
   url: https://corp.flipp.com/legal/terms_of_use/
+- type: Documentation
+  url: https://api.flipp.com/flyerkit/v4.0/documentation
+- type: APIReference
+  url: https://api.flipp.com/flyerkit/v4.0/documentation
 - type: DomainSecurity
   url: security/flipp-wishabi-domain-security.yml
+- type: Authentication
+  url: authentication/flipp-wishabi-authentication.yml
+- type: Conventions
+  url: conventions/flipp-wishabi-conventions.yml
+- type: Lifecycle
+  url: lifecycle/flipp-wishabi-lifecycle.yml
+- type: Conformance
+  url: conformance/flipp-wishabi-conformance.yml
+- type: Packages
+  url: packages/flipp-wishabi-packages.yml
+- type: SDKs
+  url: packages/flipp-wishabi-packages.yml
+- type: LLMsTxt
+  url: llms/flipp-wishabi-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Components
+  url: components/flipp-wishabi-components.yml
+- type: ChangeLog
+  url: changelog/flipp-wishabi-changelog.yml
+- type: DataModel
+  url: data-model/flipp-wishabi-data-model.yml
+- type: ErrorCatalog
+  url: errors/flipp-wishabi-problem-types.yml
+- type: RateLimits
+  url: rate-limits/flipp-wishabi-rate-limits.yml
+- type: Plans
+  url: plans/flipp-wishabi-plans-pricing.yml
+- type: SourceCode
+  url: https://github.com/wishabi
+x-artifact-absences:
+  note: >-
+    Recorded so a later pass does not re-litigate them. Each was probed or searched on 2026-08-12
+    and NO canonical pointer is emitted, because the pointer would assert a surface Flipp does not
+    serve.
+  WellKnown: >-
+    Every /.well-known/ path 404s on api.flipp.com and corp.flipp.com; www.flipp.com answers 200
+    with an identical 41,244-byte SPA shell for every path, which is a soft-404, not a document.
+    The previously-wired WellKnown pointer was REMOVED on this pass. See
+    well-known/flipp-wishabi-well-known.yml.
+  SecurityTxt: No security.txt served on any host.
+  AgentCard: /.well-known/agent-card.json and /.well-known/agent.json miss on every host.
+  MCPServer: >-
+    No MCP server published. mcp/flipp-wishabi-mcp.yml holds a DERIVED candidate tool list only,
+    status candidate.
+  StatusPage: status.flipp.com does not resolve; no status page found.
+  Deprecation: A versioning policy is published, but no deprecation policy, no notice period and
+    no Sunset/Deprecation headers.
+  Security: No vulnerability disclosure policy or bug bounty found.
+  Compliance: No SOC 2 / ISO 27001 / PCI / HIPAA claim and no trust center published.
+  Idempotency: All 11 operations are GET; no idempotency mechanism exists to point at.
+  Webhooks: No webhook, event or streaming surface.
+  AsyncAPI: No event surface, so no AsyncAPI - N/A rather than a gap.
+  Sandbox: No sandbox, test mode or console published.
+  CLI: No first-party CLI. homebrew-flipp exists but is internal Go dev tooling, not an API CLI.
+  Pricing: >-
+    corp.flipp.com/legal-storefronts-rates/ returns 200 but is password-protected, so no public
+    pricing page exists to point at. See plans/flipp-wishabi-plans-pricing.yml.
+  DeveloperPortal: developer.flipp.com does not resolve.
+  GettingStarted: No quickstart or getting-started page published.
+  SignUp: No self-service signup; tokens are issued by a Flipp technical contact.
+  Postman: No public Postman collection or workspace found.
+  Roadmap: No public roadmap.
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 18
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence

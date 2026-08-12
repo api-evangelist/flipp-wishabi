@@ -1,0 +1,279 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/flipp-wishabi-flyerkit-openapi.yml
+note: >-
+  Entity-relationship graph derived from the 20 `definitions` in the FlyerKit v4.0 Swagger
+  document and the id-reference fields they carry. The spec declares no `$ref` links BETWEEN
+  definitions - every model is flat and relationships are expressed only as foreign-key-shaped
+  integer fields (`flyer_id`, `flyer_run_id`, `product_id`) and as URI path structure. Those two
+  signals are what the relationships below are derived from; nothing here is invented.
+root_entity: publication
+domains:
+- name: publications
+  entities: [publication, publication_page, publication_highlight, publication_category,
+    correction_notice]
+- name: products
+  entities: [product, merchant_product, detailed_product, sub_item, inventory_sub_item,
+    product_coupon, product_review, product_rich_media, product_spec, product_feature,
+    cart_button, quantity_control_option]
+- name: locations
+  entities: [store, fsa]
+- name: errors
+  entities: [error]
+entities:
+- name: publication
+  description: >-
+    A circular / flyer. The root object of the model - everything else in the publications domain
+    hangs off it. Carries validity dates (valid_from/valid_to - when the pricing is good) SEPARATE
+    from availability dates (available_from/available_to - when it may be shown), a locale, a
+    postal_code, an SFML render URL, a storefront payload URL and payload, a deep_link, total_pages,
+    and five thumbnail renditions at different heights (150h/400h/2000h plus selector and first
+    page).
+  identifier: id
+  identifier_type: integer
+  key_fields: [id, flyer_run_id, flyer_type_id, name, locale, postal_code, valid_from, valid_to,
+    available_from, available_to, total_pages, sfml_url, storefront_payload_url, deep_link]
+  source_operations:
+  - GET /publications/{merchant_identifier}
+- name: publication_page
+  description: One page image of a circular, with its bounding box and three image renditions.
+  key_fields: [page, flyer_id, flyer_run_id, image_150h_url, image_400h_url, image_2000h_url,
+    left, top, width, height]
+  source_operations:
+  - GET /publication/{publication_id}/pages
+- name: publication_highlight
+  description: A named hot-spot region on a page - a rectangle a renderer draws over the flyer
+    image.
+  key_fields: [name, left, top, width, height]
+  source_operations:
+  - GET /publication/{publication_id}/highlights
+- name: publication_category
+  description: A merchandising category region within a publication, with a thumbnail.
+  key_fields: [name, left, top, width, height, thumbnail_image_url]
+  source_operations:
+  - GET /publication/{publication_id}/categories
+- name: correction_notice
+  description: A price/content correction attached to a publication, as HTML plus an image.
+  key_fields: [html, image_url]
+  source_operations: []
+  note: Declared in the schema but not returned as the top-level payload of any operation - it is
+    a nested member of the publication response.
+- name: product
+  description: >-
+    An offer item within one publication. Carries the full price presentation vocabulary -
+    current_price, original_price, dollars_off, percent_off, current_price_range,
+    original_price_range, and the three-part price text (pre_price_text, price_text,
+    post_price_text) a renderer concatenates.
+  identifier: id
+  identifier_type: integer
+  key_fields: [id, flyer_id, flyer_run_id, name, sku, brand, sale_story, current_price,
+    original_price, categories, valid_from, valid_to, deep_link, custom_id_field_1,
+    custom_id_field_2, custom_id_field_3]
+  source_operations:
+  - GET /publication/{publication_id}/products
+- name: merchant_product
+  description: >-
+    The same offer shape returned when querying ACROSS all of a merchant's publications rather
+    than within one. Field-for-field identical to `product` in the v4.0 schema - the distinction
+    is the query scope, not the payload.
+  key_fields: same as product
+  source_operations:
+  - GET /publications/{merchant_identifier}/products
+- name: detailed_product
+  description: >-
+    The expanded single-product record. Adds image_url, cutout_image_url, disclaimer_text and
+    hosted_coupon_image over the collection shape, and is where coupons, reviews, rich media,
+    specs and features attach.
+  identifier: id
+  key_fields: [id, flyer_id, name, brand, image_url, cutout_image_url, disclaimer_text,
+    current_price, original_price, categories, hosted_coupon_image]
+  source_operations:
+  - GET /product/{product_id}
+- name: sub_item
+  description: >-
+    A variant/child item of a product, with its own pricing, imagery, ratings and web/commission
+    URLs. Note this model still carries the pre-v4.0 singular `category` string rather than the
+    `categories` array.
+  key_fields: [id, product_id, name, sku, current_price, original_price, category, average_rating,
+    web_url, web_commission_url]
+- name: inventory_sub_item
+  description: >-
+    Live store-level inventory for a sub item, sourced from the MI9 Retail API. The only model in
+    the schema using camelCase field names (storeCode, imageUrl, originalPrice, promotionText) -
+    a passthrough of an upstream vendor's shape.
+  key_fields: [sku, storeCode, name, imageUrl, price, originalPrice, promotionText, url, buttons]
+  source_operations:
+  - GET /product/{product_id}/sub_items
+  external_source: MI9 Retail API
+- name: cart_button
+  description: An add-to-cart affordance for an inventory item, with quantity control config.
+  key_fields: [sku, storeCode, enabled, label, quantityControl, quantityControlOption]
+- name: quantity_control_option
+  description: The unit, interval, minimum, maximum and default for a cart quantity stepper.
+  key_fields: [unit, interval, minimum, maximum, default]
+- name: product_coupon
+  description: >-
+    A coupon matched to a flyer item, including loyalty-program linkage
+    (loyalty_program_coupon_id, loyalty_program_id) so an offer can be clipped to a retailer's
+    loyalty card.
+  key_fields: [flyer_item_id, coupon_id, coupon_type, loyalty_program_coupon_id, loyalty_program_id,
+    external_id, valid_from, valid_to]
+- name: product_review
+  description: A user review attached to a detailed product.
+  key_fields: [title, rating, byline, date, body]
+- name: product_rich_media
+  description: A rich-media asset (video, gallery) attached to a detailed product.
+  key_fields: [id, alt_text, type, thumbnail]
+- name: product_spec
+  description: A name/value specification row.
+  key_fields: [name, value]
+- name: product_feature
+  description: A single free-text feature bullet.
+  key_fields: [text]
+- name: store
+  description: >-
+    A physical retail location with address, geo coordinates, the retailer's own store code, and
+    seven day-pair open/close times as flat fields (sun_open/sun_close ... sat_open/sat_close).
+  identifier: id
+  key_fields: [id, merchant_store_code, name, address, city, province, postal_code, latitude,
+    longitude, phone_number]
+  source_operations:
+  - GET /stores/{merchant_identifier}
+- name: fsa
+  description: >-
+    A Forward Sortation Area - the normalized geographic region resolved from a caller's IP.
+    Single-field model.
+  key_fields: [geo_locate_fsa]
+  source_operations:
+  - GET /fsa/{merchant_name_identifier}
+- name: error
+  description: The error envelope. See errors/flipp-wishabi-problem-types.yml.
+  key_fields: [message, code]
+relationships:
+- from: publication
+  to: publication_page
+  type: has_many
+  via: flyer_id
+  evidence: publication_page.flyer_id + path /publication/{publication_id}/pages
+- from: publication
+  to: publication_highlight
+  type: has_many
+  via: path
+  evidence: path /publication/{publication_id}/highlights (no id field on the child model)
+- from: publication
+  to: publication_category
+  type: has_many
+  via: path
+  evidence: path /publication/{publication_id}/categories
+- from: publication
+  to: correction_notice
+  type: has_one
+  via: nested
+  evidence: correction_notice is not the payload of any operation; it appears within the
+    publication response
+- from: publication
+  to: product
+  type: has_many
+  via: flyer_id
+  evidence: product.flyer_id + path /publication/{publication_id}/products
+- from: product
+  to: publication
+  type: belongs_to
+  via: flyer_id
+- from: product
+  to: detailed_product
+  type: has_one
+  via: id
+  evidence: GET /product/{product_id} returns detailed_product for the same integer id
+- from: product
+  to: sub_item
+  type: has_many
+  via: product_id
+  evidence: sub_item.product_id
+- from: product
+  to: inventory_sub_item
+  type: has_many
+  via: path
+  evidence: path /product/{product_id}/sub_items, scoped by required store_code
+- from: inventory_sub_item
+  to: cart_button
+  type: has_many
+  via: buttons
+  evidence: inventory_sub_item.buttons
+- from: cart_button
+  to: quantity_control_option
+  type: has_one
+  via: quantityControlOption
+- from: detailed_product
+  to: product_coupon
+  type: has_many
+  via: flyer_item_id
+  evidence: product_coupon.flyer_item_id references the flyer item
+- from: detailed_product
+  to: product_review
+  type: has_many
+  via: nested
+- from: detailed_product
+  to: product_rich_media
+  type: has_many
+  via: nested
+- from: detailed_product
+  to: product_spec
+  type: has_many
+  via: nested
+- from: detailed_product
+  to: product_feature
+  type: has_many
+  via: nested
+- from: merchant
+  to: publication
+  type: has_many
+  via: merchant_identifier
+  evidence: path /publications/{merchant_identifier}
+  note: >-
+    `merchant` is NOT a model in the schema. It exists only as a path parameter obtained out of
+    band from a Flipp technical contact - there is no merchants endpoint and no merchant object,
+    so the top of the graph is unresolvable through the API itself.
+- from: merchant
+  to: store
+  type: has_many
+  via: merchant_identifier
+  evidence: path /stores/{merchant_identifier}
+- from: store
+  to: publication
+  type: resolves
+  via: store_code
+  evidence: >-
+    store_code is a query parameter on the publication operations - a store selects which
+    publications are returned rather than owning them.
+- from: publication
+  to: flyer_run
+  type: belongs_to
+  via: flyer_run_id
+  note: >-
+    `flyer_run_id` appears on publication, publication_page, product and merchant_product but no
+    `flyer_run` model is defined and no operation returns one. It is an internal Flipp grouping
+    identifier leaking into the public contract.
+observations:
+- >-
+  The graph has no hub object for the merchant. Every read starts from a `merchant_identifier`
+  string the integrator must be told, which is what makes this a partner API rather than a public
+  one.
+- >-
+  Three near-identical product shapes (product, merchant_product, detailed_product) exist for
+  three query scopes. `product` and `merchant_product` have identical field lists in v4.0, so the
+  schema duplication buys nothing.
+- >-
+  Naming is inconsistent across the model: `flyer_*` internally versus `publication` externally,
+  snake_case everywhere except `inventory_sub_item`/`cart_button` which are camelCase passthrough
+  from the MI9 Retail API, and `category` (string) surviving on `sub_item` after v4.0 renamed it
+  to `categories` (array) on the product models.
+- >-
+  Geometry (left/top/width/height) is embedded in three publication child models, confirming the
+  data is designed for a renderer drawing over a flyer image rather than for generic commerce
+  consumption.
+render: null
+render_note: No subway/ diagram exists for this provider.
+cross_links:
+  conventions: conventions/flipp-wishabi-conventions.yml
+  errors: errors/flipp-wishabi-problem-types.yml

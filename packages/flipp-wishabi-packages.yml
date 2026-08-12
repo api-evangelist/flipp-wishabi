@@ -1,0 +1,169 @@
+generated: '2026-08-12'
+method: searched
+source: https://github.com/wishabi
+note: >-
+  Flipp publishes NO client library to any public package registry - npm, PyPI, Maven Central,
+  RubyGems, CocoaPods trunk, NuGet, crates.io and pkg.go.dev were all queried and none carries a
+  first-party Flipp SDK (`com.flipp` has 0 artifacts on Maven Central; `FlyerKit` 404s on the
+  CocoaPods trunk; the only npm package under github.com/wishabi is an unrelated 2021 landing-page
+  experiment). Distribution is instead (a) GitHub binary repos consumed by Swift Package Manager,
+  and (b) a CREDENTIALED JFrog Artifactory Maven repository whose credentials are "provided by
+  Flipp". Currency below is therefore read from GitHub release/tag metadata and from the version
+  pins the provider's own sample apps declare - both provider-published and reliably dated - rather
+  than from a public registry metadata endpoint.
+registries_checked:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=flipp
+  first_party_result: none
+- registry: Maven Central
+  query: 'https://search.maven.org/solrsearch/select?q=g:com.flipp'
+  first_party_result: none
+  found: 0
+- registry: CocoaPods
+  query: https://trunk.cocoapods.org/api/v1/pods/FlyerKit
+  status: 404
+  first_party_result: none
+- registry: PyPI
+  query: https://pypi.org/pypi/flipp/json
+  status: 404
+  first_party_result: none
+- registry: RubyGems
+  query: https://rubygems.org/api/v1/search.json?query=flipp
+  first_party_result: none
+  note: >-
+    `flipp-mockserver-client` and `flipp-ruby-kafka-temp-fork` exist but are internal-tooling
+    forks, not client libraries for the FlyerKit API.
+- registry: crates.io
+  first_party_result: none
+- registry: NuGet
+  first_party_result: none
+- registry: pkg.go.dev
+  first_party_result: none
+packages:
+- name: dvm-sdk
+  product: Flipp Platform SDK (Digital Visual Merchandising)
+  language: Swift
+  platform: iOS 14+
+  official: true
+  registry: swiftpm-github
+  distribution: >-
+    Swift Package Manager binaryTarget pointing at a zipped xcframework attached to a GitHub
+    Release. Package.swift pins the release URL and a SHA-256 checksum, so the version a consumer
+    resolves is explicit and verifiable.
+  repository: https://github.com/wishabi/dvm-ios-binaries
+  install: https://github.com/wishabi/dvm-ios-binaries/
+  version: 3.5.1
+  published: '2026-08-11'
+  version_source: https://api.github.com/repos/wishabi/dvm-ios-binaries/releases
+  previous_version: 3.4.0
+  previous_published: '2026-08-11'
+  checksum: 72ec02e8bcdefdc0aed5a4feed1b62e6476354e6810f12cdf0575bccb3a6f7e9
+  entrypoint: DVMSDK.initialize(clientToken:userId:)
+  auth: clientToken / SDK key issued by Flipp (separate credential from the FlyerKit access_token)
+  sample_app: https://github.com/wishabi/dvm-sample-ios
+  note: >-
+    Released the day before this pass - this is Flipp's actively maintained SDK line. 3.5.1's
+    release note states the public API is now self-contained (no MarketplaceContent dependency
+    for consumers).
+- name: com.flipp:dvm-sdk
+  product: Flipp Platform SDK (Digital Visual Merchandising)
+  language: Kotlin
+  platform: Android (minSdk 24, compileSdk 36, JVM target 17, Kotlin 2.2.20+)
+  official: true
+  registry: artifactory
+  registry_url: https://flipplib.jfrog.io/artifactory/dvm-sdk-android
+  gated: true
+  gated_note: >-
+    The Maven repository requires `artifactory_user` / `artifactory_password` "provided by Flipp",
+    so there is no anonymous metadata endpoint to query for the latest version. A prospective
+    integrator cannot see what versions exist without first obtaining credentials.
+  version: 2.1.0
+  published: null
+  version_source: https://github.com/wishabi/dvm-sample-android/blob/main/gradle/libs.versions.toml
+  version_note: >-
+    2.1.0 is the version the provider's own sample app pins (`dvmSdk = "2.1.0"` in
+    libs.versions.toml, and the README states "This sample app targets SDK version 2.1.0"). The
+    publish date is null because the Artifactory repository is credentialed and publishes no
+    anonymous metadata - checked, nothing to record, not a guess.
+  companion_artifact: com.flipp:content
+  companion_note: >-
+    `com.flipp:content` (package `com.flipp.content.v2.model`) arrives with the SDK and carries
+    the CorePublication / Offer / Promotion model types the SDK's API is expressed in.
+  entrypoint: com.flipp.dvm.sdk.android.external.DvmSdk.initialize(clientToken, context, userId)
+  sample_app: https://github.com/wishabi/dvm-sample-android
+- name: skit (SFML rendering kit, iOS)
+  product: Flipp StorefrontsKit / SKit
+  language: Objective-C / Swift
+  platform: iOS
+  official: true
+  registry: github-release
+  repository: https://github.com/wishabi/ios-skit-binaries-public
+  version: 1.28.3
+  published: '2025-08-05'
+  version_source: https://api.github.com/repos/wishabi/ios-skit-binaries-public/releases
+  previous_version: 1.28.2
+  previous_published: '2025-02-10'
+  note: >-
+    Renders SFML storefront publications (SFMLView, StorefrontSFMLView, SFMLAnalytics). Last
+    release is a year old - the DVM line has superseded it as the actively developed renderer.
+- name: com.flipp.flyerkit:flyerkit
+  product: FlyerKit for Android
+  language: Java
+  platform: Android 4.0+
+  official: true
+  registry: none
+  distribution: >-
+    An .aar committed into the public binaries repo and consumed via a Gradle `flatDir` local
+    Maven repository - `compile 'com.flipp.flyerkit:flyerkit:X.Y.Z@aar'`. There is no hosted
+    Maven coordinate; the consumer copies the file into their own libs/ directory.
+  repository: https://github.com/wishabi/flyerkit-droid-binaries-public
+  version: 2.1.1
+  published: null
+  version_source: https://github.com/wishabi/flyerkit-droid-binaries-public (libs/flyerkit-2.1.1.aar)
+  version_note: >-
+    Version read from the vendored artifact filename `libs/flyerkit-2.1.1.aar`. The repo publishes
+    no releases and no tags, so there is no dated publish event to record - null, checked. Last
+    push to the repository was 2025-02-19.
+  api_docs: https://api.flipp.com/flyerkit/v3.0/documentation
+  decay_signal: >-
+    The README still points integrators at the FlyerKit **v3.0** documentation, which now 404s -
+    the live documented version is v4.0. A first-party SDK whose README references a retired
+    version of the API it wraps is an abandonment signal.
+- name: FlyerKit for iOS
+  product: FlyerKit for iOS
+  language: Swift / Objective-C
+  platform: iOS
+  official: true
+  registry: none
+  distribution: Binaries + jazzy-generated documentation committed to a public GitHub repo; no
+    SwiftPM manifest, no podspec.
+  repository: https://github.com/wishabi/flyerkit-ios-binaries-public
+  version: null
+  published: null
+  version_note: >-
+    Checked - the repository publishes no releases, no tags, and no version manifest
+    (Package.swift/podspec), and the binary is not version-stamped in a readable path. A consumer
+    cannot tell which build they are getting either. Last push 2025-02-18.
+  primary_class: WFKFlyerView
+samples:
+- name: dvm-sample-ios
+  url: https://github.com/wishabi/dvm-sample-ios
+  last_push: '2026-08-11'
+- name: dvm-sample-android
+  url: https://github.com/wishabi/dvm-sample-android
+  last_push: '2026-08-12'
+- name: android-skit-example-public
+  url: https://github.com/wishabi/android-skit-example-public
+  last_push: '2025-02-19'
+- name: skit2demo-public
+  url: https://github.com/wishabi/skit2demo-public
+  last_push: '2025-02-19'
+summary:
+  official_count: 5
+  public_registry_count: 0
+  credentialed_registry_count: 1
+  rest_api_client_count: 0
+  rest_api_client_note: >-
+    None of the five packages is a client library for the FlyerKit REST API. They are all
+    RENDERING SDKs - they draw publications on a screen. A retailer calling the FlyerKit HTTPS/JSON
+    API has no first-party SDK in any language and writes their own HTTP client.

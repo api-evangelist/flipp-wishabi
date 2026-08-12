@@ -1,0 +1,140 @@
+generated: '2026-08-12'
+method: searched
+source: https://github.com/wishabi/dvm-sample-ios
+sources:
+- https://github.com/wishabi/dvm-sample-ios
+- https://github.com/wishabi/dvm-sample-android
+- https://github.com/wishabi/flyerkit-droid-binaries-public
+- https://github.com/wishabi/flyerkit-ios-binaries-public
+- https://github.com/wishabi/ios-skit-binaries-public
+note: >-
+  Flipp's client-side surface is NATIVE-MOBILE, not web. There are no web components, no
+  JavaScript element library, no CDN-hosted loader script and no embeddable iframe or hosted
+  dashboard - a survey of the corporate site, the FlyerKit documentation and the public GitHub org
+  turned up none. What Flipp ships instead are prebuilt native VIEW components that render a
+  publication inside a retailer's own iOS or Android app: the retailer supplies a publication
+  identifier and a client token, and the component draws the circular, handles pan/zoom/tap and
+  emits interaction analytics. These are distinct from the FlyerKit REST API (which returns the
+  data) and from the SDK packages themselves (see packages/flipp-wishabi-packages.yml, which
+  records distribution and version currency; this file records the component surface).
+families:
+- name: DVM (Digital Visual Merchandising)
+  status: active
+  description: >-
+    The current rendering engine. Renders publications in a responsive, interactive digital format
+    rather than as a scanned print page, and can also fall back to SFML print rendering. Both
+    platform SDKs are initialized once with a `clientToken` issued by Flipp, and expose
+    self-contained value types (Publication, Offer, Promotion, OfferPricing, RenderingType,
+    StrategyResult).
+  auth: clientToken / SDK key issued by Flipp - a SEPARATE credential from the FlyerKit
+    access_token
+  components:
+  - name: DVMRendererView
+    platform: iOS
+    kind: native view
+    constructor: >-
+      DVMSDK.createRenderingView(publicationId:publicationInfo:renderMode:language:shouldPersistWebsiteDataToDisk:disableZoom:linkedOfferId:)
+    options: [publicationId, publicationInfo, renderMode (.dvm | .sfml), language,
+      shouldPersistWebsiteDataToDisk, disableZoom, linkedOfferId]
+    delegate: true
+    source: https://github.com/wishabi/dvm-sample-ios
+  - name: FlippPublication
+    platform: Android
+    kind: Jetpack Compose composable
+    options: [modifier, identifiers (Store | PostalCode), renderType, language,
+      longPressDurationMs, caching, linkedOfferId, delegate, header, footer]
+    delegate: PublicationRendererDelegate
+    slots: [header, footer]
+    source: https://github.com/wishabi/dvm-sample-android
+  data_access:
+  - name: DVMSDK.fetchPublicationsList
+    platform: iOS
+    kind: async data method
+    signature: fetchPublicationsList(merchantId:storeCode:language:resultsCount:pageToken:)
+    pagination: cursor (pageToken) + resultsCount, default 10
+    note: >-
+      The SDK's own publication listing is CURSOR-paginated with a `pageToken`, which the FlyerKit
+      REST API does not offer - the REST surface uses page/size/offset. The two surfaces disagree
+      on pagination style.
+  - name: PublicationRepository
+    platform: Android
+    kind: repository class
+    package: com.flipp.content.v2.network.repository
+    methods: [getPublicationsByStore, getPublicationsByPostalCode]
+    caveat: >-
+      Documented failure mode, quoted from the provider: the methods "do not throw - a network
+      error, an invalid clientToken or any other failure comes back as an empty list,
+      indistinguishable from a store that genuinely has no publications." Silent failure by
+      design.
+  sdk_versions:
+    ios: 3.5.1 (2026-08-11)
+    android: 2.1.0
+- name: SKit / StorefrontsKit (SFML)
+  status: maintenance
+  description: >-
+    Renders SFML storefront publications - the vertical-scroll "storefront" format - with
+    accessibility elements and built-in analytics. Superseded by DVM for new integrations but
+    still released.
+  components:
+  - name: SFMLView
+    platform: iOS
+    kind: native view
+  - name: StorefrontSFMLView
+    platform: iOS
+    kind: native view
+  - name: SFMLAnnotationView
+    platform: iOS
+    kind: native view
+  supporting_types: [SFMLAction, SFMLActionType, SFMLAnalytics, SFMLItemAttributes, SFMLItemID,
+    SFMLItemSource, SFMLBorderLayer, SFMLAccessibilityElement, SFMLFlyerViewAccessibilityElement,
+    SourcedItemID, ItemSource]
+  sdk_versions:
+    ios: 1.28.3 (2025-08-05)
+  source: https://github.com/wishabi/ios-skit-binaries-public
+  sample: https://github.com/wishabi/android-skit-example-public
+- name: FlyerKit rendering views
+  status: dormant
+  description: >-
+    The original print-flyer viewer - a GUI component that displays a Flipp flyer image in a native
+    view with pan/zoom gestures, tap/double-tap/long-press handling, image badge overlays and
+    highlight regions. Paired with the FlyerKit REST API of the same name.
+  components:
+  - name: WFKFlyerView
+    platform: iOS
+    kind: native view
+    protocols: [WFKFlyerViewDelegate, WFKFlyerViewBadgeAnnotation, WFKFlyerViewTapAnnotation]
+    source: https://github.com/wishabi/flyerkit-ios-binaries-public
+  - name: com.flipp.flyerkit.FlyerView
+    platform: Android
+    kind: native View subclass
+    api: [setFlyerId, setTapAnnotations, setFlyerViewListener, setBadgeAnnotations,
+      setHighlightAnnotations]
+    listeners: [FlyerView.FlyerViewListener, FlyerView.TapAnnotation, FlyerView.BadgeAnnotation]
+    min_platform: Android 4.0+
+    source: https://github.com/wishabi/flyerkit-droid-binaries-public
+  decay_note: >-
+    Both repositories were last pushed in February 2025 and publish no releases or tags. The
+    Android README still directs integrators to the FlyerKit v3.0 documentation, which now 404s.
+loaders:
+  web: none
+  cdn: none
+  script_tag: none
+  npm: none
+  finding: >-
+    No web loader of any kind. Everything is consumed as a native binary - SwiftPM binaryTarget
+    from a GitHub release (iOS), a credentialed JFrog Artifactory Maven repository (Android DVM),
+    or a vendored .aar (Android FlyerKit).
+web_surface:
+  hosted_dashboard: none published
+  embeddable_iframe: none published
+  admin_tool: >-
+    "Fadmin" is referenced in the FlyerKit v4.0 spec as the place a retailer's flyer sort order is
+    configured, but it is an internal Flipp tool with no public URL and no public documentation.
+counts:
+  families: 3
+  components: 7
+  web_components: 0
+cross_links:
+  packages: packages/flipp-wishabi-packages.yml
+  authentication: authentication/flipp-wishabi-authentication.yml
+  changelog: changelog/flipp-wishabi-changelog.yml

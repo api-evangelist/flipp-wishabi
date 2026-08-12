@@ -1,0 +1,47 @@
+generated: '2026-08-12'
+method: generated
+source: openapi/flipp-wishabi-flyerkit-openapi.yml
+provider: Flipp (Wishabi)
+api: Flipp FlyerKit API v4.0
+base_url: https://api.flipp.com/flyerkit/v4.0
+provider_published_skills: none
+provider_published_skills_searched:
+- https://api.flipp.com/flyerkit/v4.0/documentation
+- https://github.com/wishabi (AGENTS.md / skills/ - not present in any public repo)
+note: >-
+  Flipp publishes no Agent Skills and no AGENTS.md. These three skills are API Evangelist-generated
+  from the operations in the provider's own published v4.0 Swagger document. IMPORTANT: that
+  document declares NO `operationId` on any of its 11 operations, so each step below cites its
+  operation by HTTP METHOD + PATH exactly as the spec spells it. No operation, parameter, field or
+  error message in these skills is invented - every one is grounded in
+  openapi/flipp-wishabi-flyerkit-openapi.yml or in a live probe recorded in this repo.
+prerequisite:
+  credential: access_token (query parameter)
+  issuance: >-
+    Issued out of band by a Flipp technical contact. There is no self-service signup and no token
+    endpoint, so none of these skills can be bootstrapped by an agent on its own.
+  merchant_identifier: >-
+    Also obtained from a Flipp technical contact. There is no merchants operation, so it cannot be
+    discovered through the API.
+skills:
+- name: browse-retailer-circular
+  file: skills/flipp-wishabi-browse-retailer-circular.md
+  description: Find a retailer's current circular for a shopper's location and walk its pages,
+    highlights and categories.
+  operations: 4
+- name: pull-circular-offers
+  file: skills/flipp-wishabi-pull-circular-offers.md
+  description: Pull filtered, paginated offer items out of a retailer's publications and expand
+    one to its full detail record with coupons.
+  operations: 3
+- name: locate-store-and-inventory
+  file: skills/flipp-wishabi-locate-store-and-inventory.md
+  description: Resolve a shopper to a nearby store, then read live store-level inventory and
+    add-to-cart affordances for an offer.
+  operations: 4
+cross_links:
+  conventions: conventions/flipp-wishabi-conventions.yml
+  errors: errors/flipp-wishabi-problem-types.yml
+  authentication: authentication/flipp-wishabi-authentication.yml
+  rate_limits: rate-limits/flipp-wishabi-rate-limits.yml
+  data_model: data-model/flipp-wishabi-data-model.yml

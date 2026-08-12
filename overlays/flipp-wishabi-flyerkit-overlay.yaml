@@ -1,0 +1,152 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Flipp FlyerKit API
+  version: 1.0.0
+x-generated: '2026-08-12'
+x-method: generated
+x-source: openapi/flipp-wishabi-flyerkit-openapi.yml
+x-note: >-
+  OpenAPI Overlay 1.0.0 capturing API Evangelist's enrichment of the FlyerKit v4.0 Swagger
+  document. It is applied ON TOP of the harvested spec and never mutates
+  openapi/_original/flipp-wishabi-flyerkit-v4-openapi-original.json. Every value below is either
+  observed from a live probe on 2026-08-12, quoted from Flipp's own published documentation, or a
+  pointer into an artifact in this repo. The two substantive additions are (1) the
+  `securityDefinitions` block the provider omitted even though every operation requires an
+  access_token, and (2) `operationId`s, which the published document declares on none of its 11
+  operations - both are recorded here as OUR additions, not as provider content.
+extends: openapi/flipp-wishabi-flyerkit-openapi.yml
+actions:
+- target: $.info
+  description: Record provenance and the API Evangelist artifact index on the spec root.
+  update:
+    x-apievangelist-provider: flipp-wishabi
+    x-apievangelist-harvested: '2026-08-12'
+    x-apievangelist-spec-source: https://api.flipp.com/flyerkit/apidocs_v4
+    x-apievangelist-artifacts:
+      authentication: authentication/flipp-wishabi-authentication.yml
+      conventions: conventions/flipp-wishabi-conventions.yml
+      errors: errors/flipp-wishabi-problem-types.yml
+      data-model: data-model/flipp-wishabi-data-model.yml
+      lifecycle: lifecycle/flipp-wishabi-lifecycle.yml
+      conformance: conformance/flipp-wishabi-conformance.yml
+      rate-limits: rate-limits/flipp-wishabi-rate-limits.yml
+      plans: plans/flipp-wishabi-plans-pricing.yml
+      packages: packages/flipp-wishabi-packages.yml
+      components: components/flipp-wishabi-components.yml
+      changelog: changelog/flipp-wishabi-changelog.yml
+      skills: skills/_index.yml
+    x-apievangelist-access-model:
+      onboarding: contact
+      self_service: false
+      label: Partner
+- target: $
+  description: >-
+    Add the schemes and securityDefinitions the published document omits. The provider documents
+    the access_token mechanism in prose and requires it on 10 of 11 operations, but declares no
+    securityDefinitions block, so generated clients emit no auth handling.
+  update:
+    schemes:
+    - https
+    securityDefinitions:
+      access_token:
+        type: apiKey
+        name: access_token
+        in: query
+        description: >-
+          "Contact your Flipp technical contact for your API access token." Issued out of band;
+          no self-service signup and no token endpoint. NOTE: this block is an API Evangelist
+          addition - it is absent from the document Flipp publishes.
+    tags:
+    - name: publications
+      description: Circulars and their pages, highlights and categories.
+    - name: products
+      description: Offer items within and across publications, and their detail records.
+    - name: stores
+      description: Physical retail locations.
+    - name: fsa
+      description: Forward Sortation Area geo resolution.
+    - name: copyright
+      description: Flipp copyright notice. The only unauthenticated operation.
+- target: $.paths['/publications/{merchant_identifier}'].get
+  description: Name the operation and record the pagination gap.
+  update:
+    operationId: listPublications
+    x-apievangelist-added-operationid: true
+    x-apievangelist-pagination: none
+- target: $.paths['/publications/{merchant_identifier}/products'].get
+  update:
+    operationId: listMerchantProducts
+    x-apievangelist-added-operationid: true
+    x-apievangelist-pagination: offset+size+page
+    x-apievangelist-added-in: '4.0'
+- target: $.paths['/publication/{publication_id}/pages'].get
+  update:
+    operationId: listPublicationPages
+    x-apievangelist-added-operationid: true
+    x-apievangelist-pagination: none
+- target: $.paths['/publication/{publication_id}/highlights'].get
+  update:
+    operationId: listPublicationHighlights
+    x-apievangelist-added-operationid: true
+    x-apievangelist-pagination: none
+- target: $.paths['/publication/{publication_id}/categories'].get
+  update:
+    operationId: listPublicationCategories
+    x-apievangelist-added-operationid: true
+    x-apievangelist-pagination: none
+- target: $.paths['/publication/{publication_id}/products'].get
+  update:
+    operationId: listPublicationProducts
+    x-apievangelist-added-operationid: true
+    x-apievangelist-pagination: offset+size+page
+    x-apievangelist-sortable: true
+- target: $.paths['/product/{product_id}'].get
+  update:
+    operationId: getProduct
+    x-apievangelist-added-operationid: true
+- target: $.paths['/product/{product_id}/sub_items'].get
+  update:
+    operationId: listProductSubItems
+    x-apievangelist-added-operationid: true
+    x-apievangelist-upstream: MI9 Retail API
+    x-apievangelist-note: The only model in the schema using camelCase field names - a passthrough
+      of the upstream vendor shape.
+- target: $.paths['/stores/{merchant_identifier}'].get
+  update:
+    operationId: findStores
+    x-apievangelist-added-operationid: true
+- target: $.paths['/fsa/{merchant_name_identifier}'].get
+  update:
+    operationId: geolocateFsa
+    x-apievangelist-added-operationid: true
+- target: $.paths['/copyright'].get
+  description: The only unauthenticated operation; returns text/plain, not JSON.
+  update:
+    operationId: getCopyright
+    x-apievangelist-added-operationid: true
+    x-apievangelist-authenticated: false
+    x-apievangelist-produces: text/plain
+- target: $.definitions.error
+  description: >-
+    Record the observed contract drift - the spec declares `code` as a string but the deployed API
+    returns it as a JSON number.
+  update:
+    x-apievangelist-observed: '{"message":"Missing access_token parameter","code":422}'
+    x-apievangelist-observed-at: '2026-08-12'
+    x-apievangelist-drift: >-
+      `code` is declared `type: string` but was observed as an unquoted JSON number on a live 422.
+    x-apievangelist-rfc9457: false
+    x-apievangelist-catalog: errors/flipp-wishabi-problem-types.yml
+- target: $.definitions.publication
+  update:
+    x-apievangelist-root-entity: true
+    x-apievangelist-relationships: data-model/flipp-wishabi-data-model.yml
+- target: $.definitions.inventory_sub_item
+  update:
+    x-apievangelist-naming: camelCase (inconsistent with the rest of the schema)
+    x-apievangelist-upstream: MI9 Retail API
+- target: $.definitions.sub_item
+  update:
+    x-apievangelist-drift: >-
+      Still carries the singular `category` string after v4.0 renamed the field to `categories`
+      (array) on the product models.

@@ -1,0 +1,74 @@
+generated: '2026-08-12'
+method: searched
+source: https://api.flipp.com/flyerkit/v4.0/documentation
+docs: https://api.flipp.com/flyerkit/v3.0/documentation
+note: >-
+  The published FlyerKit Swagger 2.0 document declares NO `securityDefinitions` block -
+  authorization is expressed as a required `access_token` query parameter on every
+  operation except GET /copyright. `derive-authentication.py` therefore finds nothing to
+  aggregate; this profile is written from the provider's own published documentation,
+  which states the mechanism explicitly.
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+  oauth2_flows: []
+  self_service: false
+schemes:
+- name: access_token
+  type: apiKey
+  in: query
+  parameter: access_token
+  required: true
+  sources:
+  - openapi/flipp-wishabi-flyerkit-openapi.yml
+  - https://api.flipp.com/flyerkit/v4.0/documentation
+  description: >-
+    "Contact your Flipp technical contact for your API access token." Tokens are issued
+    out of band by a Flipp account/technical contact - there is no self-service signup,
+    no developer console, and no token endpoint. Tokens are passed to the FlyerKit API as
+    URL query parameters.
+  applies_to: >-
+    Every FlyerKit v4.0 operation except GET /copyright, which is unauthenticated.
+issuance:
+  self_service: false
+  channel: Flipp technical contact / account manager
+  quoted: >-
+    "Access tokens are issued by your Flipp technical contact and if needed, multiple
+    access tokens can be created for your various development teams or partners. Access
+    tokens should always be kept secret and not shared."
+  source: https://api.flipp.com/flyerkit/v4.0/documentation
+permissions:
+  model: per-token scoping
+  note: >-
+    v4.0 introduced a multi-token model: "Updated the access token model, allowing
+    retailers to have multiple FlyerKit access tokens with different levels of
+    permission." One named permission is documented - viewing future (not yet live)
+    publications and products via `see_future`, which "requires an access token with
+    special permissions issued by your Flipp technical contact." Flipp publishes no
+    enumerated scope list, so there is no scopes/ artifact for this provider.
+  breaking_change: >-
+    "access tokens from previous FlyerKit versions will no longer work in v4.0 and new
+    ones will need to be issued by your Flipp technical contact."
+transport:
+  https_only: true
+  cors: true
+  cors_note: >-
+    "The API allows cross-origin requests using CORS." (FlyerKit v2.0 and v3.0
+    documentation.) Because the token travels in the query string of a browser-visible
+    URL, a CORS-enabled front-end integration exposes it to the client.
+observations:
+- >-
+  Credential in the query string, not a header. Query parameters are logged by
+  intermediaries, proxies and browser history; Flipp's own v3.0 docs temper this by
+  stating the token "is not intended as a security mechanism ... All data available
+  through the API is publicly available information."
+- No OAuth 2.0, no OpenID Connect, no mTLS, and no key-rotation endpoint is published.
+- >-
+  The mobile SDKs (FlyerKit iOS/Android, DVM) use a separate `clientToken` / SDK key,
+  also issued by Flipp; see components/flipp-wishabi-components.yml.
+cross_links:
+  conventions: conventions/flipp-wishabi-conventions.yml
+  errors: errors/flipp-wishabi-problem-types.yml
+  lifecycle: lifecycle/flipp-wishabi-lifecycle.yml

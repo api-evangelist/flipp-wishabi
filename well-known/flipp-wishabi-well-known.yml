@@ -1,0 +1,158 @@
+generated: '2026-08-12'
+method: probed
+source: live HTTP probes of every host named in apis.yml and the FlyerKit OpenAPI host block
+result: none
+note: >-
+  Every /.well-known/ path missed on every Flipp host. api.flipp.com (the FlyerKit API host
+  named in the OpenAPI `host` field) returns a genuine 1052-byte 404 for all five paths.
+  corp.flipp.com returns the WordPress 404 template. www.flipp.com is a single-page
+  application whose catch-all route answers 200 with the SAME 41,244-byte HTML shell for
+  EVERY /.well-known/* path - including paths that cannot exist - so those 200s are soft-404
+  SPA shells, not documents. Per the pipeline rule, a 200 carrying an HTML shell is a MISS.
+  NO WellKnown, SecurityTxt or APICatalog pointer is emitted for this provider, and the
+  previously-wired WellKnown pointer has been removed from apis.yml because this probe
+  records an absence, not a presence.
+hosts:
+- host: api.flipp.com
+  role: FlyerKit API host (OpenAPI `host`, apis.yml baseURL)
+  server: istio-envoy / nginx behind CloudFront
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    content_type: text/html; charset=utf-8
+    bytes: 1052
+    document: false
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    content_type: text/html; charset=utf-8
+    bytes: 1052
+    document: false
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    content_type: text/html; charset=utf-8
+    bytes: 1052
+    document: false
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    content_type: text/html; charset=utf-8
+    bytes: 1052
+    document: false
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    content_type: text/html; charset=utf-8
+    bytes: 1052
+    document: false
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    content_type: text/html; charset=utf-8
+    bytes: 1052
+    document: false
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    content_type: text/html; charset=utf-8
+    bytes: 1052
+    document: false
+    file: null
+- host: www.flipp.com
+  role: consumer web app (apis.yml Website)
+  server: single-page application with a catch-all route
+  soft_404: true
+  soft_404_evidence: >-
+    All seven probed paths returned HTTP 200, content-type text/html, and an identical
+    41,244-byte body beginning `<html hide-focus-outline build='build/70301842' ...`.
+    Identical byte length across unrelated paths is the SPA catch-all signature.
+  paths:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/html
+    bytes: 41244
+    document: false
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: text/html
+    bytes: 41244
+    document: false
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: text/html
+    bytes: 41244
+    document: false
+    file: null
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: text/html
+    bytes: 41244
+    document: false
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    content_type: text/html
+    bytes: 41244
+    document: false
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    bytes: 41244
+    document: false
+    file: null
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: text/html
+    bytes: 41244
+    document: false
+    file: null
+- host: corp.flipp.com
+  role: corporate / platform site (apis.yml CompanyWebsite)
+  server: WordPress
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    content_type: text/html; charset=UTF-8
+    bytes: 239915
+    document: false
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    content_type: text/html; charset=UTF-8
+    bytes: 240013
+    document: false
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    content_type: text/html; charset=UTF-8
+    bytes: 239513
+    document: false
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    content_type: text/html; charset=UTF-8
+    document: false
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    content_type: text/html; charset=UTF-8
+    document: false
+    file: null
+adjacent_findings:
+- surface: https://corp.flipp.com/wp-json/
+  status: 200
+  content_type: application/json; charset=UTF-8
+  note: >-
+    The corporate marketing site runs WordPress and its default REST discovery document is
+    reachable. This is the CMS behind corp.flipp.com, not a Flipp product API, so it is
+    recorded here as an observation only and is NOT registered as an API in apis.yml.
+- surface: https://www.flipp.com/robots.txt
+  status: 200
+  content_type: text/plain
+  bytes: 950
+  note: A real robots.txt is served (the SPA does not swallow it), which is what proves the
+    /.well-known/ 200s above are catch-all shells rather than routed responses.

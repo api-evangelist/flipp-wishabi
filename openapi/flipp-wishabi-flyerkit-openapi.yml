@@ -1,0 +1,2131 @@
+swagger: '2.0'
+info:
+  version: '4.0'
+  title: FlyerKit
+  description: 'An API to access Flipp''s publication data for use in your applications.
+
+
+    ### Overview
+
+
+    The FlyerKit API gives retailers like yourself access to the structured data that powers the Flipp
+    circular platform. With this API, Flipp empowers you and your teams to create new experiences for
+    your web properties and applications. The FlyerKit API allows you to integrate your circular data
+    by creating custom promotions and integrations (modules, search, emails, menus, etc.) with the goal
+    of increasing circular readership.
+
+
+    For example, you could integrate items from your circular directly into an email campaign or display
+    thumbnails of your most popular items from across your publications as part of a module on a landing
+    page.
+
+    When used in conjunction with the FlyerKit mobile application SDKs (available for both Android and
+    iOS), the FlyerKit API can be used to create a circular browsing experience within your native application.
+
+
+    This document is primarily created for development and product teams as a technical reference, but
+    can be used by individuals with expertise in digital marketing, e-commerce and information technology
+    to gain a high level overview of FlyerKit API capabilities and functionality.
+
+
+    ### Changes from FlyerKit v3.0
+
+
+    * Updated the access token model, allowing retailers to have multiple FlyerKit access tokens with
+    different levels of permission.
+
+    NOTE: access tokens from previous FlyerKit versions will no longer work in v4.0 and new ones will
+    need to be issued by your Flipp technical contact.
+
+
+    * Added the ability to view future publications and products which are not yet live. This requires
+    an access token with special permissions issued by your Flipp technical contact.
+
+
+    * Added the ability to filter products by keywords and/or tags in all product endpoints.
+
+
+    * Changed the `category` field returned in item models from a string to an array containing all of
+    the item''s categories and renamed it `categories`.
+
+
+    * Created a new endpoint `/flyerkit/v4.0/publications/{merchant_identifier}/products` which returns
+    products across all of a retailer''s publications.
+
+
+    * Added deep_link url field to publications and product endpoints. These new fields will return a
+    direct link to a publication or item on a retailer''s page.
+
+
+    ### Access Token Management
+
+
+    Access tokens are issued by your Flipp technical contact and if needed, multiple access tokens can
+    be created for your various development teams or partners. Access tokens should always be kept secret
+    and not shared.
+
+
+    Access tokens are passed to the FlyerKit API as URL parameters.
+
+
+    ### Supported Formats
+
+
+    ##### JSON
+
+
+    The FlyerKit API currently only returns data in JSON format. Example responses are provided for each
+    of the FlyerKit endpoints.
+
+
+    ### Versioning
+
+
+    FlyerKit uses a semantic versioning scheme with a major and minor version number. Requests are made
+    against a major version as part of the base path in the URI. All backward compatible changes will
+    be made in minor versions. Clients will not be able to request a specific minor version as the server
+    will always serve the latest version for a major release.
+
+
+    Any changes in the API that are not backward compatible will use an updated major version.
+
+    '
+host: api.flipp.com
+basePath: /flyerkit/v4.0
+paths:
+  /publications/{merchant_identifier}:
+    get:
+      summary: Find publications by merchant and store or postal/zip code
+      description: Returns a list of available publications for a given store and optionally postal/zip
+        code. Publications are selected using the supplied store's location. The validity dates of a publication
+        specify the period for which the content (sales, pricing, etc.) is valid. The availability dates
+        specify the time that the publication should be accessible within an application.The sort order
+        depends on order that should be manually set up on 'Flyers sorting' tab in Fadmin
+      tags:
+      - publications
+      parameters:
+      - name: merchant_identifier
+        in: path
+        description: Your merchant name identifier which can be obtained from your Flipp technical contact.
+        required: true
+        type: string
+      - name: access_token
+        in: query
+        description: Contact your Flipp technical contact for your API access token.
+        required: true
+        type: string
+      - name: locale
+        in: query
+        description: 'Providing a locale will return content from that locale''s language whenever Flipp
+          has that content available. Content includes the underlying circular, as well as categories.
+
+          When localized content is not available for a given locale, an empty response is returned.
+
+          | Locale              | Description                                               |
+
+          | ------------------- | --------------------------------------------------------- |
+
+          | en-CA               | English, Canada                                           |
+
+          | fr-CA               | French, Canada                                            |
+
+          | en-US               | English, United States                                    |
+
+          '
+        required: true
+        type: string
+      - name: store_code
+        in: query
+        description: Retailer's store code.
+        type: string
+      - name: postal_code
+        in: query
+        description: Optional if store_code is provided. Values can be a Canadian postal code, or a United
+          States zipcode.
+        type: string
+      - name: see_future
+        in: query
+        description: Whether to include future publications in the results. Requires special access token
+          permissions.
+        type: boolean
+      - name: show_storefronts
+        in: query
+        description: Show Digital Content. If true will suppress publications that are not optimized for
+          vertical scroll. If false will suppress digital only content. Default is false.
+        type: boolean
+      responses:
+        '200':
+          description: Publications response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/publication'
+        '422':
+          description: Missing or invalid parameters
+          schema:
+            $ref: '#/definitions/error'
+  /publications/{merchant_identifier}/products:
+    get:
+      summary: Returns products across publications
+      description: Returns a list of available products for a given store or postal/zip code. If a store
+        code is given, products are selected using the store's location. Otherwise, products are chosen
+        using the given postal/zip code. If both a store code and postal/zip code are provided, the store
+        code takes precedence. Text will be localized according to the locale of the publication. If keywords
+        or tags are provided, a maximum of 1000 items will be returned.Results are sorted by the 'left'
+        column asc which means physical location of item on the flyer from left to right.
+      tags:
+      - products
+      parameters:
+      - name: merchant_identifier
+        in: path
+        description: Your merchant name identifier which can be obtained from your Flipp technical contact.
+        required: true
+        type: string
+      - name: access_token
+        in: query
+        description: Contact your Flipp technical contact for your API access token.
+        required: true
+        type: string
+      - name: locale
+        in: query
+        description: 'Providing a locale will return content from that locale''s language whenever Flipp
+          has that content available. Content includes the underlying circular, as well as categories.
+
+          When localized content is not available for a given locale, an empty response is returned.
+
+          | Locale              | Description                                               |
+
+          | ------------------- | --------------------------------------------------------- |
+
+          | en-CA               | English, Canada                                           |
+
+          | fr-CA               | French, Canada                                            |
+
+          | en-US               | English, United States                                    |
+
+          '
+        required: true
+        type: string
+      - name: store_code
+        in: query
+        description: Retailer's store code.
+        required: true
+        type: string
+      - name: postal_code
+        in: query
+        description: Optional if store_code is provided. Values can be a Canadian postal code, or a United
+          States zipcode.
+        type: string
+      - name: page
+        in: query
+        description: Limit products to those appearing on a specified page in the circular.
+        type: integer
+      - name: display_type
+        in: query
+        description: 'Comma-delimited list of integers specifying types of circular items to return.
+
+          If not provided, this endpoint will only return items with a display type of 1.
+
+          See table below for a list of display types.
+
+          | Display Type Number | Description                                               |
+
+          | ------------------- | --------------------------------------------------------- |
+
+          | 1                   | Circular item                                             |
+
+          | 3                   | Video (YouTube embedded URL or link to mp4 file)          |
+
+          | 5                   | Web linkout (link to external site)                       |
+
+          | 7                   | Circular page link (link to another page in the circular) |
+
+          | 15                  | iframe (displays a URL in an iframe)                      |
+
+          | 25                  | Coupon (retailer coupon displayed as a circular item)     |
+
+          | all                 | All items regardless of type                              |
+
+          '
+        type: string
+      - name: postal_code
+        in: query
+        description: Postal/zip code to specify the region from which to fetch coupons.
+        type: string
+      - name: keywords
+        in: query
+        description: Comma-delimited list of keywords appearing in item names/descriptions with which
+          to filter items.
+        type: string
+      - name: tags
+        in: query
+        description: Text strings that allow items to be filtered based on more detailed groupings/categorizations.
+          Ask your Flipp Technical contact for more details on how to provide tags against your items.
+        type: string
+      - name: see_future
+        in: query
+        description: Whether to include future publications in the results. Requires special access token
+          permissions.
+        type: boolean
+      - name: show_storefronts
+        in: query
+        description: Show Digital Content. If true will suppress publications that are not optimized for
+          vertical scroll. If false will suppress digital only content. Default is false.
+        type: boolean
+      - name: category
+        in: query
+        description: Filter products by given category.
+        type: string
+      - name: size
+        in: query
+        description: Set the count of products to be returned. Positive number. All products will be returned
+          if size >= total products count and offset = 0 or missing. [] is returned if there are no products
+          available.
+        type: integer
+      - name: offset
+        in: query
+        description: Set the count of items to be skipped when size parameter is specified. 0 is a default
+          value. [] is returned if offset is too big.
+        type: integer
+      responses:
+        '200':
+          description: Products response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/merchant_product'
+        '422':
+          description: Missing or invalid parameters
+          schema:
+            $ref: '#/definitions/error'
+  /publication/{publication_id}/pages:
+    get:
+      summary: Returns pages in a publication
+      description: Returns the list of pages in the given publication.The width of the thumbnails in the
+        response may vary to preserve image aspect ratios.
+      tags:
+      - publications
+      parameters:
+      - name: publication_id
+        in: path
+        description: Unique identifier for the publication.
+        required: true
+        type: integer
+      - name: access_token
+        in: query
+        description: Contact your Flipp technical contact for your API access token.
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Pages response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/publication_page'
+        '422':
+          description: Missing or invalid parameters
+          schema:
+            $ref: '#/definitions/error'
+  /publication/{publication_id}/highlights:
+    get:
+      summary: Returns highlights in a publication
+      description: Returns the list of highlights in the given publication. Highlights are special tags
+        given to items which allow them to be highlighted on the front end by darkening the surrounding
+        items/areas of the publication. For example, some merchants like all items made in the USA to
+        be given a "Made in USA" highlight.
+      tags:
+      - publications
+      parameters:
+      - name: publication_id
+        in: path
+        description: Unique identifier for the publication.
+        required: true
+        type: integer
+      - name: access_token
+        in: query
+        description: Contact your Flipp technical contact for your API access token.
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Highlights response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/publication_highlight'
+        '422':
+          description: Missing or invalid parameters
+          schema:
+            $ref: '#/definitions/error'
+  /publication/{publication_id}/categories:
+    get:
+      summary: Returns categories in a publication
+      description: Returns the list of categories in the given publication. The categories can be used
+        to implement a feature that jumps to a specific category in the publication. For example, if the
+        publication has a grocery section, then the grocery category would be used to scroll to the start
+        of the grocery section.
+      tags:
+      - publications
+      parameters:
+      - name: publication_id
+        in: path
+        description: Unique identifier for the publication.
+        required: true
+        type: integer
+      - name: access_token
+        in: query
+        description: Contact your Flipp technical contact for your API access token.
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Categories response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/publication_category'
+        '422':
+          description: Missing or invalid parameters
+          schema:
+            $ref: '#/definitions/error'
+  /publication/{publication_id}/products:
+    get:
+      summary: Returns products in a publication
+      description: For a given publication ID, returns a list of products in the publication. The products
+        in the response are sorted by position, from first page to last, then top to bottom, then left
+        to right by default.Text will be localized according to the locale of the publication. If keywords
+        or tags are provided, a maximum of 1000 items will be returned.
+      tags:
+      - publications
+      - products
+      parameters:
+      - name: publication_id
+        in: path
+        description: Unique identifier for the publication.
+        required: true
+        type: integer
+      - name: access_token
+        in: query
+        description: Contact your Flipp technical contact for your API access token.
+        required: true
+        type: string
+      - name: page
+        in: query
+        description: Limit products to those appearing on a specified page in the circular.
+        type: integer
+      - name: display_type
+        in: query
+        description: 'Comma-delimited list of integers specifying types of circular items to return.
+
+          If not provided, this endpoint will only return items with a display type of 1.
+
+          See table below for a list of display types.
+
+          | Display Type Number | Description                                               |
+
+          | ------------------- | --------------------------------------------------------- |
+
+          | 1                   | Circular item                                             |
+
+          | 3                   | Video (YouTube embedded URL or link to mp4 file)          |
+
+          | 5                   | Web linkout (link to external site)                       |
+
+          | 7                   | Circular page link (link to another page in the circular) |
+
+          | 15                  | iframe (displays a URL in an iframe)                      |
+
+          | 25                  | Coupon (retailer coupon displayed as a circular item)     |
+
+          | all                 | All items regardless of type                              |
+
+          '
+        type: string
+      - name: postal_code
+        in: query
+        description: Postal/zip code to specify the region from which to fetch coupons.
+        type: string
+      - name: store_code
+        in: query
+        description: Store code required for deep_link of the product.
+        type: string
+      - name: keywords
+        in: query
+        description: Comma-delimited list of keywords appearing in item names/descriptions with which
+          to filter items.
+        type: string
+      - name: tags
+        in: query
+        description: Text strings that allow items to be filtered based on more detailed groupings/categorizations.
+          Ask your Flipp Technical contact for more details on how to provide tags against your items.
+        type: string
+      - name: sort_by
+        in: query
+        description: "Return items sorted by a specified criterion. Supported sort criteria are listed\
+          \ in the table below.\n| Sort criterion      | Description                                 \
+          \              |\n| ------------------- | ---------------------------------------------------------\
+          \ |\n| popularity          | Orders items based on the running total of clicks that\nshoppers\
+          \ have made on the items in the current circular.\nItem click counts are updated at least twice\
+          \ per day.\n                                 |\n"
+        type: string
+      - name: sort_order
+        in: query
+        description: 'When used with sort_by, determines the order in which items are sorted by the specified
+          criterion.
+
+          | Sort order          | Description                                               |
+
+          | ------------------- | --------------------------------------------------------- |
+
+          | asc                 | Sort items in ascending order.                            |
+
+          | desc                | Sort items in descending order (default).                 |
+
+          '
+        type: string
+      - name: category
+        in: query
+        description: Filter products by given category.
+        type: string
+      - name: size
+        in: query
+        description: Set the count of products to be returned. Positive number. All products will be returned
+          if size >= total products count and offset = 0 or missing. [] is returned if there are no products
+          available.
+        type: integer
+      - name: offset
+        in: query
+        description: Set the count of items to be skipped when size parameter is specified. 0 is a default
+          value. [] is returned if offset is too big.
+        type: integer
+      responses:
+        '200':
+          description: Products response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/product'
+        '422':
+          description: Missing or invalid parameters
+          schema:
+            $ref: '#/definitions/error'
+  /product/{product_id}:
+    get:
+      summary: Returns detailed information about a product
+      description: Returns detailed information about the specified product. Text will be localized according
+        to the locale of the product's publication.
+      tags:
+      - products
+      parameters:
+      - name: product_id
+        in: path
+        description: Unique identifier for the product.
+        required: true
+        type: integer
+      - name: access_token
+        in: query
+        description: Contact your Flipp technical contact for your API access token.
+        required: true
+        type: string
+      - name: postal_code
+        in: query
+        description: Postal/zip code to specify which the region from which to fetch coupons.
+        type: string
+      - name: store_code
+        in: query
+        description: Store code required for deep_link of the product.
+        type: string
+      responses:
+        '200':
+          description: Product response
+          schema:
+            $ref: '#/definitions/detailed_product'
+        '422':
+          description: Missing or invalid parameters
+          schema:
+            $ref: '#/definitions/error'
+  /product/{product_id}/sub_items:
+    get:
+      summary: Returns detailed inventory information about a product's sub items get from MI9 Retail
+        API
+      description: Returns detailed inventory information about the specified product's sub items in a
+        certain store.
+      tags:
+      - products
+      parameters:
+      - name: product_id
+        in: path
+        description: Unique identifier for the product.
+        required: true
+        type: integer
+      - name: access_token
+        in: query
+        description: Contact your Flipp technical contact for your API access token.
+        required: true
+        type: string
+      - name: store_code
+        in: query
+        description: Store code required for getting inventory data.
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Product response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/inventory_sub_item'
+        '422':
+          description: Missing or invalid parameters
+          schema:
+            $ref: '#/definitions/error'
+  /stores/{merchant_identifier}:
+    get:
+      summary: Returns closest stores to a postal/zip code
+      description: Returns a list of the five closest stores to the specified postal/zip code.
+      tags:
+      - stores
+      parameters:
+      - name: merchant_identifier
+        in: path
+        description: Your merchant name identifier which can be obtained from your Flipp technical contact.
+        required: true
+        type: string
+      - name: access_token
+        in: query
+        description: Contact your Flipp technical contact for your API access token.
+        required: true
+        type: string
+      - name: postal_code
+        in: query
+        description: Postal/zip code of user.
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Stores response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/store'
+        '422':
+          description: Missing or invalid parameters
+          schema:
+            $ref: '#/definitions/error'
+  /fsa/{merchant_name_identifier}:
+    get:
+      summary: Find geo locate fsa by merchant and ip
+      description: 'Returns normalized geo locate fsa for a given merchant and optionally ip. Geo locate
+        fsa is selected by country. '
+      tags:
+      - fsa
+      parameters:
+      - name: merchant_name_identifier
+        in: path
+        description: Your merchant name identifier which can be obtained from your Flipp technical contact.
+        required: true
+        type: string
+      - name: access_token
+        in: query
+        description: Contact your Flipp technical contact for your API access token.
+        required: true
+        type: string
+      - name: ip_override
+        in: query
+        description: Optional parameter to override request remote IP.
+        type: string
+      responses:
+        '200':
+          description: Geo locate fsa response
+          schema:
+            $ref: '#/definitions/fsa'
+        '422':
+          description: Missing or invalid parameters
+          schema:
+            $ref: '#/definitions/error'
+  /copyright:
+    get:
+      summary: Returns Flipp copyright
+      tags:
+      - copyright
+      responses:
+        '200':
+          description: Copyright response
+definitions:
+  publication:
+    properties:
+      id:
+        type: integer
+        description: Unique identifier for the publication
+        example: 348864
+      flyer_run_id:
+        type: integer
+        description: ID for the circular
+        example: 47315
+      flyer_type_id:
+        type: integer
+        description: Unique identifier for the type of circular
+        example: 12234
+      name:
+        type: string
+        description: Localized publication name
+        example: Mailer
+      description:
+        type: string
+        description: Label given to publication by retailer
+        example: Tribune Ad
+        nullable: true
+      sfml_url:
+        type: string
+        description: Storefront Payload URL
+        example: https://sfml.flippback.com/587807/3433653/22811814cd2e63f0c8b92f53fc5193f9831bf4103e7e2efff5c74680648f1ce4.sfml
+        nullable: true
+      storefront_payload_url:
+        type: string
+        description: Storefront Payload URL
+        example: https://cdn-gateflipp.flippback.com/storefront-hosted/587807/3433653/22811814cd2e63f0c8b92f53fc5193f9831bf4103e7e2efff5c74680648f1ce4?merchant_id=543&store_id=12345
+        nullable: true
+      storefront_payload:
+        type: string
+        description: Storefront Payload
+        example: https://cdn-gateflipp.flippback.com/storefront-payload/587807/3433653/22811814cd2e63f0c8b92f53fc5193f9831bf4103e7e2efff5c74680648f1ce4?merchant_id=543
+        nullable: true
+      deep_link:
+        type: string
+        description: Link to the publication on the merchant's website. Requires store_code. Publication
+          must be live.
+        example: http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984
+        nullable: true
+      flyer_type:
+        type: string
+        description: Flipp's name identifier of the type of circular
+        example: mailer
+        nullable: true
+      total_pages:
+        type: integer
+        description: Number of pages in the flyer
+        example: 9
+      external_display_name:
+        type: string
+        description: Localized publication external display name
+        example: Mailer
+        nullable: true
+      locale:
+        type: locale
+        description: The publication's locale
+        example: en
+      postal_code:
+        type: string
+        description: The given postal/zip code of given store
+        example: 07866
+        nullable: true
+      valid_from:
+        type: date
+        description: The start of the validity period
+        example: '2015-03-16T00:00:00-04:00'
+        nullable: true
+      valid_to:
+        type: date
+        description: The end of the validity period
+        example: '2016-01-30T23:59:00-05:00'
+        nullable: true
+      available_from:
+        type: date
+        description: The start of the availability period
+        example: '2015-03-16T01:00:00-04:00'
+        nullable: true
+      available_to:
+        type: date
+        description: The end of the availability period
+        example: '2016-01-31T00:59:00-05:00'
+        nullable: true
+      thumbnail_image_url:
+        type: string
+        description: A thumbnail image intended for a listing
+        example: https://cdn.flippenterprise.net/flyers/348864/l_thumbnail/1425009356.jpg
+        nullable: true
+      flyer_selector_thumbnail_url:
+        type: string
+        description: URL links to the flyer selector image used on hosted desktop
+        example: https://cdn.flippenterprise.net/flyers/348864/thumbnail/1425009356.jpg
+        nullable: true
+      first_page_thumbnail_url:
+        type: string
+        description: The first page thumbnail of the circular (height 2000px)
+        example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key
+        nullable: true
+      first_page_thumbnail_150h_url:
+        type: string
+        description: The first page thumbnail of the circular (height 150px)
+        example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_150h_s3_key
+        nullable: true
+      first_page_thumbnail_400h_url:
+        type: string
+        description: The first page thumbnail of the circular (height 400px)
+        example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_400h_s3_key
+        nullable: true
+      first_page_thumbnail_2000h_url:
+        type: string
+        description: The first page thumbnail of the circular (height 2000px)
+        example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key
+        nullable: true
+      image_first_page_400w:
+        type: string
+        description: The first page thumbnail of the circular (width 400px)
+        example: https://cdn.flippenterprise.net/flyers/2797863/first_page_thumbnail_400w/1564075442.jpg
+        nullable: true
+      image_first_page_140w:
+        type: string
+        description: The first page thumbnail of the circular (width 140px)
+        example: https://cdn.flippenterprise.net/flyers/2797863/first_page_thumbnail_140w/1564075442.jpg
+        nullable: true
+      image_first_page_100w:
+        type: string
+        description: The first page thumbnail of the circular (width 100px)
+        example: https://cdn.flippenterprise.net/flyers/2797863/first_page_thumbnail_100w/1564075442.jpg
+        nullable: true
+      correction_notices:
+        type: array
+        items:
+          $ref: '#/definitions/correction_notice'
+      custom_flyer_item_disclaimer:
+        type: string
+        description: English custom flyer item disclaimer of the given flyer_type
+        example: Price and availability may vary by store.
+        nullable: true
+      french_custom_flyer_item_disclaimer:
+        type: string
+        description: French custom flyer item disclaimer of the given flyer_type
+        example: Les prix et l'offre des produits peuvent varier en magasin.
+        nullable: true
+      validity_text:
+        type: string
+        description: Auto generated text by the valid_to field for Content Showcase
+        example: Valid Until 2016-01-30T23:59:00-05:00
+        nullable: true
+      key_message:
+        type: string
+        description: Circular key message field for Content Showcase
+        example: New Movie Releases
+        nullable: true
+      key_message_short:
+        type: string
+        description: Short variant of circular key message field for Content Showcase
+        example: New Movie Releases
+        nullable: true
+      pdf_url:
+        type: string
+        description: Print version of the publication in PDF format
+        example: https://cdn.flippenterprise.net/flyers/26376715/711004c22f8216e4.pdf
+        nullable: true
+  correction_notice:
+    properties:
+      html:
+        type: string
+        description: HTML content of the correction notice
+        example: <p>Correction</p>
+      image_url:
+        type: string
+        description: Image associated with the correction notice
+        example: https://cdn.flippenterprise.net/flyers/348864/correction/1232923480.jpg
+        nullable: true
+  publication_page:
+    properties:
+      page:
+        type: integer
+        description: The page number, beginning at 1
+        example: 1
+      flyer_id:
+        type: integer
+        description: The flyer ID of the page
+        example: 348864
+      flyer_run_id:
+        type: integer
+        description: The flyer run ID of the page
+        example: 47315
+      image_150h_url:
+        type: string
+        description: URL of page thumbnail 150 pixels high
+        example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_150h_s3_key
+        nullable: true
+      image_400h_url:
+        type: string
+        description: URL of page thumbnail 400 pixels high
+        example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_400h_s3_key
+        nullable: true
+      image_2000h_url:
+        type: string
+        description: URL of page thumbnail 2000 pixels high
+        example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key
+        nullable: true
+      left:
+        type: float
+        description: The left coordinate of the page's bounding box
+        example: 0.0
+        nullable: true
+      top:
+        type: float
+        description: The top coordinate of the page's bounding box
+        example: 0.0
+        nullable: true
+      width:
+        type: float
+        description: The width of the page's bounding box
+        example: 2560.0
+      height:
+        type: float
+        description: The height of the page's bounding box
+        example: 2560.0
+  publication_highlight:
+    properties:
+      name:
+        type: string
+        description: The name of the highlight
+        example: Grocery Aisle
+      left:
+        type: float
+        description: The left coordinate of the highlight's bounding box
+        example: 10169.2
+        nullable: true
+      top:
+        type: float
+        description: The top coordinate of the highlight's bounding box
+        example: 1989.54
+        nullable: true
+      width:
+        type: float
+        description: The width of the highlight's bounding box
+        example: 556.5
+      height:
+        type: float
+        description: The height of the highlight's bounding box
+        example: 469.6700000000001
+  publication_category:
+    properties:
+      name:
+        type: string
+        description: The name of the category
+        example: Solid Surface Countertops
+      left:
+        type: float
+        description: The left coordinate of the category's bounding box
+        example: 1997.98
+        nullable: true
+      top:
+        type: float
+        description: The top coordinate of the category's bounding box
+        example: 22.6047
+        nullable: true
+      width:
+        type: float
+        description: The width of the category's bounding box
+        example: 3905.3799999999997
+        nullable: true
+      height:
+        type: float
+        description: The height of the category's bounding box
+        example: 2504.1353
+        nullable: true
+      thumbnail_image_url:
+        type: string
+        description: A thumbnail image intended for a listing
+        example: https://cdn.flippenterprise.net/flyers/348864/l_thumbnail/1425009356.jpg
+        nullable: true
+  error:
+    properties:
+      message:
+        type: string
+        description: The error message
+        example: Invalid publication_id or access token
+      code:
+        type: string
+        description: HTTP status code
+        example: '422'
+  product:
+    properties:
+      id:
+        type: integer
+        description: Unique identifier for the product
+        example: 7775353
+      flyer_id:
+        type: integer
+        description: Flyer ID to which the product belongs
+        example: 47524
+      flyer_run_id:
+        type: integer
+        description: Identifier for the circular
+        example: 8329
+      name:
+        type: string
+        description: Localized product name
+        example: Celestial Series Countertops
+      deep_link:
+        type: string
+        description: Link to a flyer item on the merchant's website. Requires store_code. Publication
+          must be live.
+        example: http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234
+        nullable: true
+      sale_story:
+        type: string
+        description: Localized news story for the product
+        example: SPECIAL 60% OFF
+        nullable: true
+      current_price:
+        type: float
+        description: The current price for the product
+        example: 19.99
+        nullable: true
+      original_price:
+        type: float
+        description: The original price for the product
+        example: 34.99
+        nullable: true
+      dollars_off:
+        type: float
+        description: The advertised number of dollars off
+        example: 240.01
+        nullable: true
+      percent_off:
+        type: float
+        description: The advertised percent savings
+        example: 69.01
+        nullable: true
+      sku:
+        type: string
+        description: The product stock keeping unit
+        example: 780-4069
+        nullable: true
+      custom_id_field_1:
+        type: string
+        description: Field used by merchants to store custom info
+        example: 0081341P
+        nullable: true
+      custom_id_field_2:
+        type: string
+        description: Field used by merchants to store custom info
+        example: '# BONUS Reward Miles when you buy 1'
+        nullable: true
+      custom_id_field_3:
+        type: string
+        description: Field used by merchants to store custom info
+        example: $0.75
+        nullable: true
+      description:
+        type: string
+        description: Localized text describing the product
+        example: From Michael Michael Kors in tan or black.
+        nullable: true
+      brand:
+        type: string
+        description: The brand of the product
+        example: Corinthian
+      pre_price_text:
+        type: string
+        description: Localized text to place before price_text
+        example: '2 for '
+      price_text:
+        type: string
+        description: Localized text for the price
+        example: '5.47'
+      post_price_text:
+        type: string
+        description: Localized text to place after price_text
+        example: CAD
+      valid_from:
+        type: date
+        description: Start of the product's validity period
+        example: '2014-01-01'
+        nullable: true
+      valid_to:
+        type: date
+        description: End of the product's validity period
+        example: '2015-12-31'
+        nullable: true
+      categories:
+        type: array
+        description: The categories of the product
+        items:
+          type: string
+        example:
+        - Kitchen
+        nullable: true
+      current_price_range:
+        type: string
+        description: Localized text of the product price range
+        example: $130 - $150
+        nullable: true
+      original_price_range:
+        type: string
+        description: Localized text of the original range
+        example: $130 - $150
+        nullable: true
+      small_image_url:
+        type: string
+        description: URL of a small image of the product
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/standard.jpg
+        nullable: true
+      medium_image_url:
+        type: string
+        description: URL of a medium image of the product
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/large.jpg
+        nullable: true
+      large_image_url:
+        type: string
+        description: URL of a large image of the product
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/plus_large.jpg
+        nullable: true
+      x_large_image_url:
+        type: string
+        description: URL of a very large image of the product
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        nullable: true
+      left:
+        type: float
+        description: The left coordinate of the product's bounding box
+        example: 3990.63
+        nullable: true
+      top:
+        type: float
+        description: The top coordinate of the product's bounding box
+        example: 1652.96
+        nullable: true
+      width:
+        type: float
+        description: The width of the product's bounding box
+        example: 1294.6899999999996
+      height:
+        type: float
+        description: The height of the product's bounding box
+        example: 857.8000000000002
+      item_type:
+        type: integer
+        description: Display type of the circular item
+        example: 1
+        nullable: true
+      page:
+        type: integer
+        description: Page the item is on
+        example: 3
+      page_width:
+        type: float
+        description: Page width
+        example: 1978
+      page_height:
+        type: float
+        description: Page height
+        example: 2560
+      page_relative_left_offset:
+        type: float
+        description: Relative left offset of page
+        example: 34.63000000000011
+        nullable: true
+      page_relative_top_offset:
+        type: float
+        description: Relative top offset of page
+        example: 1652.96
+        nullable: true
+      average_rating:
+        type: integer
+        description: Average rating of item
+        example: 4.8
+        nullable: true
+      images:
+        type: array
+        description: Array of product image URLs
+        items:
+          type: string
+        example:
+        - https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+      video_type:
+        type: integer
+        description: 'Type of video: 0 is youtube embedded; 1 is mp4 URL'
+        example: 1
+        nullable: true
+      video_url:
+        type: string
+        description: Video of product
+        example: https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0
+        nullable: true
+      web_url:
+        type: string
+        description: Link to the external item page
+        example: https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016
+        nullable: true
+      web_commission_url:
+        type: string
+        description: Link to the external item page with tracking codes
+        example: http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd
+        nullable: true
+      hosted_coupon_image:
+        type: string
+        description: Image of coupon for hosted experiences
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        nullable: true
+      distribution_coupon_image:
+        type: string
+        description: Image of coupon for distribution experiences
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        nullable: true
+      page_destination:
+        type: integer
+        description: Number of page that the item points to
+        example: 26
+        nullable: true
+      coupons:
+        type: array
+        description: Array of coupons for the item
+        items:
+          $ref: '#/definitions/product_coupon'
+      sub_items:
+        type: array
+        description: Array of subitems for the item
+        items:
+          $ref: '#/definitions/sub_item'
+  sub_item:
+    properties:
+      id:
+        type: integer
+        description: Unique identifier for the subitem
+        example: 7775353
+      product_id:
+        type: integer
+        description: FlyerItem ID to which the subitem belongs
+        example: 47524
+      name:
+        type: string
+        description: Localized subitem name
+        example: Celestial Series Countertops
+      sale_story:
+        type: string
+        description: Localized news story for the subitem
+        example: SPECIAL 60% OFF
+        nullable: true
+      current_price:
+        type: float
+        description: The current price for the subitem
+        example: 19.99
+        nullable: true
+      original_price:
+        type: float
+        description: The original price for the subitem
+        example: 34.99
+        nullable: true
+      sku:
+        type: string
+        description: The subitem stock keeping unit
+        example: 780-4069
+        nullable: true
+      description:
+        type: string
+        description: Localized text describing the subitem
+        example: From Michael Michael Kors in tan or black.
+        nullable: true
+      brand:
+        type: string
+        description: The brand of the subitem
+        example: Corinthian
+      pre_price_text:
+        type: string
+        description: Localized text to place before price_text
+        example: '2 for '
+      price_text:
+        type: string
+        description: Localized text for the price
+        example: '5.47'
+      post_price_text:
+        type: string
+        description: Localized text to place after price_text
+        example: CAD
+      category:
+        type: string
+        description: The category of the subitem
+        example: Kitchen
+        nullable: true
+      small_image_url:
+        type: string
+        description: URL of a small image of the subitem
+        example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg
+        nullable: true
+      medium_image_url:
+        type: string
+        description: URL of a medium image of the subitem
+        example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg
+        nullable: true
+      large_image_url:
+        type: string
+        description: URL of a large image of the subitem
+        example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg
+        nullable: true
+      x_large_image_url:
+        type: string
+        description: URL of a very large image of the subitem
+        example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg
+        nullable: true
+      average_rating:
+        type: integer
+        description: Average rating of item
+        example: 4.8
+        nullable: true
+      images:
+        type: array
+        description: Array of subitem image URLs
+        items:
+          type: string
+        example:
+        - http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg
+      web_url:
+        type: string
+        description: Link to the external item page
+        example: https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016
+        nullable: true
+      web_commission_url:
+        type: string
+        description: Link to the external item page with tracking codes
+        example: http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd
+        nullable: true
+  merchant_product:
+    properties:
+      id:
+        type: integer
+        description: Unique identifier for the product
+        example: 7775353
+      flyer_id:
+        type: integer
+        description: Flyer ID to which the product belongs
+        example: 47524
+      flyer_run_id:
+        type: integer
+        description: Identifier for the circular
+        example: 8329
+      name:
+        type: string
+        description: Localized product name
+        example: Celestial Series Countertops
+      deep_link:
+        type: string
+        description: Link to a flyer item on the merchant's website. Requires store_code. Publication
+          must be live.
+        example: http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234
+        nullable: true
+      sale_story:
+        type: string
+        description: Localized news story for the product
+        example: SPECIAL 60% OFF
+        nullable: true
+      current_price:
+        type: float
+        description: The current price for the product
+        example: 19.99
+        nullable: true
+      original_price:
+        type: float
+        description: The original price for the product
+        example: 34.99
+        nullable: true
+      dollars_off:
+        type: float
+        description: The advertised number of dollars off
+        example: 240.01
+        nullable: true
+      percent_off:
+        type: float
+        description: The advertised percent savings
+        example: 69.01
+        nullable: true
+      sku:
+        type: string
+        description: The product stock keeping unit
+        example: 780-4069
+        nullable: true
+      custom_id_field_1:
+        type: string
+        description: Field used by merchants to store custom info
+        example: 0081341P
+        nullable: true
+      custom_id_field_2:
+        type: string
+        description: Field used by merchants to store custom info
+        example: '# BONUS Reward Miles when you buy 1'
+        nullable: true
+      custom_id_field_3:
+        type: string
+        description: Field used by merchants to store custom info
+        example: $0.75
+        nullable: true
+      description:
+        type: string
+        description: Localized text describing the product
+        example: From Michael Michael Kors in tan or black.
+        nullable: true
+      brand:
+        type: string
+        description: The brand of the product
+        example: Corinthian
+      pre_price_text:
+        type: string
+        description: Localized text to place before price_text
+        example: '2 for '
+      price_text:
+        type: string
+        description: Localized text for the price
+        example: '5.47'
+      post_price_text:
+        type: string
+        description: Localized text to place after price_text
+        example: CAD
+      valid_from:
+        type: date
+        description: Start of the product's validity period
+        example: '2014-01-01'
+        nullable: true
+      valid_to:
+        type: date
+        description: End of the product's validity period
+        example: '2015-12-31'
+        nullable: true
+      categories:
+        type: array
+        description: The categories of the product
+        items:
+          type: string
+        example:
+        - Kitchen
+        nullable: true
+      current_price_range:
+        type: string
+        description: Localized text of the product price range
+        example: $130 - $150
+        nullable: true
+      original_price_range:
+        type: string
+        description: Localized text of the original range
+        example: $130 - $150
+        nullable: true
+      small_image_url:
+        type: string
+        description: URL of a small image of the product
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/standard.jpg
+        nullable: true
+      medium_image_url:
+        type: string
+        description: URL of a medium image of the product
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/large.jpg
+        nullable: true
+      large_image_url:
+        type: string
+        description: URL of a large image of the product
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/plus_large.jpg
+        nullable: true
+      x_large_image_url:
+        type: string
+        description: URL of a very large image of the product
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        nullable: true
+      left:
+        type: float
+        description: The left coordinate of the product's bounding box
+        example: 3990.63
+        nullable: true
+      top:
+        type: float
+        description: The top coordinate of the product's bounding box
+        example: 1652.96
+        nullable: true
+      width:
+        type: float
+        description: The width of the product's bounding box
+        example: 1294.6899999999996
+      height:
+        type: float
+        description: The height of the product's bounding box
+        example: 857.8000000000002
+      item_type:
+        type: integer
+        description: Display type of the circular item
+        example: 1
+        nullable: true
+      page:
+        type: integer
+        description: Page the item is on
+        example: 3
+      page_width:
+        type: float
+        description: Page width
+        example: 1978
+      page_height:
+        type: float
+        description: Page height
+        example: 2560
+      page_relative_left_offset:
+        type: float
+        description: Relative left offset of page
+        example: 34.63000000000011
+        nullable: true
+      page_relative_top_offset:
+        type: float
+        description: Relative top offset of page
+        example: 1652.96
+        nullable: true
+      average_rating:
+        type: integer
+        description: Average rating of item
+        example: 4.8
+        nullable: true
+      images:
+        type: array
+        description: Array of product image URLs
+        items:
+          type: string
+        example:
+        - https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+      video_type:
+        type: integer
+        description: 'Type of video: 0 is youtube embedded; 1 is mp4 URL'
+        example: 1
+        nullable: true
+      video_url:
+        type: string
+        description: Video of product
+        example: https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0
+        nullable: true
+      web_url:
+        type: string
+        description: Link to the external item page
+        example: https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016
+        nullable: true
+      web_commission_url:
+        type: string
+        description: Link to the external item page with tracking codes
+        example: http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd
+        nullable: true
+      hosted_coupon_image:
+        type: string
+        description: Image of coupon for hosted experiences
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        nullable: true
+      distribution_coupon_image:
+        type: string
+        description: Image of coupon for distribution experiences
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        nullable: true
+      page_destination:
+        type: integer
+        description: Number of page that the item points to
+        example: 26
+        nullable: true
+      flyer_type_id:
+        type: integer
+        description: Unique identifier for the type of circular
+        example: 12234
+      flyer_type_name:
+        type: string
+        description: Name identifier for the type of circular
+        example: Local Ad
+      coupons:
+        type: array
+        description: Array of coupons for the item
+        items:
+          $ref: '#/definitions/product_coupon'
+      sub_items:
+        type: array
+        description: Array of subitems for the item
+        items:
+          $ref: '#/definitions/sub_item'
+  detailed_product:
+    properties:
+      id:
+        type: integer
+        description: Unique identifier for the product
+        example: 61395159
+      flyer_id:
+        type: integer
+        description: Flyer ID to which the product belongs
+        example: 347991
+      brand:
+        type: string
+        description: The brand of the product
+        example: KitchenAid
+      name:
+        type: string
+        description: Localized product name
+        example: KitchenAid Artisan 5-qt. Stand Mixer
+      deep_link:
+        type: string
+        description: Link to a flyer item on the merchant's website. Requires store_code. Publication
+          must be live.
+        example: http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234
+        nullable: true
+      image_url:
+        type: string
+        description: URL of item image
+        example: https://cdn.flippenterprise.net/page_items/20716523/1425352660/extra_large.jpg
+        nullable: true
+      cutout_image_url:
+        type: string
+        description: URL of cutout item image
+        example: https://cdn.flippenterprise.net/page_items/20716523/1425352660/extra_large.jpg
+        nullable: true
+      description:
+        type: string
+        description: Localized text describing the product
+        example: From Michael Michael Kors in tan or black.
+        nullable: true
+      current_price:
+        type: float
+        description: The current price for the product
+        example: 19.99
+        nullable: true
+      current_price_range:
+        type: string
+        description: Localized text of the product price range
+        example: $130 - $150
+        nullable: true
+      pre_price_text:
+        type: string
+        description: Localized text to place before price_text
+        example: '2 for '
+      price_text:
+        type: string
+        description: Localized text for the price
+        example: '5.47'
+      post_price_text:
+        type: string
+        description: Localized text to place after price_text
+        example: CAD
+      categories:
+        type: array
+        description: The categories of the product
+        items:
+          type: string
+        example:
+        - For the Home
+        nullable: true
+      sale_story:
+        type: string
+        description: Localized news story for the product
+        example: SPECIAL 60% OFF
+        nullable: true
+      dollars_off:
+        type: float
+        description: The advertised number of dollars off
+        example: 240.01
+        nullable: true
+      percent_off:
+        type: float
+        description: The advertised percent savings
+        example: 69.01
+        nullable: true
+      disclaimer_text:
+        type: string
+        description: Localized disclaimer for the item
+        example: Faucet and accessories sold separately.
+        nullable: true
+      original_price:
+        type: float
+        description: The original price for the product
+        example: 34.99
+        nullable: true
+      original_price_range:
+        type: string
+        description: Localized text of the original range
+        example: $130 - $150
+        nullable: true
+      valid_from:
+        type: date
+        description: Start of the product's validity period
+        example: '2014-01-01'
+        nullable: true
+      valid_to:
+        type: date
+        description: End of the product's validity period
+        example: '2015-12-31'
+        nullable: true
+      sku:
+        type: string
+        description: The product stock keeping unit
+        example: 780-4069
+        nullable: true
+      hosted_coupon_image:
+        type: string
+        description: Image of coupon for hosted experiences
+        example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        nullable: true
+      custom_id_field_1:
+        type: string
+        description: Field used by merchants to store custom info
+        example: 0081341P
+        nullable: true
+      custom_id_field_2:
+        type: string
+        description: Field used by merchants to store custom info
+        example: '# BONUS Reward Miles when you buy 1'
+        nullable: true
+      custom_id_field_3:
+        type: string
+        description: Field used by merchants to store custom info
+        example: $0.75
+        nullable: true
+      left:
+        type: float
+        description: The left coordinate of the product's bounding box
+        example: 12486.7
+        nullable: true
+      top:
+        type: float
+        description: The top coordinate of the product's bounding box
+        example: 91.0685
+        nullable: true
+      width:
+        type: float
+        description: The width of the product's bounding box
+        example: 1908.3999999999996
+      height:
+        type: float
+        description: The height of the product's bounding box
+        example: 2174.9815000000003
+      video_type:
+        type: integer
+        description: 'Type of video: 0 is youtube embedded; 1 is mp4 URL'
+        example: 1
+        nullable: true
+      video_url:
+        type: string
+        description: Video of product
+        example: https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0
+        nullable: true
+      web_url:
+        type: string
+        description: Link to the external item page
+        example: https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016
+        nullable: true
+      web_commission_url:
+        type: string
+        description: Link to the external item page with tracking codes
+        example: http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd
+        nullable: true
+      item_type:
+        type: integer
+        description: Display type of the circular item
+        example: 1
+        nullable: true
+      page:
+        type: integer
+        description: Page the item is on
+        example: 6
+      average_rating:
+        type: integer
+        description: Average rating of item
+        example: 4.8
+        nullable: true
+      reviews:
+        type: array
+        description: Reviews of the product
+        items:
+          $ref: '#/definitions/product_review'
+      specs:
+        type: array
+        description: Product specifications
+        items:
+          $ref: '#/definitions/product_spec'
+      features:
+        type: array
+        description: Product features and highlights
+        items:
+          $ref: '#/definitions/product_feature'
+      coupons:
+        type: array
+        description: Array of coupons for the item
+        items:
+          $ref: '#/definitions/product_coupon'
+      sub_items:
+        type: array
+        description: Array of subitems for the item
+        items:
+          $ref: '#/definitions/sub_item'
+      rich_media:
+        type: array
+        description: Array of alternative media for item. Only available on product route.
+        items:
+          $ref: '#/definitions/product_rich_media'
+      shopping_list_enabled:
+        type: boolean
+        description: Whether shopping list is enabled for the item
+        example: true
+      in_store_only:
+        type: boolean
+        description: Whether the item is in store only
+        example: true
+  inventory_sub_item:
+    properties:
+      sku:
+        type: string
+        description: The sub item's stock keeping unit
+        example: 00062639343101
+      storeCode:
+        type: string
+        description: Retailer's store code
+        example: '990'
+      name:
+        type: string
+        description: Sub item's name
+        example: Ginger Ale
+        nullable: true
+      imageUrl:
+        type: string
+        description: URL of an sub item's image
+        example: https://imageresize.sof.stg.v8.mywebgrocer.com/api/ImageResize/00062639343118.jpg
+        nullable: true
+      description:
+        type: string
+        description: Text describing the sub item
+        example: A Bold, Robust, Effervescent Cola.
+        nullable: true
+      price:
+        type: string
+        description: Text for the sub item's price
+        example: $1.99
+      originalPrice:
+        type: string
+        description: The original price for the subitem
+        example: $1.99
+        nullable: true
+      promotionText:
+        type: string
+        description: News story for the subitem
+        example: SPECIAL 60% OFF
+        nullable: true
+      url:
+        type: string
+        description: The link to the subitem
+        example: ''
+        nullable: true
+      buttons:
+        type: array
+        description: Array of 'add to cart' buttons
+        nullable: true
+        items:
+          $ref: '#/definitions/cart_button'
+  cart_button:
+    properties:
+      sku:
+        type: string
+        description: The sub item's stock keeping unit
+        example: 00062639343101
+        nullable: true
+      storeCode:
+        type: string
+        description: Retailer's store code
+        example: '990'
+        nullable: true
+      enabled:
+        type: boolean
+        description: Is shopping cart functionality enabled
+        example: true
+        nullable: true
+      label:
+        type: string
+        description: Button label
+        example: ''
+        nullable: true
+      quantityControl:
+        type: boolean
+        description: Is quantity controls functionality enabled
+        example: false
+        nullable: true
+      quantityControlOption:
+        type: array
+        description: An object of quantity control options
+        nullable: true
+        $ref: '#/definitions/quantity_control_option'
+  quantity_control_option:
+    properties:
+      unit:
+        type: string
+        description: Units to measure sub item's quantity
+        example: kg
+        nullable: true
+      interval:
+        type: integer
+        description: Interval (step) to increase/decrease item's quantity
+        example: 1
+        nullable: true
+      minimum:
+        type: integer
+        description: Minimum value for quantity
+        example: 1
+        nullable: true
+      maximum:
+        type: integer
+        description: Maximum value for quantity
+        example: 10
+        nullable: true
+      default:
+        type: integer
+        description: Default value for quantity
+        example: 1
+        nullable: true
+  product_coupon:
+    properties:
+      flyer_item_id:
+        type: integer
+        description: ID of the circular item to which the coupon applies
+        example: 197289464
+      coupon_id:
+        type: integer
+        description: ID of the coupon
+        example: 155559
+      coupon_type:
+        type: string
+        description: Type of the coupon
+        example: amountoff
+      loyalty_program_coupon_id:
+        type: integer
+        description: ID of the coupon within its loyalty program
+        example: 198495
+      loyalty_program_id:
+        type: integer
+        description: ID of the coupon's loyalty program
+        example: 305
+      external_id:
+        type: string
+        description: External identifier for the coupon
+        example: '293218'
+      sale_story:
+        type: string
+        description: Localized news story for the coupon
+        example: save $0.50
+        nullable: true
+      promotion_text:
+        type: string
+        description: Localized text for the coupon
+        example: Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)
+        nullable: true
+      disclaimer_text:
+        type: string
+        description: Localized text for the coupon's disclaimer
+        example: 'Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly
+          prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER:
+          LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any
+          other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED,
+          PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08
+          handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests
+          for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited
+          or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions.
+          Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498'
+        nullable: true
+      brand_display_name:
+        type: string
+        description: Coupon product brand name
+        example: Cottonelle
+        nullable: true
+      valid_from:
+        type: date
+        description: Start of coupon validity period
+        example: '2017-05-07T03:00:00-04:00'
+        nullable: true
+      valid_to:
+        type: date
+        description: End of coupon validity period
+        example: '2017-06-12T02:59:59-04:00'
+        nullable: true
+      image:
+        type: string
+        description: URL of coupon image
+        example: https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg
+        nullable: true
+  product_review:
+    properties:
+      title:
+        type: string
+        description: The title of the review
+        example: A great product
+        nullable: true
+      rating:
+        type: float
+        description: The rating of the review
+        example: 5
+      byline:
+        type: string
+        description: The name of the author of the review
+        example: John Smith
+        nullable: true
+      date:
+        type: date
+        description: The date of the review
+        example: '2011-02-14T19:06:43Z'
+      body:
+        type: string
+        description: The body of the review
+        example: I really enjoyed using this wheelbarrow on my last job.
+  product_rich_media:
+    properties:
+      id:
+        type: number
+        description: Id of media
+        example: '12132'
+      alt_text:
+        type: string
+        description: Alternative text. Descriptive text about media.
+        example: Sizzling bbq.
+        nullable: true
+      type:
+        type: integer
+        description: Type of media. 0 = image.  1 = video. 2 = youtube video
+        example: '1'
+        nullable: true
+      thumbnail:
+        type: string
+        description: Thumbnail of asset
+        example: http://example.com/thumb.png
+        nullable: true
+  product_spec:
+    properties:
+      name:
+        type: string
+        description: The name of the spec
+        example: Weight
+        nullable: true
+      value:
+        type: string
+        description: The value of the spec
+        example: 50 lbs
+        nullable: true
+  product_feature:
+    properties:
+      text:
+        type: string
+        description: Text describing the feature
+        example: Cast iron plating for improved durability.
+        nullable: true
+  store:
+    properties:
+      id:
+        type: integer
+        description: The store's Flipp ID
+        example: 3057
+      address:
+        type: string
+        description: The store's address
+        example: 6220 Menard Drive
+        nullable: true
+      city:
+        type: string
+        description: The store's city
+        example: Casper
+        nullable: true
+      latitude:
+        type: string
+        description: The store's latitude
+        example: '42.843126'
+        nullable: true
+      longitude:
+        type: string
+        description: The store's longitude
+        example: '-106.276372'
+        nullable: true
+      merchant_store_code:
+        type: string
+        description: The store's code defined by the merchant
+        example: '3243'
+      name:
+        type: string
+        description: The store's name
+        example: CASPER
+        nullable: true
+      phone_number:
+        type: string
+        description: The store's phone number
+        example: '9056230110'
+        nullable: true
+      postal_code:
+        type: string
+        description: The store's postal/zip code
+        example: '82609'
+        nullable: true
+      province:
+        type: string
+        description: The store's province or state
+        example: WY
+        nullable: true
+      sat_close:
+        type: string
+        description: The store's Saturday closing hour
+        example: '18:00'
+        nullable: true
+      sat_open:
+        type: string
+        description: The store's Saturday opening hour
+        example: '8:00'
+        nullable: true
+      sun_close:
+        type: string
+        description: The store's Sunday closing hour
+        example: '18:00'
+        nullable: true
+      sun_open:
+        type: string
+        description: The store's Sunday opening hour
+        example: '10:00'
+        nullable: true
+      mon_close:
+        type: string
+        description: The store's Monday closing hour
+        example: '21:00'
+        nullable: true
+      mon_open:
+        type: string
+        description: The store's Monday opening hour
+        example: '8:00'
+        nullable: true
+      tue_close:
+        type: string
+        description: The store's Tuesday closing hour
+        example: '21:00'
+        nullable: true
+      tue_open:
+        type: string
+        description: The store's Tuesday opening hour
+        example: '8:00'
+        nullable: true
+      wed_close:
+        type: string
+        description: The store's Wednesday closing hour
+        example: '21:00'
+        nullable: true
+      wed_open:
+        type: string
+        description: The store's Wednesday opening hour
+        example: '8:00'
+        nullable: true
+      thu_close:
+        type: string
+        description: The store's Thursday closing hour
+        example: '21:00'
+        nullable: true
+      thu_open:
+        type: string
+        description: The store's Thursday opening hour
+        example: '8:00'
+        nullable: true
+      fri_close:
+        type: string
+        description: The store's Friday closing hour
+        example: '21:00'
+        nullable: true
+      fri_open:
+        type: string
+        description: The store's Friday opening hour
+        example: '8:00'
+        nullable: true
+      distance:
+        type: string
+        description: The store's distance from postal in miles(US) or kilometers(CA)
+        example: 4mi
+        nullable: true
+  fsa:
+    properties:
+      geo_locate_fsa:
+        type: string
+        description: Geo locate fsa for the merchant by ip
+        example: H3A

@@ -1,0 +1,123 @@
+generated: '2026-08-12'
+method: derived
+status: candidate
+source: openapi/flipp-wishabi-flyerkit-openapi.yml
+searched:
+- https://api.flipp.com/flyerkit/v4.0/documentation
+- https://github.com/wishabi
+- https://registry.modelcontextprotocol.io/
+- npm registry (@modelcontextprotocol, flipp)
+search_result: none
+note: >-
+  Flipp publishes NO MCP server. No hosted or remote MCP endpoint was found on any Flipp host, no
+  MCP package exists under github.com/wishabi or on npm, and nothing in the FlyerKit documentation
+  mentions agents or tools. The tool list below is a CANDIDATE derived from the 11 operations in
+  the published v4.0 Swagger document - it describes what a FlyerKit MCP server WOULD expose, and
+  it is not offered by Flipp. It is recorded so the shape of the opportunity is legible, and it
+  carries NO `MCPServer` pointer in apis.yml because that pointer asserts the provider serves the
+  surface.
+server:
+  name: null
+  published: false
+  transport: null
+  url: null
+tool_naming_note: >-
+  The FlyerKit Swagger document declares no `operationId` on any operation, so no tool name can be
+  inherited from the contract. Each candidate tool below therefore cites its backing operation by
+  METHOD + PATH, which is the only stable identifier the spec provides. The missing operationIds
+  are themselves the blocker: an MCP server generated from this spec would produce unnamed tools.
+tools:
+- name: list_publications
+  description: List available publications (circulars) for a merchant, resolved by store code or
+    postal/ZIP code and a locale.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /publications/{merchant_identifier}'
+  required_inputs: [merchant_identifier, access_token, locale]
+  optional_inputs: [store_code, postal_code, see_future, show_storefronts]
+  returns: publication[]
+- name: list_merchant_products
+  description: List products across all of a merchant's publications, with keyword, tag and
+    category filtering and offset pagination.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /publications/{merchant_identifier}/products'
+  required_inputs: [merchant_identifier, access_token, locale, store_code]
+  optional_inputs: [postal_code, page, size, offset, display_type, keywords, tags, category,
+    see_future, show_storefronts]
+  returns: merchant_product[]
+- name: list_publication_pages
+  description: List the page images of one publication, with bounding boxes and three image
+    renditions.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /publication/{publication_id}/pages'
+  required_inputs: [publication_id, access_token]
+  returns: publication_page[]
+- name: list_publication_highlights
+  description: List the named highlight regions on a publication's pages.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /publication/{publication_id}/highlights'
+  required_inputs: [publication_id, access_token]
+  returns: publication_highlight[]
+- name: list_publication_categories
+  description: List the merchandising categories within a publication.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /publication/{publication_id}/categories'
+  required_inputs: [publication_id, access_token]
+  returns: publication_category[]
+- name: list_publication_products
+  description: List the offer items within one publication, with filtering, sorting and offset
+    pagination.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /publication/{publication_id}/products'
+  required_inputs: [publication_id, access_token]
+  optional_inputs: [page, size, offset, display_type, postal_code, store_code, keywords, tags,
+    sort_by, sort_order, category]
+  returns: product[]
+- name: get_product
+  description: Get the full detail record for one product, including coupons, reviews, rich media,
+    specs and features.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /product/{product_id}'
+  required_inputs: [product_id, access_token]
+  optional_inputs: [postal_code, store_code]
+  returns: detailed_product
+- name: list_product_sub_items
+  description: Get store-level inventory sub-items for a product (sourced from the MI9 Retail
+    API), including add-to-cart affordances.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /product/{product_id}/sub_items'
+  required_inputs: [product_id, access_token, store_code]
+  returns: inventory_sub_item[]
+- name: find_stores
+  description: Return the closest stores to a postal/ZIP code for a merchant.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /stores/{merchant_identifier}'
+  required_inputs: [merchant_identifier, access_token, postal_code]
+  returns: store[]
+- name: geolocate_fsa
+  description: Resolve the caller's Forward Sortation Area from IP for a merchant.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /fsa/{merchant_name_identifier}'
+  required_inputs: [merchant_name_identifier, access_token]
+  optional_inputs: [ip_override]
+  returns: fsa
+- name: get_copyright
+  description: Return Flipp's copyright notice. The only unauthenticated operation.
+  source_operation: 'openapi/flipp-wishabi-flyerkit-openapi.yml#GET /copyright'
+  required_inputs: []
+  returns: text/plain
+coverage:
+  operations_total: 11
+  tools_derived: 11
+  read_only: true
+blockers_for_a_real_server:
+- >-
+  The credential is a URL query parameter issued out of band by a human. An MCP server would have
+  to hold a long-lived partner token with no rotation or revocation endpoint.
+- >-
+  `merchant_identifier` is not discoverable through the API - there is no merchants endpoint - so
+  an agent cannot bootstrap without being told the identifier out of band.
+- >-
+  No operationIds in the spec, so tool names cannot be generated deterministically from the
+  contract.
+- >-
+  Error semantics collapse authentication, authorization, validation and not-found into a single
+  422 with a free-text message, which an agent cannot branch on reliably.
+- >-
+  The copyright notice served by GET /copyright asserts "This API cannot be accessed and the
+  content and any results may not be used, reproduced or transmitted in any manner without express
+  written permission from Flipp Corp." Any agent surface over this data is a licensing decision
+  for Flipp, not a technical one.
+cross_links:
+  conventions: conventions/flipp-wishabi-conventions.yml
+  errors: errors/flipp-wishabi-problem-types.yml
+  authentication: authentication/flipp-wishabi-authentication.yml

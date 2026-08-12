@@ -1,0 +1,115 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/flipp-wishabi-flyerkit-openapi.yml
+probed: 'https://api.flipp.com/flyerkit/v4.0/publications/walmart?locale=en-CA&postal_code=M5V2T6'
+probed_at: '2026-08-12'
+format: custom
+rfc9457: false
+rfc9457_note: >-
+  FlyerKit does NOT use RFC 9457 / RFC 7807. Errors are returned as `application/json;
+  charset=utf-8` with a bespoke two-field envelope; there is no `application/problem+json` media
+  type, no `type` URI, no `title`, no `instance`, and no extension members. An agent cannot
+  dereference a problem type or branch on a stable machine-readable code.
+envelope:
+  media_type: application/json; charset=utf-8
+  fields:
+  - name: message
+    type: string
+    description: The error message (human-readable, free text)
+    example: Invalid publication_id or access token
+  - name: code
+    type: string
+    description: >-
+      HTTP status code, restated in the body. Declared as `type: string` in the spec but observed
+      live as a JSON NUMBER - the published contract and the deployed API disagree on this field's
+      type, which will break a strictly-typed client.
+    example: '422'
+  observed_body: '{"message":"Missing access_token parameter","code":422}'
+  observed_note: >-
+    Live unauthenticated probe on 2026-08-12 returned HTTP 422 with `"code":422` as an unquoted
+    number, contradicting the spec's `"type": "string"`.
+status_codes:
+- status: 422
+  reason: Unprocessable Entity
+  declared_on: every operation except GET /copyright
+  declared_count: 10
+  schema: '#/definitions/error'
+  description: Missing or invalid parameters
+  note: >-
+    422 is FlyerKit's ONLY declared error status and it is overloaded. It covers authentication
+    failure (missing or invalid access_token), authorization failure (a token without
+    `see_future` permission), missing required parameters, and unknown identifiers - four
+    distinct failure classes that a caller must disambiguate by string-matching `message`.
+- status: 200
+  reason: OK
+  declared_on: all 11 operations
+  note: >-
+    An unmatched query returns HTTP 200 with an empty array rather than a 404. The spec states
+    this explicitly for `locale`: "When localized content is not available for a given locale, an
+    empty response is returned." Empty-set and wrong-locale are therefore indistinguishable.
+undeclared:
+- status: 401
+  note: Not declared and not observed - authentication failure is expressed as 422.
+- status: 403
+  note: Not declared - a token lacking `see_future` permission is expressed as 422.
+- status: 404
+  note: >-
+    Not declared for any resource operation. The API HOST returns 404 for unrouted paths (a
+    1052-byte HTML page from istio-envoy, not JSON), so a caller who mistypes a path receives
+    HTML rather than the documented error envelope.
+- status: 429
+  note: >-
+    Not declared, and no rate-limit headers are returned on live responses. See
+    rate-limits/flipp-wishabi-rate-limits.yml.
+- status: 5xx
+  note: No server-error responses are declared on any operation.
+problem_types:
+- id: missing-access-token
+  status: 422
+  message: Missing access_token parameter
+  evidence: >-
+    Observed live 2026-08-12 on GET
+    /flyerkit/v4.0/publications/walmart?locale=en-CA&postal_code=M5V2T6 and on GET
+    /flyerkit/v4.0/product/1
+  remediation: >-
+    Append `access_token=<token>` to the query string. Tokens are issued out of band by a Flipp
+    technical contact; there is no self-service issuance. See
+    authentication/flipp-wishabi-authentication.yml.
+- id: invalid-publication-or-token
+  status: 422
+  message: Invalid publication_id or access token
+  evidence: 'openapi/_original/flipp-wishabi-flyerkit-v4-openapi-original.json #/definitions/error
+    example'
+  remediation: >-
+    The single message conflates a bad resource id with a bad credential. Verify the token first
+    (call an operation with a known-good publication id), then the id.
+- id: missing-required-parameter
+  status: 422
+  message: Missing or invalid parameters
+  evidence: response description on all 10 authorized operations
+  remediation: >-
+    Required parameters differ per operation - `locale` is required on the two publication-list
+    operations, `store_code` on GET /publications/{merchant_identifier}/products and GET
+    /product/{product_id}/sub_items, `postal_code` on GET /stores/{merchant_identifier}. See
+    conventions/flipp-wishabi-conventions.yml.
+- id: insufficient-token-permission
+  status: 422
+  message: (not published)
+  evidence: >-
+    Derived from the documented behaviour of the `see_future` parameter, which "requires an access
+    token with special permissions issued by your Flipp technical contact." No distinct status or
+    message is published for the denial case.
+  confidence: medium
+  remediation: Request an elevated token from the Flipp technical contact.
+gaps:
+- No `application/problem+json` and no RFC 9457 adoption.
+- No stable machine-readable error code vocabulary - only an HTTP status restated in the body,
+  plus free-text English messages.
+- 422 is used where 400, 401, 403 and 404 are the semantically correct statuses.
+- No 429 and no 5xx responses declared anywhere in the contract.
+- The `code` field's declared type (string) does not match the deployed type (number).
+- Error messages are not localized even though the API is bilingual (en-CA / fr-CA / en-US).
+cross_links:
+  authentication: authentication/flipp-wishabi-authentication.yml
+  conventions: conventions/flipp-wishabi-conventions.yml
+  rate_limits: rate-limits/flipp-wishabi-rate-limits.yml

@@ -1,0 +1,49 @@
+generated: '2026-08-12'
+method: searched
+source: https://corp.flipp.com/platforms/
+plan_count: 0
+plans: []
+public_pricing: false
+model: partner / contact-sales
+note: >-
+  Flipp publishes no public plans, tiers or prices for the FlyerKit API or for the Flipp Platform.
+  The FlyerKit API is not sold as a product at all - it is an entitlement of an existing retail
+  partnership, and access tokens are "issued by your Flipp technical contact." Every commercial
+  path on the corporate site terminates in a partnership CTA ("Become a Partner", "Let's
+  Partner", "Contact Us"); there is no signup, no self-service checkout and no published rate
+  card. plan_count: 0 records a searched absence, not an unchecked field.
+evidence:
+- url: https://corp.flipp.com/platforms/
+  status: 200
+  finding: >-
+    The platform page names the commercial surfaces (Flipp Platform, Sponsored Ads, Shopper
+    Consideration Platform) and states "Whether that be an API or feed, Flipp will do the heavy
+    lifting for you," but carries no price, tier, quota or overage anywhere. Every conversion
+    element is a partnership contact form.
+- url: https://corp.flipp.com/legal-storefronts-rates/
+  status: 200
+  finding: >-
+    A rate card for the Storefronts platform DOES exist on Flipp's own domain, titled "Storefronts
+    Platform Rates" - but the page body is "This content is password-protected. To view it, please
+    enter the password below." The 200 carries a password wall, not a rate table. Flipp has
+    written the pricing down and deliberately chosen not to publish it.
+- url: https://api.flipp.com/flyerkit/v4.0/documentation
+  status: 200
+  finding: >-
+    The FlyerKit API reference documents authentication, versioning and formats. It contains no
+    pricing, no quota, and no plan language of any kind.
+- url: https://developer.flipp.com/
+  status: 0
+  finding: NXDOMAIN - no developer portal exists on which a pricing page could live.
+access_model:
+  onboarding: contact
+  self_service: false
+  trial: false
+  free_tier: false
+  label: Partner
+  quoted: >-
+    "Contact your Flipp technical contact for your API access token." (FlyerKit v4.0
+    documentation, access_token parameter description.)
+cross_links:
+  rate_limits: rate-limits/flipp-wishabi-rate-limits.yml
+  authentication: authentication/flipp-wishabi-authentication.yml

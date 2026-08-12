@@ -1,0 +1,197 @@
+generated: '2026-08-12'
+method: searched
+source: https://api.flipp.com/flyerkit/v4.0/documentation
+derived_from: openapi/flipp-wishabi-flyerkit-openapi.yml
+probed: '2026-08-12'
+api: Flipp FlyerKit API v4.0
+base_url: https://api.flipp.com/flyerkit/v4.0
+transport:
+  protocol: HTTPS only
+  methods: GET only (all 11 operations are reads - FlyerKit is a read-only projection of Flipp's
+    circular data)
+  content_type: application/json; charset=utf-8
+  quoted: 'The FlyerKit API currently only returns data in JSON format.'
+  cors:
+    enabled: true
+    observed_headers:
+      access-control-allow-origin: '*'
+      access-control-allow-methods: POST, GET, PUT, DELETE, OPTIONS, HEAD
+      access-control-allow-headers: Access-Control-Allow-Headers, Origin, Accept, X-Requested-With,
+        Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, X-CSRF-Token
+    note: >-
+      Wildcard CORS combined with a credential carried in the query string means a browser
+      integration necessarily exposes the access token to the end user and to any referrer log.
+authentication:
+  style: apiKey in query
+  parameter: access_token
+  required_on: 10 of 11 operations (GET /copyright is unauthenticated)
+  detail: authentication/flipp-wishabi-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Not applicable and not published. Every FlyerKit operation is a GET, so all requests are
+    naturally idempotent and safe to retry, but Flipp documents no idempotency key, no request
+    deduplication window and no write surface that would need one. NO `Idempotency` pointer is
+    emitted in apis.yml - there is no idempotency mechanism to point at.
+pagination:
+  supported: partial
+  style: offset+size, with an alternate page cursor
+  parameters:
+  - name: page
+    in: query
+    type: integer
+    note: Page number.
+  - name: size
+    in: query
+    type: integer
+    note: Page size.
+  - name: offset
+    in: query
+    type: integer
+    note: Record offset.
+  applies_to:
+  - GET /publications/{merchant_identifier}/products
+  - GET /publication/{publication_id}/products
+  not_paginated:
+  - GET /publications/{merchant_identifier}
+  - GET /publication/{publication_id}/pages
+  - GET /publication/{publication_id}/highlights
+  - GET /publication/{publication_id}/categories
+  - GET /product/{product_id}/sub_items
+  - GET /stores/{merchant_identifier}
+  response_envelope: none
+  gaps:
+  - >-
+    Only the two product-collection operations paginate. The other six collection operations
+    return a bare unbounded JSON array with no page controls at all.
+  - >-
+    Responses are bare arrays - there is no envelope, so no `total`, no `next`, no cursor and no
+    Link header. A caller cannot tell whether more results exist except by requesting another page
+    and seeing whether it comes back empty.
+  - >-
+    `page`, `size` and `offset` coexist without documented precedence. The spec does not state
+    what happens when `page` and `offset` are supplied together, nor the default or maximum
+    `size`.
+filtering_and_sorting:
+  filters:
+  - name: keywords
+    applies_to: product endpoints
+    added_in: '4.0'
+  - name: tags
+    applies_to: product endpoints
+    added_in: '4.0'
+  - name: category
+    applies_to: product endpoints
+  - name: display_type
+    applies_to: product endpoints
+  - name: see_future
+    applies_to: publication and product endpoints
+    note: Requires an access token with elevated permission.
+  - name: show_storefronts
+    applies_to: publication endpoints
+    note: Suppresses publications not optimized for vertical scroll.
+  sorting:
+    parameters:
+    - sort_by
+    - sort_order
+    applies_to:
+    - GET /publication/{publication_id}/products
+    default: >-
+      For GET /publications/{merchant_identifier} the spec states the order "depends on order that
+      should be manually set up on 'Flyers sorting' tab in Fadmin" - i.e. the sort is configured
+      by Flipp operations in an internal admin tool, not by the caller.
+field_expansion:
+  supported: false
+  sparse_fields: false
+  note: >-
+    No `expand`, `fields` or `include` parameter exists. Depth is instead expressed as separate
+    endpoints - a product summary comes from a collection operation and the full record from GET
+    /product/{product_id}, which is a second round trip per item.
+localization:
+  parameter: locale
+  required_on:
+  - GET /publications/{merchant_identifier}
+  - GET /publications/{merchant_identifier}/products
+  values:
+  - en-CA
+  - fr-CA
+  - en-US
+  behaviour: >-
+    "Providing a locale will return content from that locale's language whenever Flipp has that
+    content available... When localized content is not available for a given locale, an empty
+    response is returned."
+  risk: >-
+    A missing translation is indistinguishable from an empty result set. Both are HTTP 200 with
+    `[]`.
+geo:
+  parameters:
+  - postal_code (Canadian postal code or US ZIP)
+  - store_code (retailer's own store code)
+  - ip_override (GET /fsa/{merchant_name_identifier} only - overrides the caller IP used for geo
+    lookup)
+  note: >-
+    Content selection is location-scoped: a publication is resolved from a store or a
+    postal/ZIP code, so the same publication id is not globally meaningful without its location
+    context.
+metadata:
+  custom_fields:
+  - custom_id_field_1
+  - custom_id_field_2
+  - custom_id_field_3
+  note: The product models carry three retailer-defined passthrough identifier fields. There is
+    no general key/value metadata bag.
+tracing:
+  request_id_header: x-request-id
+  observed: true
+  observed_note: >-
+    Every live response carried an `x-request-id` UUID (e.g. 0b79c658-a10d-9d55-a0cb-7eb2ca86cc57
+    on a 422, f9af34a7-1207-496e-9f6b-659a5716bc38 on a 200) plus `x-runtime`, and the authorized
+    surface adds `x-envoy-upstream-service-time`. The header is emitted but is NOT documented, so
+    a partner filing a support ticket has no published instruction to quote it.
+  correlation_request_header: none documented
+caching:
+  etag: true
+  etag_observed: W/"432069bb994d9b1c649be8f9a041c486" on GET /copyright
+  cache_control:
+    unauthenticated: max-age=3600, public
+    authorized: no-cache
+  conditional_requests: supported by the presence of a weak ETag; not documented
+  cdn: CloudFront (x-cache / x-amz-cf-pop observed on every response)
+versioning:
+  scheme: semantic major.minor, major pinned in the URI path
+  detail: lifecycle/flipp-wishabi-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  shape: '{ "message": string, "code": number }'
+  rfc9457: false
+  only_error_status: 422
+  detail: errors/flipp-wishabi-problem-types.yml
+rate_limit_signalling:
+  headers: none
+  documented: false
+  detail: rate-limits/flipp-wishabi-rate-limits.yml
+security_headers_observed:
+  strict-transport-security: max-age=31536000; includeSubdomains; (on the nginx-served
+    /copyright endpoint)
+  x-frame-options: SAMEORIGIN
+  x-content-type-options: nosniff
+  x-permitted-cross-domain-policies: none
+  referrer-policy: strict-origin-when-cross-origin
+  x-xss-protection: '1; mode=block (nginx) / 0 (envoy) - the two upstreams disagree'
+identifiers:
+  publication_id: integer
+  product_id: integer
+  merchant_identifier: >-
+    A string merchant name identifier "which can be obtained from your Flipp technical contact" -
+    not discoverable through the API. There is no merchants endpoint, so a caller cannot enumerate
+    or resolve merchant identifiers programmatically.
+  no_prefixes: >-
+    Identifiers are bare integers with no type prefix, so an id alone does not say what it
+    identifies.
+cross_links:
+  authentication: authentication/flipp-wishabi-authentication.yml
+  errors: errors/flipp-wishabi-problem-types.yml
+  lifecycle: lifecycle/flipp-wishabi-lifecycle.yml
+  rate_limits: rate-limits/flipp-wishabi-rate-limits.yml
+  data_model: data-model/flipp-wishabi-data-model.yml

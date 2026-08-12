@@ -1,0 +1,166 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/flipp-wishabi-flyerkit-openapi.yml
+searched:
+- https://api.flipp.com/flyerkit/v4.0/documentation
+- https://corp.flipp.com/platforms/
+- https://corp.flipp.com/legal/terms_of_use/
+note: >-
+  Cross-cutting standards assertions for the Flipp FlyerKit API. Every `conforms: false` below is
+  a measured absence from the published contract or a failed search, not an assumption. No
+  compliance certification (SOC 2, ISO 27001, PCI DSS, HIPAA, FedRAMP) is published anywhere on
+  Flipp's public surface, so NO `Compliance` and NO `TrustCenter` pointer is emitted in apis.yml.
+standards:
+- id: openapi
+  conforms: partial
+  version: Swagger 2.0
+  evidence: >-
+    api.flipp.com/flyerkit/apidocs_v4 serves a valid Swagger 2.0 document (200,
+    application/json) rendered by Swagger UI at /flyerkit/v4.0/documentation. It is two major
+    versions behind - OpenAPI 3.0 shipped in 2017 and 3.1 in 2021. The document declares no
+    `operationId` on any of its 11 operations, no `tags` block, no `securityDefinitions`, and no
+    `schemes`, so tooling that generates clients or agent tools from it produces unnamed
+    operations.
+- id: rfc9457
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence: >-
+    Errors use a bespoke `{message, code}` envelope with media type application/json. No
+    `application/problem+json`, no `type` URI, no `title`, no `instance`. See
+    errors/flipp-wishabi-problem-types.yml.
+- id: rfc8594
+  name: Sunset HTTP Header
+  conforms: false
+  evidence: >-
+    No `Sunset` or `Deprecation` header on any live response (probed 2026-08-12). Retired majors
+    v2.0 and v3.0 simply 404. See lifecycle/flipp-wishabi-lifecycle.yml.
+- id: ietf-ratelimit-headers
+  name: IETF RateLimit header fields
+  conforms: false
+  evidence: >-
+    No RateLimit-* or X-RateLimit-* header on the 200 or the 422 captured 2026-08-12, and no 429
+    declared in the contract. See rate-limits/flipp-wishabi-rate-limits.yml.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No OAuth 2.0. Authorization is a bearer-equivalent `access_token` passed as a URL QUERY
+    PARAMETER, issued out of band by a Flipp technical contact. No token endpoint, no
+    authorization endpoint, no refresh, no revocation endpoint.
+    /.well-known/oauth-authorization-server returns 404 on api.flipp.com.
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on api.flipp.com (probed 2026-08-12).
+- id: rfc6750
+  name: OAuth 2.0 Bearer Token Usage
+  conforms: false
+  evidence: >-
+    RFC 6750 §2.3 explicitly discourages the URI query parameter method for bearer tokens. FlyerKit
+    uses exactly that method and offers no Authorization header alternative, so the credential
+    lands in access logs, proxy logs, browser history and Referer headers.
+- id: idempotency-key
+  conforms: not-applicable
+  evidence: >-
+    All 11 operations are GET, which is idempotent by HTTP semantics. There is no write surface,
+    so an idempotency key would have nothing to protect. Recorded as not-applicable rather than
+    false.
+- id: pagination
+  conforms: partial
+  evidence: >-
+    `page`, `size` and `offset` are offered on the two product-collection operations only. The
+    other six collection operations return unbounded bare arrays. No envelope, no total count, no
+    cursor, no `Link` rel="next". See conventions/flipp-wishabi-conventions.yml.
+- id: cors
+  conforms: true
+  evidence: >-
+    `access-control-allow-origin: *` plus a full allow-methods/allow-headers set observed live on
+    both the 200 and the 422. The documentation states "The API allows cross-origin requests using
+    CORS."
+- id: http-caching
+  conforms: true
+  evidence: >-
+    `Cache-Control: max-age=3600, public` and a weak `ETag` observed on GET /copyright; authorized
+    endpoints return `Cache-Control: no-cache`. Conditional requests are therefore possible but
+    are not documented.
+- id: hsts
+  conforms: partial
+  evidence: >-
+    `strict-transport-security: max-age=31536000; includeSubdomains;` observed on the
+    nginx-served /copyright response, and on www.flipp.com. The istio-envoy 422 response and the
+    api.flipp.com root did NOT carry HSTS - the header is inconsistent across upstreams. See
+    security/flipp-wishabi-domain-security.yml.
+- id: semver
+  conforms: true
+  evidence: >-
+    "FlyerKit uses a semantic versioning scheme with a major and minor version number... Any
+    changes in the API that are not backward compatible will use an updated major version."
+    Published policy, quoted verbatim in lifecycle/flipp-wishabi-lifecycle.yml.
+- id: json-api
+  conforms: false
+  evidence: Bare JSON arrays and objects; no `data`/`included`/`links`/`meta` envelope and no
+    application/vnd.api+json media type.
+- id: hal
+  conforms: false
+  evidence: No `_links` or `_embedded` anywhere in the 20 definitions.
+- id: odata
+  conforms: false
+  evidence: No $filter/$select/$expand/$top/$skip and no service or metadata document.
+- id: graphql
+  conforms: false
+  evidence: https://api.flipp.com/graphql returns 404 (probed 2026-08-12).
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No event, streaming or webhook surface is published. FlyerKit is poll-only, which matters for
+    circular data - a partner cannot be told a new flyer run went live and must poll for it.
+- id: mcp
+  name: Model Context Protocol
+  conforms: false
+  evidence: No hosted MCP server found. See mcp/flipp-wishabi-mcp.yml.
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return 404 on api.flipp.com and
+    corp.flipp.com, and a soft-404 SPA shell on www.flipp.com (probed 2026-08-12). See
+    well-known/flipp-wishabi-well-known.yml.
+- id: llmstxt
+  conforms: false
+  evidence: >-
+    /llms.txt returns 404 on api.flipp.com, corp.flipp.com and help.flipp.com, and a soft-404 SPA
+    shell on www.flipp.com. The llms/ artifact in this repo is API Evangelist-generated, not
+    provider-published.
+- id: securitytxt
+  name: RFC 9116 security.txt
+  conforms: false
+  evidence: 404 on api.flipp.com and corp.flipp.com; soft-404 SPA shell on www.flipp.com.
+- id: dnssec
+  conforms: false
+  evidence: security/flipp-wishabi-domain-security.yml - flipp.com has no DNSSEC and no CAA
+    records.
+- id: dmarc
+  conforms: partial
+  evidence: 'flipp.com publishes SPF and DMARC with policy p=quarantine (not p=reject).'
+compliance_certifications:
+  published: []
+  searched:
+  - https://corp.flipp.com/security/ (404)
+  - https://corp.flipp.com/trust/ (no such host path)
+  - hackerone.com / bugcrowd.com / intigriti.com program listings
+  finding: >-
+    No SOC 2, ISO 27001, PCI DSS, HIPAA or FedRAMP claim, and no trust center, is published on any
+    Flipp host. Flipp handles consumer shopping-behaviour data at scale (its own marketing cites
+    400B+ intent-based shopping signals and 100M+ households) and publishes a privacy policy and
+    terms of use, but no security or compliance attestation. No `Compliance` pointer is emitted.
+regulatory_context:
+  jurisdiction: Canada (Toronto HQ) + United States
+  applicable:
+  - name: PIPEDA
+    note: Canadian federal privacy law applies to Flipp as a Canadian company processing personal
+      information.
+  - name: CCPA/CPRA
+    note: US consumer-privacy exposure via the US shopper audience.
+  published_program: >-
+    A privacy policy (corp.flipp.com/legal/privacy/) and terms of use
+    (corp.flipp.com/legal/terms_of_use/) are published. No dedicated compliance or data-processing
+    documentation was found.
