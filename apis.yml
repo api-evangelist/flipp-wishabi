@@ -38,7 +38,7 @@ accessModel:
   - https://api.flipp.com/flyerkit/v4.0/documentation
   generated: '2026-08-12'
   method: searched
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-08-12'
 image: https://corp.flipp.com/wp-content/uploads/2024/03/cropped-cropped-blue-1000-192x192.png
