@@ -1,0 +1,2421 @@
+{
+  "item": [
+    {
+      "id": "c22c3a0d-c832-4d82-bf48-8a7c9293d309",
+      "name": "publications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "373261c3-7278-4792-8b44-ea606bb07ab3",
+          "name": "Find publications by merchant and store or postal/zip code",
+          "request": {
+            "name": "Find publications by merchant and store or postal/zip code",
+            "description": {
+              "content": "Returns a list of available publications for a given store and optionally postal/zip code. Publications are selected using the supplied store's location. The validity dates of a publication specify the period for which the content (sales, pricing, etc.) is valid. The availability dates specify the time that the publication should be accessible within an application.The sort order depends on order that should be manually set up on 'Flyers sorting' tab in Fadmin",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publications",
+                ":merchant_identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                },
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "<string>",
+                  "description": "(Required) Providing a locale will return content from that locale's language whenever Flipp has that content available. Content includes the underlying circular, as well as categories.\nWhen localized content is not available for a given locale, an empty response is returned.\n| Locale              | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| en-CA               | English, Canada                                           |\n| fr-CA               | French, Canada                                            |\n| en-US               | English, United States                                    |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "store_code",
+                  "value": "<string>",
+                  "description": "Retailer's store code."
+                },
+                {
+                  "disabled": false,
+                  "key": "postal_code",
+                  "value": "<string>",
+                  "description": "Optional if store_code is provided. Values can be a Canadian postal code, or a United States zipcode."
+                },
+                {
+                  "disabled": false,
+                  "key": "see_future",
+                  "value": "<boolean>",
+                  "description": "Whether to include future publications in the results. Requires special access token permissions."
+                },
+                {
+                  "disabled": false,
+                  "key": "show_storefronts",
+                  "value": "<boolean>",
+                  "description": "Show Digital Content. If true will suppress publications that are not optimized for vertical scroll. If false will suppress digital only content. Default is false."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_identifier",
+                  "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "19a75560-db4f-4512-b9dc-ac783b70a027",
+              "name": "Publications response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":merchant_identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "see_future",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "show_storefronts",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_identifier",
+                      "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 348864,\n    \"flyer_run_id\": 47315,\n    \"flyer_type_id\": 12234,\n    \"name\": \"Mailer\",\n    \"description\": \"Tribune Ad\",\n    \"sfml_url\": \"https://sfml.flippback.com/587807/3433653/22811814cd2e63f0c8b92f53fc5193f9831bf4103e7e2efff5c74680648f1ce4.sfml\",\n    \"storefront_payload_url\": \"https://cdn-gateflipp.flippback.com/storefront-hosted/587807/3433653/22811814cd2e63f0c8b92f53fc5193f9831bf4103e7e2efff5c74680648f1ce4?merchant_id=543&store_id=12345\",\n    \"storefront_payload\": \"https://cdn-gateflipp.flippback.com/storefront-payload/587807/3433653/22811814cd2e63f0c8b92f53fc5193f9831bf4103e7e2efff5c74680648f1ce4?merchant_id=543\",\n    \"deep_link\": \"http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984\",\n    \"flyer_type\": \"mailer\",\n    \"total_pages\": 9,\n    \"external_display_name\": \"Mailer\",\n    \"locale\": \"en\",\n    \"postal_code\": \"string\",\n    \"valid_from\": \"2015-03-16T00:00:00-04:00\",\n    \"valid_to\": \"2016-01-30T23:59:00-05:00\",\n    \"available_from\": \"2015-03-16T01:00:00-04:00\",\n    \"available_to\": \"2016-01-31T00:59:00-05:00\",\n    \"thumbnail_image_url\": \"https://cdn.flippenterprise.net/flyers/348864/l_thumbnail/1425009356.jpg\",\n    \"flyer_selector_thumbnail_url\": \"https://cdn.flippenterprise.net/flyers/348864/thumbnail/1425009356.jpg\",\n    \"first_page_thumbnail_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key\",\n    \"first_page_thumbnail_150h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_150h_s3_key\",\n    \"first_page_thumbnail_400h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_400h_s3_key\",\n    \"first_page_thumbnail_2000h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key\",\n    \"image_first_page_400w\": \"https://cdn.flippenterprise.net/flyers/2797863/first_page_thumbnail_400w/1564075442.jpg\",\n    \"image_first_page_140w\": \"https://cdn.flippenterprise.net/flyers/2797863/first_page_thumbnail_140w/1564075442.jpg\",\n    \"image_first_page_100w\": \"https://cdn.flippenterprise.net/flyers/2797863/first_page_thumbnail_100w/1564075442.jpg\",\n    \"correction_notices\": [\n      {\n        \"html\": \"<p>Correction</p>\",\n        \"image_url\": \"https://cdn.flippenterprise.net/flyers/348864/correction/1232923480.jpg\"\n      },\n      {\n        \"html\": \"<p>Correction</p>\",\n        \"image_url\": \"https://cdn.flippenterprise.net/flyers/348864/correction/1232923480.jpg\"\n      }\n    ],\n    \"custom_flyer_item_disclaimer\": \"Price and availability may vary by store.\",\n    \"french_custom_flyer_item_disclaimer\": \"Les prix et l'offre des produits peuvent varier en magasin.\",\n    \"validity_text\": \"Valid Until 2016-01-30T23:59:00-05:00\",\n    \"key_message\": \"New Movie Releases\",\n    \"key_message_short\": \"New Movie Releases\",\n    \"pdf_url\": \"https://cdn.flippenterprise.net/flyers/26376715/711004c22f8216e4.pdf\"\n  },\n  {\n    \"id\": 348864,\n    \"flyer_run_id\": 47315,\n    \"flyer_type_id\": 12234,\n    \"name\": \"Mailer\",\n    \"description\": \"Tribune Ad\",\n    \"sfml_url\": \"https://sfml.flippback.com/587807/3433653/22811814cd2e63f0c8b92f53fc5193f9831bf4103e7e2efff5c74680648f1ce4.sfml\",\n    \"storefront_payload_url\": \"https://cdn-gateflipp.flippback.com/storefront-hosted/587807/3433653/22811814cd2e63f0c8b92f53fc5193f9831bf4103e7e2efff5c74680648f1ce4?merchant_id=543&store_id=12345\",\n    \"storefront_payload\": \"https://cdn-gateflipp.flippback.com/storefront-payload/587807/3433653/22811814cd2e63f0c8b92f53fc5193f9831bf4103e7e2efff5c74680648f1ce4?merchant_id=543\",\n    \"deep_link\": \"http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984\",\n    \"flyer_type\": \"mailer\",\n    \"total_pages\": 9,\n    \"external_display_name\": \"Mailer\",\n    \"locale\": \"en\",\n    \"postal_code\": \"string\",\n    \"valid_from\": \"2015-03-16T00:00:00-04:00\",\n    \"valid_to\": \"2016-01-30T23:59:00-05:00\",\n    \"available_from\": \"2015-03-16T01:00:00-04:00\",\n    \"available_to\": \"2016-01-31T00:59:00-05:00\",\n    \"thumbnail_image_url\": \"https://cdn.flippenterprise.net/flyers/348864/l_thumbnail/1425009356.jpg\",\n    \"flyer_selector_thumbnail_url\": \"https://cdn.flippenterprise.net/flyers/348864/thumbnail/1425009356.jpg\",\n    \"first_page_thumbnail_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key\",\n    \"first_page_thumbnail_150h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_150h_s3_key\",\n    \"first_page_thumbnail_400h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_400h_s3_key\",\n    \"first_page_thumbnail_2000h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key\",\n    \"image_first_page_400w\": \"https://cdn.flippenterprise.net/flyers/2797863/first_page_thumbnail_400w/1564075442.jpg\",\n    \"image_first_page_140w\": \"https://cdn.flippenterprise.net/flyers/2797863/first_page_thumbnail_140w/1564075442.jpg\",\n    \"image_first_page_100w\": \"https://cdn.flippenterprise.net/flyers/2797863/first_page_thumbnail_100w/1564075442.jpg\",\n    \"correction_notices\": [\n      {\n        \"html\": \"<p>Correction</p>\",\n        \"image_url\": \"https://cdn.flippenterprise.net/flyers/348864/correction/1232923480.jpg\"\n      },\n      {\n        \"html\": \"<p>Correction</p>\",\n        \"image_url\": \"https://cdn.flippenterprise.net/flyers/348864/correction/1232923480.jpg\"\n      }\n    ],\n    \"custom_flyer_item_disclaimer\": \"Price and availability may vary by store.\",\n    \"french_custom_flyer_item_disclaimer\": \"Les prix et l'offre des produits peuvent varier en magasin.\",\n    \"validity_text\": \"Valid Until 2016-01-30T23:59:00-05:00\",\n    \"key_message\": \"New Movie Releases\",\n    \"key_message_short\": \"New Movie Releases\",\n    \"pdf_url\": \"https://cdn.flippenterprise.net/flyers/26376715/711004c22f8216e4.pdf\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5003eae-e52f-4654-9a71-3684c3d3f3cc",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":merchant_identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "see_future",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "show_storefronts",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_identifier",
+                      "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34f24c17-e63f-4387-8c88-8ba477539f3d",
+          "name": "Returns pages in a publication",
+          "request": {
+            "name": "Returns pages in a publication",
+            "description": {
+              "content": "Returns the list of pages in the given publication.The width of the thumbnails in the response may vary to preserve image aspect ratios.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publication",
+                ":publication_id",
+                "pages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publication_id",
+                  "description": "(Required) Unique identifier for the publication."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0b5b7377-598e-4eeb-b2fa-c15db73ac5df",
+              "name": "Pages response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publication",
+                    ":publication_id",
+                    "pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publication_id",
+                      "description": "(Required) Unique identifier for the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"page\": 1,\n    \"flyer_id\": 348864,\n    \"flyer_run_id\": 47315,\n    \"image_150h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_150h_s3_key\",\n    \"image_400h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_400h_s3_key\",\n    \"image_2000h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key\",\n    \"left\": 0,\n    \"top\": 0,\n    \"width\": 2560,\n    \"height\": 2560\n  },\n  {\n    \"page\": 1,\n    \"flyer_id\": 348864,\n    \"flyer_run_id\": 47315,\n    \"image_150h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_150h_s3_key\",\n    \"image_400h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_400h_s3_key\",\n    \"image_2000h_url\": \"https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key\",\n    \"left\": 0,\n    \"top\": 0,\n    \"width\": 2560,\n    \"height\": 2560\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e6babe3-699e-45ea-9f6e-ce2af1fcd1fc",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publication",
+                    ":publication_id",
+                    "pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publication_id",
+                      "description": "(Required) Unique identifier for the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e3702c6d-bf5a-458b-b528-ac1e8855a487",
+          "name": "Returns highlights in a publication",
+          "request": {
+            "name": "Returns highlights in a publication",
+            "description": {
+              "content": "Returns the list of highlights in the given publication. Highlights are special tags given to items which allow them to be highlighted on the front end by darkening the surrounding items/areas of the publication. For example, some merchants like all items made in the USA to be given a \"Made in USA\" highlight.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publication",
+                ":publication_id",
+                "highlights"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publication_id",
+                  "description": "(Required) Unique identifier for the publication."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "494aec57-91bd-47f8-b0d3-38af29bf76a8",
+              "name": "Highlights response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publication",
+                    ":publication_id",
+                    "highlights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publication_id",
+                      "description": "(Required) Unique identifier for the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"Grocery Aisle\",\n    \"left\": 10169.2,\n    \"top\": 1989.54,\n    \"width\": 556.5,\n    \"height\": 469.6700000000001\n  },\n  {\n    \"name\": \"Grocery Aisle\",\n    \"left\": 10169.2,\n    \"top\": 1989.54,\n    \"width\": 556.5,\n    \"height\": 469.6700000000001\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29665295-2d94-42de-8b2a-93a4c90e6db3",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publication",
+                    ":publication_id",
+                    "highlights"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publication_id",
+                      "description": "(Required) Unique identifier for the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d13d9cd3-7316-4cee-9341-d4d7a16fdec5",
+          "name": "Returns categories in a publication",
+          "request": {
+            "name": "Returns categories in a publication",
+            "description": {
+              "content": "Returns the list of categories in the given publication. The categories can be used to implement a feature that jumps to a specific category in the publication. For example, if the publication has a grocery section, then the grocery category would be used to scroll to the start of the grocery section.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publication",
+                ":publication_id",
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publication_id",
+                  "description": "(Required) Unique identifier for the publication."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "651829fa-98ee-47b7-a5d0-d9fca7c62c71",
+              "name": "Categories response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publication",
+                    ":publication_id",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publication_id",
+                      "description": "(Required) Unique identifier for the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"Solid Surface Countertops\",\n    \"left\": 1997.98,\n    \"top\": 22.6047,\n    \"width\": 3905.3799999999997,\n    \"height\": 2504.1353,\n    \"thumbnail_image_url\": \"https://cdn.flippenterprise.net/flyers/348864/l_thumbnail/1425009356.jpg\"\n  },\n  {\n    \"name\": \"Solid Surface Countertops\",\n    \"left\": 1997.98,\n    \"top\": 22.6047,\n    \"width\": 3905.3799999999997,\n    \"height\": 2504.1353,\n    \"thumbnail_image_url\": \"https://cdn.flippenterprise.net/flyers/348864/l_thumbnail/1425009356.jpg\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24f91523-cf7c-42c8-b26b-48203c3bb055",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publication",
+                    ":publication_id",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publication_id",
+                      "description": "(Required) Unique identifier for the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "15916b53-5f68-4d8f-8497-c0d355c853fa",
+          "name": "Returns products in a publication",
+          "request": {
+            "name": "Returns products in a publication",
+            "description": {
+              "content": "For a given publication ID, returns a list of products in the publication. The products in the response are sorted by position, from first page to last, then top to bottom, then left to right by default.Text will be localized according to the locale of the publication. If keywords or tags are provided, a maximum of 1000 items will be returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publication",
+                ":publication_id",
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Limit products to those appearing on a specified page in the circular."
+                },
+                {
+                  "disabled": false,
+                  "key": "display_type",
+                  "value": "<string>",
+                  "description": "Comma-delimited list of integers specifying types of circular items to return.\nIf not provided, this endpoint will only return items with a display type of 1.\nSee table below for a list of display types.\n| Display Type Number | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| 1                   | Circular item                                             |\n| 3                   | Video (YouTube embedded URL or link to mp4 file)          |\n| 5                   | Web linkout (link to external site)                       |\n| 7                   | Circular page link (link to another page in the circular) |\n| 15                  | iframe (displays a URL in an iframe)                      |\n| 25                  | Coupon (retailer coupon displayed as a circular item)     |\n| all                 | All items regardless of type                              |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "postal_code",
+                  "value": "<string>",
+                  "description": "Postal/zip code to specify the region from which to fetch coupons."
+                },
+                {
+                  "disabled": false,
+                  "key": "store_code",
+                  "value": "<string>",
+                  "description": "Store code required for deep_link of the product."
+                },
+                {
+                  "disabled": false,
+                  "key": "keywords",
+                  "value": "<string>",
+                  "description": "Comma-delimited list of keywords appearing in item names/descriptions with which to filter items."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Text strings that allow items to be filtered based on more detailed groupings/categorizations. Ask your Flipp Technical contact for more details on how to provide tags against your items."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>",
+                  "description": "Return items sorted by a specified criterion. Supported sort criteria are listed in the table below.\n| Sort criterion      | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| popularity          | Orders items based on the running total of clicks that\nshoppers have made on the items in the current circular.\nItem click counts are updated at least twice per day.\n                                 |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "<string>",
+                  "description": "When used with sort_by, determines the order in which items are sorted by the specified criterion.\n| Sort order          | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| asc                 | Sort items in ascending order.                            |\n| desc                | Sort items in descending order (default).                 |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Filter products by given category."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>",
+                  "description": "Set the count of products to be returned. Positive number. All products will be returned if size >= total products count and offset = 0 or missing. [] is returned if there are no products available."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Set the count of items to be skipped when size parameter is specified. 0 is a default value. [] is returned if offset is too big."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publication_id",
+                  "description": "(Required) Unique identifier for the publication."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4f3daf70-ee64-4550-92cc-ea3cbb7ad67a",
+              "name": "Products response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publication",
+                    ":publication_id",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "display_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publication_id",
+                      "description": "(Required) Unique identifier for the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 7775353,\n    \"flyer_id\": 47524,\n    \"flyer_run_id\": 8329,\n    \"name\": \"Celestial Series Countertops\",\n    \"deep_link\": \"http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234\",\n    \"sale_story\": \"SPECIAL 60% OFF\",\n    \"current_price\": 19.99,\n    \"original_price\": 34.99,\n    \"dollars_off\": 240.01,\n    \"percent_off\": 69.01,\n    \"sku\": \"780-4069\",\n    \"custom_id_field_1\": \"0081341P\",\n    \"custom_id_field_2\": \"# BONUS Reward Miles when you buy 1\",\n    \"custom_id_field_3\": \"$0.75\",\n    \"description\": \"From Michael Michael Kors in tan or black.\",\n    \"brand\": \"Corinthian\",\n    \"pre_price_text\": \"2 for \",\n    \"price_text\": \"5.47\",\n    \"post_price_text\": \"CAD\",\n    \"valid_from\": \"2014-01-01\",\n    \"valid_to\": \"2015-12-31\",\n    \"categories\": [\n      \"Kitchen\"\n    ],\n    \"current_price_range\": \"$130 - $150\",\n    \"original_price_range\": \"$130 - $150\",\n    \"small_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/standard.jpg\",\n    \"medium_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/large.jpg\",\n    \"large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/plus_large.jpg\",\n    \"x_large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"left\": 3990.63,\n    \"top\": 1652.96,\n    \"width\": 1294.6899999999996,\n    \"height\": 857.8000000000002,\n    \"item_type\": 1,\n    \"page\": 3,\n    \"page_width\": 1978,\n    \"page_height\": 2560,\n    \"page_relative_left_offset\": 34.63000000000011,\n    \"page_relative_top_offset\": 1652.96,\n    \"average_rating\": 5656,\n    \"images\": [\n      \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\"\n    ],\n    \"video_type\": 1,\n    \"video_url\": \"https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0\",\n    \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n    \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\",\n    \"hosted_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"distribution_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"page_destination\": 26,\n    \"coupons\": [\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      },\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      }\n    ],\n    \"sub_items\": [\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 6193,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      },\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 3568,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      }\n    ]\n  },\n  {\n    \"id\": 7775353,\n    \"flyer_id\": 47524,\n    \"flyer_run_id\": 8329,\n    \"name\": \"Celestial Series Countertops\",\n    \"deep_link\": \"http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234\",\n    \"sale_story\": \"SPECIAL 60% OFF\",\n    \"current_price\": 19.99,\n    \"original_price\": 34.99,\n    \"dollars_off\": 240.01,\n    \"percent_off\": 69.01,\n    \"sku\": \"780-4069\",\n    \"custom_id_field_1\": \"0081341P\",\n    \"custom_id_field_2\": \"# BONUS Reward Miles when you buy 1\",\n    \"custom_id_field_3\": \"$0.75\",\n    \"description\": \"From Michael Michael Kors in tan or black.\",\n    \"brand\": \"Corinthian\",\n    \"pre_price_text\": \"2 for \",\n    \"price_text\": \"5.47\",\n    \"post_price_text\": \"CAD\",\n    \"valid_from\": \"2014-01-01\",\n    \"valid_to\": \"2015-12-31\",\n    \"categories\": [\n      \"Kitchen\"\n    ],\n    \"current_price_range\": \"$130 - $150\",\n    \"original_price_range\": \"$130 - $150\",\n    \"small_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/standard.jpg\",\n    \"medium_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/large.jpg\",\n    \"large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/plus_large.jpg\",\n    \"x_large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"left\": 3990.63,\n    \"top\": 1652.96,\n    \"width\": 1294.6899999999996,\n    \"height\": 857.8000000000002,\n    \"item_type\": 1,\n    \"page\": 3,\n    \"page_width\": 1978,\n    \"page_height\": 2560,\n    \"page_relative_left_offset\": 34.63000000000011,\n    \"page_relative_top_offset\": 1652.96,\n    \"average_rating\": 5559,\n    \"images\": [\n      \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\"\n    ],\n    \"video_type\": 1,\n    \"video_url\": \"https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0\",\n    \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n    \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\",\n    \"hosted_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"distribution_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"page_destination\": 26,\n    \"coupons\": [\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      },\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      }\n    ],\n    \"sub_items\": [\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 6612,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      },\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 5785,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78d1ed24-dc25-4c99-8b0f-34db4bbdee19",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publication",
+                    ":publication_id",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "display_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publication_id",
+                      "description": "(Required) Unique identifier for the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "4a7cc753-4ee6-456e-93bd-0253d4873ce5",
+      "name": "products",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "64763ac5-0072-4541-95f3-552f00a7cdf5",
+          "name": "Returns products across publications",
+          "request": {
+            "name": "Returns products across publications",
+            "description": {
+              "content": "Returns a list of available products for a given store or postal/zip code. If a store code is given, products are selected using the store's location. Otherwise, products are chosen using the given postal/zip code. If both a store code and postal/zip code are provided, the store code takes precedence. Text will be localized according to the locale of the publication. If keywords or tags are provided, a maximum of 1000 items will be returned.Results are sorted by the 'left' column asc which means physical location of item on the flyer from left to right.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publications",
+                ":merchant_identifier",
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                },
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "<string>",
+                  "description": "(Required) Providing a locale will return content from that locale's language whenever Flipp has that content available. Content includes the underlying circular, as well as categories.\nWhen localized content is not available for a given locale, an empty response is returned.\n| Locale              | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| en-CA               | English, Canada                                           |\n| fr-CA               | French, Canada                                            |\n| en-US               | English, United States                                    |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "store_code",
+                  "value": "<string>",
+                  "description": "(Required) Retailer's store code."
+                },
+                {
+                  "disabled": false,
+                  "key": "postal_code",
+                  "value": "<string>",
+                  "description": "Optional if store_code is provided. Values can be a Canadian postal code, or a United States zipcode."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Limit products to those appearing on a specified page in the circular."
+                },
+                {
+                  "disabled": false,
+                  "key": "display_type",
+                  "value": "<string>",
+                  "description": "Comma-delimited list of integers specifying types of circular items to return.\nIf not provided, this endpoint will only return items with a display type of 1.\nSee table below for a list of display types.\n| Display Type Number | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| 1                   | Circular item                                             |\n| 3                   | Video (YouTube embedded URL or link to mp4 file)          |\n| 5                   | Web linkout (link to external site)                       |\n| 7                   | Circular page link (link to another page in the circular) |\n| 15                  | iframe (displays a URL in an iframe)                      |\n| 25                  | Coupon (retailer coupon displayed as a circular item)     |\n| all                 | All items regardless of type                              |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "postal_code",
+                  "value": "<string>",
+                  "description": "Postal/zip code to specify the region from which to fetch coupons."
+                },
+                {
+                  "disabled": false,
+                  "key": "keywords",
+                  "value": "<string>",
+                  "description": "Comma-delimited list of keywords appearing in item names/descriptions with which to filter items."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Text strings that allow items to be filtered based on more detailed groupings/categorizations. Ask your Flipp Technical contact for more details on how to provide tags against your items."
+                },
+                {
+                  "disabled": false,
+                  "key": "see_future",
+                  "value": "<boolean>",
+                  "description": "Whether to include future publications in the results. Requires special access token permissions."
+                },
+                {
+                  "disabled": false,
+                  "key": "show_storefronts",
+                  "value": "<boolean>",
+                  "description": "Show Digital Content. If true will suppress publications that are not optimized for vertical scroll. If false will suppress digital only content. Default is false."
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Filter products by given category."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>",
+                  "description": "Set the count of products to be returned. Positive number. All products will be returned if size >= total products count and offset = 0 or missing. [] is returned if there are no products available."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Set the count of items to be skipped when size parameter is specified. 0 is a default value. [] is returned if offset is too big."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_identifier",
+                  "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cdd8fcc8-bae2-4fc5-a849-b19e943e80dd",
+              "name": "Products response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":merchant_identifier",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "display_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "see_future",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "show_storefronts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_identifier",
+                      "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 7775353,\n    \"flyer_id\": 47524,\n    \"flyer_run_id\": 8329,\n    \"name\": \"Celestial Series Countertops\",\n    \"deep_link\": \"http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234\",\n    \"sale_story\": \"SPECIAL 60% OFF\",\n    \"current_price\": 19.99,\n    \"original_price\": 34.99,\n    \"dollars_off\": 240.01,\n    \"percent_off\": 69.01,\n    \"sku\": \"780-4069\",\n    \"custom_id_field_1\": \"0081341P\",\n    \"custom_id_field_2\": \"# BONUS Reward Miles when you buy 1\",\n    \"custom_id_field_3\": \"$0.75\",\n    \"description\": \"From Michael Michael Kors in tan or black.\",\n    \"brand\": \"Corinthian\",\n    \"pre_price_text\": \"2 for \",\n    \"price_text\": \"5.47\",\n    \"post_price_text\": \"CAD\",\n    \"valid_from\": \"2014-01-01\",\n    \"valid_to\": \"2015-12-31\",\n    \"categories\": [\n      \"Kitchen\"\n    ],\n    \"current_price_range\": \"$130 - $150\",\n    \"original_price_range\": \"$130 - $150\",\n    \"small_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/standard.jpg\",\n    \"medium_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/large.jpg\",\n    \"large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/plus_large.jpg\",\n    \"x_large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"left\": 3990.63,\n    \"top\": 1652.96,\n    \"width\": 1294.6899999999996,\n    \"height\": 857.8000000000002,\n    \"item_type\": 1,\n    \"page\": 3,\n    \"page_width\": 1978,\n    \"page_height\": 2560,\n    \"page_relative_left_offset\": 34.63000000000011,\n    \"page_relative_top_offset\": 1652.96,\n    \"average_rating\": 5450,\n    \"images\": [\n      \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\"\n    ],\n    \"video_type\": 1,\n    \"video_url\": \"https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0\",\n    \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n    \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\",\n    \"hosted_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"distribution_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"page_destination\": 26,\n    \"flyer_type_id\": 12234,\n    \"flyer_type_name\": \"Local Ad\",\n    \"coupons\": [\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      },\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      }\n    ],\n    \"sub_items\": [\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 5184,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      },\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 7362,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      }\n    ]\n  },\n  {\n    \"id\": 7775353,\n    \"flyer_id\": 47524,\n    \"flyer_run_id\": 8329,\n    \"name\": \"Celestial Series Countertops\",\n    \"deep_link\": \"http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234\",\n    \"sale_story\": \"SPECIAL 60% OFF\",\n    \"current_price\": 19.99,\n    \"original_price\": 34.99,\n    \"dollars_off\": 240.01,\n    \"percent_off\": 69.01,\n    \"sku\": \"780-4069\",\n    \"custom_id_field_1\": \"0081341P\",\n    \"custom_id_field_2\": \"# BONUS Reward Miles when you buy 1\",\n    \"custom_id_field_3\": \"$0.75\",\n    \"description\": \"From Michael Michael Kors in tan or black.\",\n    \"brand\": \"Corinthian\",\n    \"pre_price_text\": \"2 for \",\n    \"price_text\": \"5.47\",\n    \"post_price_text\": \"CAD\",\n    \"valid_from\": \"2014-01-01\",\n    \"valid_to\": \"2015-12-31\",\n    \"categories\": [\n      \"Kitchen\"\n    ],\n    \"current_price_range\": \"$130 - $150\",\n    \"original_price_range\": \"$130 - $150\",\n    \"small_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/standard.jpg\",\n    \"medium_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/large.jpg\",\n    \"large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/plus_large.jpg\",\n    \"x_large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"left\": 3990.63,\n    \"top\": 1652.96,\n    \"width\": 1294.6899999999996,\n    \"height\": 857.8000000000002,\n    \"item_type\": 1,\n    \"page\": 3,\n    \"page_width\": 1978,\n    \"page_height\": 2560,\n    \"page_relative_left_offset\": 34.63000000000011,\n    \"page_relative_top_offset\": 1652.96,\n    \"average_rating\": 6472,\n    \"images\": [\n      \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\"\n    ],\n    \"video_type\": 1,\n    \"video_url\": \"https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0\",\n    \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n    \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\",\n    \"hosted_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"distribution_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"page_destination\": 26,\n    \"flyer_type_id\": 12234,\n    \"flyer_type_name\": \"Local Ad\",\n    \"coupons\": [\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      },\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      }\n    ],\n    \"sub_items\": [\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 5064,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      },\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 5225,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54eb22ff-1c4f-4c8c-9685-004f5bd513d9",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":merchant_identifier",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "display_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "see_future",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "show_storefronts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_identifier",
+                      "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "30e78048-0df5-4b6f-b313-f86dc87353e1",
+          "name": "Returns products in a publication",
+          "request": {
+            "name": "Returns products in a publication",
+            "description": {
+              "content": "For a given publication ID, returns a list of products in the publication. The products in the response are sorted by position, from first page to last, then top to bottom, then left to right by default.Text will be localized according to the locale of the publication. If keywords or tags are provided, a maximum of 1000 items will be returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publication",
+                ":publication_id",
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Limit products to those appearing on a specified page in the circular."
+                },
+                {
+                  "disabled": false,
+                  "key": "display_type",
+                  "value": "<string>",
+                  "description": "Comma-delimited list of integers specifying types of circular items to return.\nIf not provided, this endpoint will only return items with a display type of 1.\nSee table below for a list of display types.\n| Display Type Number | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| 1                   | Circular item                                             |\n| 3                   | Video (YouTube embedded URL or link to mp4 file)          |\n| 5                   | Web linkout (link to external site)                       |\n| 7                   | Circular page link (link to another page in the circular) |\n| 15                  | iframe (displays a URL in an iframe)                      |\n| 25                  | Coupon (retailer coupon displayed as a circular item)     |\n| all                 | All items regardless of type                              |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "postal_code",
+                  "value": "<string>",
+                  "description": "Postal/zip code to specify the region from which to fetch coupons."
+                },
+                {
+                  "disabled": false,
+                  "key": "store_code",
+                  "value": "<string>",
+                  "description": "Store code required for deep_link of the product."
+                },
+                {
+                  "disabled": false,
+                  "key": "keywords",
+                  "value": "<string>",
+                  "description": "Comma-delimited list of keywords appearing in item names/descriptions with which to filter items."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Text strings that allow items to be filtered based on more detailed groupings/categorizations. Ask your Flipp Technical contact for more details on how to provide tags against your items."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>",
+                  "description": "Return items sorted by a specified criterion. Supported sort criteria are listed in the table below.\n| Sort criterion      | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| popularity          | Orders items based on the running total of clicks that\nshoppers have made on the items in the current circular.\nItem click counts are updated at least twice per day.\n                                 |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "<string>",
+                  "description": "When used with sort_by, determines the order in which items are sorted by the specified criterion.\n| Sort order          | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| asc                 | Sort items in ascending order.                            |\n| desc                | Sort items in descending order (default).                 |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Filter products by given category."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>",
+                  "description": "Set the count of products to be returned. Positive number. All products will be returned if size >= total products count and offset = 0 or missing. [] is returned if there are no products available."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Set the count of items to be skipped when size parameter is specified. 0 is a default value. [] is returned if offset is too big."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publication_id",
+                  "description": "(Required) Unique identifier for the publication."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52160494-0468-41c6-9567-435162ff66b1",
+              "name": "Products response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publication",
+                    ":publication_id",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "display_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publication_id",
+                      "description": "(Required) Unique identifier for the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 7775353,\n    \"flyer_id\": 47524,\n    \"flyer_run_id\": 8329,\n    \"name\": \"Celestial Series Countertops\",\n    \"deep_link\": \"http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234\",\n    \"sale_story\": \"SPECIAL 60% OFF\",\n    \"current_price\": 19.99,\n    \"original_price\": 34.99,\n    \"dollars_off\": 240.01,\n    \"percent_off\": 69.01,\n    \"sku\": \"780-4069\",\n    \"custom_id_field_1\": \"0081341P\",\n    \"custom_id_field_2\": \"# BONUS Reward Miles when you buy 1\",\n    \"custom_id_field_3\": \"$0.75\",\n    \"description\": \"From Michael Michael Kors in tan or black.\",\n    \"brand\": \"Corinthian\",\n    \"pre_price_text\": \"2 for \",\n    \"price_text\": \"5.47\",\n    \"post_price_text\": \"CAD\",\n    \"valid_from\": \"2014-01-01\",\n    \"valid_to\": \"2015-12-31\",\n    \"categories\": [\n      \"Kitchen\"\n    ],\n    \"current_price_range\": \"$130 - $150\",\n    \"original_price_range\": \"$130 - $150\",\n    \"small_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/standard.jpg\",\n    \"medium_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/large.jpg\",\n    \"large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/plus_large.jpg\",\n    \"x_large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"left\": 3990.63,\n    \"top\": 1652.96,\n    \"width\": 1294.6899999999996,\n    \"height\": 857.8000000000002,\n    \"item_type\": 1,\n    \"page\": 3,\n    \"page_width\": 1978,\n    \"page_height\": 2560,\n    \"page_relative_left_offset\": 34.63000000000011,\n    \"page_relative_top_offset\": 1652.96,\n    \"average_rating\": 1416,\n    \"images\": [\n      \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\"\n    ],\n    \"video_type\": 1,\n    \"video_url\": \"https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0\",\n    \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n    \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\",\n    \"hosted_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"distribution_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"page_destination\": 26,\n    \"coupons\": [\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      },\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      }\n    ],\n    \"sub_items\": [\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 7805,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      },\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 5468,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      }\n    ]\n  },\n  {\n    \"id\": 7775353,\n    \"flyer_id\": 47524,\n    \"flyer_run_id\": 8329,\n    \"name\": \"Celestial Series Countertops\",\n    \"deep_link\": \"http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234\",\n    \"sale_story\": \"SPECIAL 60% OFF\",\n    \"current_price\": 19.99,\n    \"original_price\": 34.99,\n    \"dollars_off\": 240.01,\n    \"percent_off\": 69.01,\n    \"sku\": \"780-4069\",\n    \"custom_id_field_1\": \"0081341P\",\n    \"custom_id_field_2\": \"# BONUS Reward Miles when you buy 1\",\n    \"custom_id_field_3\": \"$0.75\",\n    \"description\": \"From Michael Michael Kors in tan or black.\",\n    \"brand\": \"Corinthian\",\n    \"pre_price_text\": \"2 for \",\n    \"price_text\": \"5.47\",\n    \"post_price_text\": \"CAD\",\n    \"valid_from\": \"2014-01-01\",\n    \"valid_to\": \"2015-12-31\",\n    \"categories\": [\n      \"Kitchen\"\n    ],\n    \"current_price_range\": \"$130 - $150\",\n    \"original_price_range\": \"$130 - $150\",\n    \"small_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/standard.jpg\",\n    \"medium_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/large.jpg\",\n    \"large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/plus_large.jpg\",\n    \"x_large_image_url\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"left\": 3990.63,\n    \"top\": 1652.96,\n    \"width\": 1294.6899999999996,\n    \"height\": 857.8000000000002,\n    \"item_type\": 1,\n    \"page\": 3,\n    \"page_width\": 1978,\n    \"page_height\": 2560,\n    \"page_relative_left_offset\": 34.63000000000011,\n    \"page_relative_top_offset\": 1652.96,\n    \"average_rating\": 2798,\n    \"images\": [\n      \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\"\n    ],\n    \"video_type\": 1,\n    \"video_url\": \"https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0\",\n    \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n    \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\",\n    \"hosted_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"distribution_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n    \"page_destination\": 26,\n    \"coupons\": [\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      },\n      {\n        \"flyer_item_id\": 197289464,\n        \"coupon_id\": 155559,\n        \"coupon_type\": \"amountoff\",\n        \"loyalty_program_coupon_id\": 198495,\n        \"loyalty_program_id\": 305,\n        \"external_id\": \"293218\",\n        \"sale_story\": \"save $0.50\",\n        \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n        \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n        \"brand_display_name\": \"Cottonelle\",\n        \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n        \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n        \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n      }\n    ],\n    \"sub_items\": [\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 4141,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      },\n      {\n        \"id\": 7775353,\n        \"product_id\": 47524,\n        \"name\": \"Celestial Series Countertops\",\n        \"sale_story\": \"SPECIAL 60% OFF\",\n        \"current_price\": 19.99,\n        \"original_price\": 34.99,\n        \"sku\": \"780-4069\",\n        \"description\": \"From Michael Michael Kors in tan or black.\",\n        \"brand\": \"Corinthian\",\n        \"pre_price_text\": \"2 for \",\n        \"price_text\": \"5.47\",\n        \"post_price_text\": \"CAD\",\n        \"category\": \"Kitchen\",\n        \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n        \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n        \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n        \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n        \"average_rating\": 485,\n        \"images\": [\n          \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n        ],\n        \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n        \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2327308b-7889-454c-a50f-7050c6e563d3",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publication",
+                    ":publication_id",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "display_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publication_id",
+                      "description": "(Required) Unique identifier for the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91d835cb-13dc-4f94-9523-71e89f4cf4b0",
+          "name": "Returns detailed information about a product",
+          "request": {
+            "name": "Returns detailed information about a product",
+            "description": {
+              "content": "Returns detailed information about the specified product. Text will be localized according to the locale of the product's publication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                ":product_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                },
+                {
+                  "disabled": false,
+                  "key": "postal_code",
+                  "value": "<string>",
+                  "description": "Postal/zip code to specify which the region from which to fetch coupons."
+                },
+                {
+                  "disabled": false,
+                  "key": "store_code",
+                  "value": "<string>",
+                  "description": "Store code required for deep_link of the product."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "product_id",
+                  "description": "(Required) Unique identifier for the product."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "70c47608-6ccb-4020-9ee8-e6221ae7cc2a",
+              "name": "Product response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product",
+                    ":product_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "product_id",
+                      "description": "(Required) Unique identifier for the product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"id\": 61395159,\n  \"flyer_id\": 347991,\n  \"brand\": \"KitchenAid\",\n  \"name\": \"KitchenAid Artisan 5-qt. Stand Mixer\",\n  \"deep_link\": \"http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234\",\n  \"image_url\": \"https://cdn.flippenterprise.net/page_items/20716523/1425352660/extra_large.jpg\",\n  \"cutout_image_url\": \"https://cdn.flippenterprise.net/page_items/20716523/1425352660/extra_large.jpg\",\n  \"description\": \"From Michael Michael Kors in tan or black.\",\n  \"current_price\": 19.99,\n  \"current_price_range\": \"$130 - $150\",\n  \"pre_price_text\": \"2 for \",\n  \"price_text\": \"5.47\",\n  \"post_price_text\": \"CAD\",\n  \"categories\": [\n    \"For the Home\"\n  ],\n  \"sale_story\": \"SPECIAL 60% OFF\",\n  \"dollars_off\": 240.01,\n  \"percent_off\": 69.01,\n  \"disclaimer_text\": \"Faucet and accessories sold separately.\",\n  \"original_price\": 34.99,\n  \"original_price_range\": \"$130 - $150\",\n  \"valid_from\": \"2014-01-01\",\n  \"valid_to\": \"2015-12-31\",\n  \"sku\": \"780-4069\",\n  \"hosted_coupon_image\": \"https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg\",\n  \"custom_id_field_1\": \"0081341P\",\n  \"custom_id_field_2\": \"# BONUS Reward Miles when you buy 1\",\n  \"custom_id_field_3\": \"$0.75\",\n  \"left\": 12486.7,\n  \"top\": 91.0685,\n  \"width\": 1908.3999999999996,\n  \"height\": 2174.9815000000003,\n  \"video_type\": 1,\n  \"video_url\": \"https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0\",\n  \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n  \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\",\n  \"item_type\": 1,\n  \"page\": 6,\n  \"average_rating\": 5716,\n  \"reviews\": [\n    {\n      \"title\": \"A great product\",\n      \"rating\": 5,\n      \"byline\": \"John Smith\",\n      \"date\": \"2011-02-14T19:06:43Z\",\n      \"body\": \"I really enjoyed using this wheelbarrow on my last job.\"\n    },\n    {\n      \"title\": \"A great product\",\n      \"rating\": 5,\n      \"byline\": \"John Smith\",\n      \"date\": \"2011-02-14T19:06:43Z\",\n      \"body\": \"I really enjoyed using this wheelbarrow on my last job.\"\n    }\n  ],\n  \"specs\": [\n    {\n      \"name\": \"Weight\",\n      \"value\": \"50 lbs\"\n    },\n    {\n      \"name\": \"Weight\",\n      \"value\": \"50 lbs\"\n    }\n  ],\n  \"features\": [\n    {\n      \"text\": \"Cast iron plating for improved durability.\"\n    },\n    {\n      \"text\": \"Cast iron plating for improved durability.\"\n    }\n  ],\n  \"coupons\": [\n    {\n      \"flyer_item_id\": 197289464,\n      \"coupon_id\": 155559,\n      \"coupon_type\": \"amountoff\",\n      \"loyalty_program_coupon_id\": 198495,\n      \"loyalty_program_id\": 305,\n      \"external_id\": \"293218\",\n      \"sale_story\": \"save $0.50\",\n      \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n      \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n      \"brand_display_name\": \"Cottonelle\",\n      \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n      \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n      \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n    },\n    {\n      \"flyer_item_id\": 197289464,\n      \"coupon_id\": 155559,\n      \"coupon_type\": \"amountoff\",\n      \"loyalty_program_coupon_id\": 198495,\n      \"loyalty_program_id\": 305,\n      \"external_id\": \"293218\",\n      \"sale_story\": \"save $0.50\",\n      \"promotion_text\": \"Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)\",\n      \"disclaimer_text\": \"Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498\",\n      \"brand_display_name\": \"Cottonelle\",\n      \"valid_from\": \"2017-05-07T03:00:00-04:00\",\n      \"valid_to\": \"2017-06-12T02:59:59-04:00\",\n      \"image\": \"https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg\"\n    }\n  ],\n  \"sub_items\": [\n    {\n      \"id\": 7775353,\n      \"product_id\": 47524,\n      \"name\": \"Celestial Series Countertops\",\n      \"sale_story\": \"SPECIAL 60% OFF\",\n      \"current_price\": 19.99,\n      \"original_price\": 34.99,\n      \"sku\": \"780-4069\",\n      \"description\": \"From Michael Michael Kors in tan or black.\",\n      \"brand\": \"Corinthian\",\n      \"pre_price_text\": \"2 for \",\n      \"price_text\": \"5.47\",\n      \"post_price_text\": \"CAD\",\n      \"category\": \"Kitchen\",\n      \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n      \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n      \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n      \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n      \"average_rating\": 8752,\n      \"images\": [\n        \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n      ],\n      \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n      \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n    },\n    {\n      \"id\": 7775353,\n      \"product_id\": 47524,\n      \"name\": \"Celestial Series Countertops\",\n      \"sale_story\": \"SPECIAL 60% OFF\",\n      \"current_price\": 19.99,\n      \"original_price\": 34.99,\n      \"sku\": \"780-4069\",\n      \"description\": \"From Michael Michael Kors in tan or black.\",\n      \"brand\": \"Corinthian\",\n      \"pre_price_text\": \"2 for \",\n      \"price_text\": \"5.47\",\n      \"post_price_text\": \"CAD\",\n      \"category\": \"Kitchen\",\n      \"small_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg\",\n      \"medium_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg\",\n      \"large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg\",\n      \"x_large_image_url\": \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\",\n      \"average_rating\": 7965,\n      \"images\": [\n        \"http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg\"\n      ],\n      \"web_url\": \"https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016\",\n      \"web_commission_url\": \"http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd\"\n    }\n  ],\n  \"rich_media\": [\n    {\n      \"id\": 7847.833024251476,\n      \"alt_text\": \"Sizzling bbq.\",\n      \"type\": 588,\n      \"thumbnail\": \"http://example.com/thumb.png\"\n    },\n    {\n      \"id\": 6741.28820618347,\n      \"alt_text\": \"Sizzling bbq.\",\n      \"type\": 8809,\n      \"thumbnail\": \"http://example.com/thumb.png\"\n    }\n  ],\n  \"shopping_list_enabled\": true,\n  \"in_store_only\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1212ef1-8d2c-4a35-889b-2081a6bfa783",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product",
+                    ":product_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "product_id",
+                      "description": "(Required) Unique identifier for the product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "13834de4-0692-4199-9871-79e6250f35c8",
+          "name": "Returns detailed inventory information about a product's sub items get from MI9 Retail API",
+          "request": {
+            "name": "Returns detailed inventory information about a product's sub items get from MI9 Retail API",
+            "description": {
+              "content": "Returns detailed inventory information about the specified product's sub items in a certain store.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                ":product_id",
+                "sub_items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                },
+                {
+                  "disabled": false,
+                  "key": "store_code",
+                  "value": "<string>",
+                  "description": "(Required) Store code required for getting inventory data."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "product_id",
+                  "description": "(Required) Unique identifier for the product."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8c3ebebe-b73f-4b14-958c-a3cb90f1cf64",
+              "name": "Product response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product",
+                    ":product_id",
+                    "sub_items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "product_id",
+                      "description": "(Required) Unique identifier for the product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"sku\": \"string\",\n    \"storeCode\": \"990\",\n    \"name\": \"Ginger Ale\",\n    \"imageUrl\": \"https://imageresize.sof.stg.v8.mywebgrocer.com/api/ImageResize/00062639343118.jpg\",\n    \"description\": \"A Bold, Robust, Effervescent Cola.\",\n    \"price\": \"$1.99\",\n    \"originalPrice\": \"$1.99\",\n    \"promotionText\": \"SPECIAL 60% OFF\",\n    \"url\": \"\",\n    \"buttons\": [\n      {\n        \"sku\": \"string\",\n        \"storeCode\": \"990\",\n        \"enabled\": true,\n        \"label\": \"\",\n        \"quantityControl\": false,\n        \"quantityControlOption\": {\n          \"unit\": \"kg\",\n          \"interval\": 1,\n          \"minimum\": 1,\n          \"maximum\": 10,\n          \"default\": 1\n        }\n      },\n      {\n        \"sku\": \"string\",\n        \"storeCode\": \"990\",\n        \"enabled\": true,\n        \"label\": \"\",\n        \"quantityControl\": false,\n        \"quantityControlOption\": {\n          \"unit\": \"kg\",\n          \"interval\": 1,\n          \"minimum\": 1,\n          \"maximum\": 10,\n          \"default\": 1\n        }\n      }\n    ]\n  },\n  {\n    \"sku\": \"string\",\n    \"storeCode\": \"990\",\n    \"name\": \"Ginger Ale\",\n    \"imageUrl\": \"https://imageresize.sof.stg.v8.mywebgrocer.com/api/ImageResize/00062639343118.jpg\",\n    \"description\": \"A Bold, Robust, Effervescent Cola.\",\n    \"price\": \"$1.99\",\n    \"originalPrice\": \"$1.99\",\n    \"promotionText\": \"SPECIAL 60% OFF\",\n    \"url\": \"\",\n    \"buttons\": [\n      {\n        \"sku\": \"string\",\n        \"storeCode\": \"990\",\n        \"enabled\": true,\n        \"label\": \"\",\n        \"quantityControl\": false,\n        \"quantityControlOption\": {\n          \"unit\": \"kg\",\n          \"interval\": 1,\n          \"minimum\": 1,\n          \"maximum\": 10,\n          \"default\": 1\n        }\n      },\n      {\n        \"sku\": \"string\",\n        \"storeCode\": \"990\",\n        \"enabled\": true,\n        \"label\": \"\",\n        \"quantityControl\": false,\n        \"quantityControlOption\": {\n          \"unit\": \"kg\",\n          \"interval\": 1,\n          \"minimum\": 1,\n          \"maximum\": 10,\n          \"default\": 1\n        }\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "764f6d98-87b1-4b41-8959-58b82db722a1",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product",
+                    ":product_id",
+                    "sub_items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store_code",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "product_id",
+                      "description": "(Required) Unique identifier for the product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1b626f3a-366a-4db6-a619-7a20b0cbde4a",
+      "name": "stores",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5e456d02-9c97-4224-bb36-0b8b4f9c4a1a",
+          "name": "Returns closest stores to a postal/zip code",
+          "request": {
+            "name": "Returns closest stores to a postal/zip code",
+            "description": {
+              "content": "Returns a list of the five closest stores to the specified postal/zip code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores",
+                ":merchant_identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                },
+                {
+                  "disabled": false,
+                  "key": "postal_code",
+                  "value": "<string>",
+                  "description": "(Required) Postal/zip code of user."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_identifier",
+                  "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "590b7d8c-0055-44c7-a6ba-b2a09868744a",
+              "name": "Stores response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":merchant_identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_identifier",
+                      "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 3057,\n    \"address\": \"6220 Menard Drive\",\n    \"city\": \"Casper\",\n    \"latitude\": \"42.843126\",\n    \"longitude\": \"-106.276372\",\n    \"merchant_store_code\": \"3243\",\n    \"name\": \"CASPER\",\n    \"phone_number\": \"9056230110\",\n    \"postal_code\": \"82609\",\n    \"province\": \"WY\",\n    \"sat_close\": \"18:00\",\n    \"sat_open\": \"8:00\",\n    \"sun_close\": \"18:00\",\n    \"sun_open\": \"10:00\",\n    \"mon_close\": \"21:00\",\n    \"mon_open\": \"8:00\",\n    \"tue_close\": \"21:00\",\n    \"tue_open\": \"8:00\",\n    \"wed_close\": \"21:00\",\n    \"wed_open\": \"8:00\",\n    \"thu_close\": \"21:00\",\n    \"thu_open\": \"8:00\",\n    \"fri_close\": \"21:00\",\n    \"fri_open\": \"8:00\",\n    \"distance\": \"4mi\"\n  },\n  {\n    \"id\": 3057,\n    \"address\": \"6220 Menard Drive\",\n    \"city\": \"Casper\",\n    \"latitude\": \"42.843126\",\n    \"longitude\": \"-106.276372\",\n    \"merchant_store_code\": \"3243\",\n    \"name\": \"CASPER\",\n    \"phone_number\": \"9056230110\",\n    \"postal_code\": \"82609\",\n    \"province\": \"WY\",\n    \"sat_close\": \"18:00\",\n    \"sat_open\": \"8:00\",\n    \"sun_close\": \"18:00\",\n    \"sun_open\": \"10:00\",\n    \"mon_close\": \"21:00\",\n    \"mon_open\": \"8:00\",\n    \"tue_close\": \"21:00\",\n    \"tue_open\": \"8:00\",\n    \"wed_close\": \"21:00\",\n    \"wed_open\": \"8:00\",\n    \"thu_close\": \"21:00\",\n    \"thu_open\": \"8:00\",\n    \"fri_close\": \"21:00\",\n    \"fri_open\": \"8:00\",\n    \"distance\": \"4mi\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0f80ea4-95c8-4dfc-bdc0-320e67738fef",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":merchant_identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_identifier",
+                      "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "e820d2a2-98d5-485d-a642-fb5e289e8daa",
+      "name": "fsa",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b9aca274-632e-4888-a2ae-625d2aa07c09",
+          "name": "Find geo locate fsa by merchant and ip",
+          "request": {
+            "name": "Find geo locate fsa by merchant and ip",
+            "description": {
+              "content": "Returns normalized geo locate fsa for a given merchant and optionally ip. Geo locate fsa is selected by country. ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fsa",
+                ":merchant_name_identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Contact your Flipp technical contact for your API access token."
+                },
+                {
+                  "disabled": false,
+                  "key": "ip_override",
+                  "value": "<string>",
+                  "description": "Optional parameter to override request remote IP."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_name_identifier",
+                  "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d6b7424-d733-4be5-8768-79f6f3244adc",
+              "name": "Geo locate fsa response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fsa",
+                    ":merchant_name_identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ip_override",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_name_identifier",
+                      "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"geo_locate_fsa\": \"H3A\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5442450-2858-41f5-aff8-7d89a78893ed",
+              "name": "Missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fsa",
+                    ":merchant_name_identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ip_override",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_name_identifier",
+                      "description": "(Required) Your merchant name identifier which can be obtained from your Flipp technical contact."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid publication_id or access token\",\n  \"code\": \"422\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "d7b18584-1a77-4588-86c8-1a49cf50b6db",
+      "name": "copyright",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "be66d202-4d67-4341-bf03-141f6453f563",
+          "name": "Returns Flipp copyright",
+          "request": {
+            "name": "Returns Flipp copyright",
+            "description": {},
+            "url": {
+              "path": [
+                "copyright"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "974483cd-e4f2-467a-a98e-99535a204462",
+              "name": "Copyright response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "copyright"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "//api.flipp.com/flyerkit/v4.0",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4debaeaf-c9f3-49de-87c3-8e1121a6232a",
+    "name": "FlyerKit",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "An API to access Flipp's publication data for use in your applications.\n\n### Overview\n\nThe FlyerKit API gives retailers like yourself access to the structured data that powers the Flipp circular platform. With this API, Flipp empowers you and your teams to create new experiences for your web properties and applications. The FlyerKit API allows you to integrate your circular data by creating custom promotions and integrations (modules, search, emails, menus, etc.) with the goal of increasing circular readership.\n\nFor example, you could integrate items from your circular directly into an email campaign or display thumbnails of your most popular items from across your publications as part of a module on a landing page.\nWhen used in conjunction with the FlyerKit mobile application SDKs (available for both Android and iOS), the FlyerKit API can be used to create a circular browsing experience within your native application.\n\nThis document is primarily created for development and product teams as a technical reference, but can be used by individuals with expertise in digital marketing, e-commerce and information technology to gain a high level overview of FlyerKit API capabilities and functionality.\n\n### Changes from FlyerKit v3.0\n\n* Updated the access token model, allowing retailers to have multiple FlyerKit access tokens with different levels of permission.\nNOTE: access tokens from previous FlyerKit versions will no longer work in v4.0 and new ones will need to be issued by your Flipp technical contact.\n\n* Added the ability to view future publications and products which are not yet live. This requires an access token with special permissions issued by your Flipp technical contact.\n\n* Added the ability to filter products by keywords and/or tags in all product endpoints.\n\n* Changed the `category` field returned in item models from a string to an array containing all of the item's categories and renamed it `categories`.\n\n* Created a new endpoint `/flyerkit/v4.0/publications/{merchant_identifier}/products` which returns products across all of a retailer's publications.\n\n* Added deep_link url field to publications and product endpoints. These new fields will return a direct link to a publication or item on a retailer's page.\n\n### Access Token Management\n\nAccess tokens are issued by your Flipp technical contact and if needed, multiple access tokens can be created for your various development teams or partners. Access tokens should always be kept secret and not shared.\n\nAccess tokens are passed to the FlyerKit API as URL parameters.\n\n### Supported Formats\n\n##### JSON\n\nThe FlyerKit API currently only returns data in JSON format. Example responses are provided for each of the FlyerKit endpoints.\n\n### Versioning\n\nFlyerKit uses a semantic versioning scheme with a major and minor version number. Requests are made against a major version as part of the base path in the URI. All backward compatible changes will be made in minor versions. Clients will not be able to request a specific minor version as the server will always serve the latest version for a major release.\n\nAny changes in the API that are not backward compatible will use an updated major version.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,509 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "FlyerKit",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "publications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find publications by merchant and store or postal/zip code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/publications/:merchant_identifier",
+            "params": [
+              {
+                "name": "merchant_identifier",
+                "value": "",
+                "type": "path",
+                "description": "Your merchant name identifier which can be obtained from your Flipp technical contact."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Contact your Flipp technical contact for your API access token."
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "Providing a locale will return content from that locale's language whenever Flipp has that content available. Content includes the underlying circular, as well as categories.\nWhen localized content is not available for a given locale, an empty response is returned.\n| Locale              | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| en-CA               | English, Canada                                           |\n| fr-CA               | French, Canada                                            |\n| en-US               | English, United States                                    |\n"
+              },
+              {
+                "name": "store_code",
+                "value": "",
+                "type": "query",
+                "description": "Retailer's store code."
+              },
+              {
+                "name": "postal_code",
+                "value": "",
+                "type": "query",
+                "description": "Optional if store_code is provided. Values can be a Canadian postal code, or a United States zipcode."
+              },
+              {
+                "name": "see_future",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include future publications in the results. Requires special access token permissions."
+              },
+              {
+                "name": "show_storefronts",
+                "value": "",
+                "type": "query",
+                "description": "Show Digital Content. If true will suppress publications that are not optimized for vertical scroll. If false will suppress digital only content. Default is false."
+              }
+            ]
+          },
+          "docs": "Returns a list of available publications for a given store and optionally postal/zip code. Publications are selected using the supplied store's location. The validity dates of a publication specify the period for which the content (sales, pricing, etc.) is valid. The availability dates specify the time that the publication should be accessible within an application.The sort order depends on order that should be manually set up on 'Flyers sorting' tab in Fadmin"
+        },
+        {
+          "info": {
+            "name": "Returns pages in a publication",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/publication/:publication_id/pages",
+            "params": [
+              {
+                "name": "publication_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the publication."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Contact your Flipp technical contact for your API access token."
+              }
+            ]
+          },
+          "docs": "Returns the list of pages in the given publication.The width of the thumbnails in the response may vary to preserve image aspect ratios."
+        },
+        {
+          "info": {
+            "name": "Returns highlights in a publication",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/publication/:publication_id/highlights",
+            "params": [
+              {
+                "name": "publication_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the publication."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Contact your Flipp technical contact for your API access token."
+              }
+            ]
+          },
+          "docs": "Returns the list of highlights in the given publication. Highlights are special tags given to items which allow them to be highlighted on the front end by darkening the surrounding items/areas of the publication. For example, some merchants like all items made in the USA to be given a \"Made in USA\" highlight."
+        },
+        {
+          "info": {
+            "name": "Returns categories in a publication",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/publication/:publication_id/categories",
+            "params": [
+              {
+                "name": "publication_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the publication."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Contact your Flipp technical contact for your API access token."
+              }
+            ]
+          },
+          "docs": "Returns the list of categories in the given publication. The categories can be used to implement a feature that jumps to a specific category in the publication. For example, if the publication has a grocery section, then the grocery category would be used to scroll to the start of the grocery section."
+        },
+        {
+          "info": {
+            "name": "Returns products in a publication",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/publication/:publication_id/products",
+            "params": [
+              {
+                "name": "publication_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the publication."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Contact your Flipp technical contact for your API access token."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Limit products to those appearing on a specified page in the circular."
+              },
+              {
+                "name": "display_type",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of integers specifying types of circular items to return.\nIf not provided, this endpoint will only return items with a display type of 1.\nSee table below for a list of display types.\n| Display Type Number | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| 1                   | Circular item                                             |\n| 3                   | Video (YouTube embedded URL or link to mp4 file)          |\n| 5                   | Web linkout (link to external site)                       |\n| 7                   | Circular page link (link to another page in the circular) |\n| 15                  | iframe (displays a URL in an iframe)                      |\n| 25                  | Coupon (retailer coupon displayed as a circular item)     |\n| all                 | All items regardless of type                              |\n"
+              },
+              {
+                "name": "postal_code",
+                "value": "",
+                "type": "query",
+                "description": "Postal/zip code to specify the region from which to fetch coupons."
+              },
+              {
+                "name": "store_code",
+                "value": "",
+                "type": "query",
+                "description": "Store code required for deep_link of the product."
+              },
+              {
+                "name": "keywords",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of keywords appearing in item names/descriptions with which to filter items."
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Text strings that allow items to be filtered based on more detailed groupings/categorizations. Ask your Flipp Technical contact for more details on how to provide tags against your items."
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Return items sorted by a specified criterion. Supported sort criteria are listed in the table below.\n| Sort criterion      | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| popularity          | Orders items based on the running total of clicks that\nshoppers have made on the items in the current circular.\nItem click counts are updated at least twice per day.\n                                 |\n"
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "When used with sort_by, determines the order in which items are sorted by the specified criterion.\n| Sort order          | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| asc                 | Sort items in ascending order.                            |\n| desc                | Sort items in descending order (default).                 |\n"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Filter products by given category."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Set the count of products to be returned. Positive number. All products will be returned if size >= total products count and offset = 0 or missing. [] is returned if there are no products available."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Set the count of items to be skipped when size parameter is specified. 0 is a default value. [] is returned if offset is too big."
+              }
+            ]
+          },
+          "docs": "For a given publication ID, returns a list of products in the publication. The products in the response are sorted by position, from first page to last, then top to bottom, then left to right by default.Text will be localized according to the locale of the publication. If keywords or tags are provided, a maximum of 1000 items will be returned."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns products across publications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/publications/:merchant_identifier/products",
+            "params": [
+              {
+                "name": "merchant_identifier",
+                "value": "",
+                "type": "path",
+                "description": "Your merchant name identifier which can be obtained from your Flipp technical contact."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Contact your Flipp technical contact for your API access token."
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "Providing a locale will return content from that locale's language whenever Flipp has that content available. Content includes the underlying circular, as well as categories.\nWhen localized content is not available for a given locale, an empty response is returned.\n| Locale              | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| en-CA               | English, Canada                                           |\n| fr-CA               | French, Canada                                            |\n| en-US               | English, United States                                    |\n"
+              },
+              {
+                "name": "store_code",
+                "value": "",
+                "type": "query",
+                "description": "Retailer's store code."
+              },
+              {
+                "name": "postal_code",
+                "value": "",
+                "type": "query",
+                "description": "Optional if store_code is provided. Values can be a Canadian postal code, or a United States zipcode."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Limit products to those appearing on a specified page in the circular."
+              },
+              {
+                "name": "display_type",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of integers specifying types of circular items to return.\nIf not provided, this endpoint will only return items with a display type of 1.\nSee table below for a list of display types.\n| Display Type Number | Description                                               |\n| ------------------- | --------------------------------------------------------- |\n| 1                   | Circular item                                             |\n| 3                   | Video (YouTube embedded URL or link to mp4 file)          |\n| 5                   | Web linkout (link to external site)                       |\n| 7                   | Circular page link (link to another page in the circular) |\n| 15                  | iframe (displays a URL in an iframe)                      |\n| 25                  | Coupon (retailer coupon displayed as a circular item)     |\n| all                 | All items regardless of type                              |\n"
+              },
+              {
+                "name": "keywords",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of keywords appearing in item names/descriptions with which to filter items."
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Text strings that allow items to be filtered based on more detailed groupings/categorizations. Ask your Flipp Technical contact for more details on how to provide tags against your items."
+              },
+              {
+                "name": "see_future",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include future publications in the results. Requires special access token permissions."
+              },
+              {
+                "name": "show_storefronts",
+                "value": "",
+                "type": "query",
+                "description": "Show Digital Content. If true will suppress publications that are not optimized for vertical scroll. If false will suppress digital only content. Default is false."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Filter products by given category."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Set the count of products to be returned. Positive number. All products will be returned if size >= total products count and offset = 0 or missing. [] is returned if there are no products available."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Set the count of items to be skipped when size parameter is specified. 0 is a default value. [] is returned if offset is too big."
+              }
+            ]
+          },
+          "docs": "Returns a list of available products for a given store or postal/zip code. If a store code is given, products are selected using the store's location. Otherwise, products are chosen using the given postal/zip code. If both a store code and postal/zip code are provided, the store code takes precedence. Text will be localized according to the locale of the publication. If keywords or tags are provided, a maximum of 1000 items will be returned.Results are sorted by the 'left' column asc which means"
+        },
+        {
+          "info": {
+            "name": "Returns detailed information about a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/product/:product_id",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the product."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Contact your Flipp technical contact for your API access token."
+              },
+              {
+                "name": "postal_code",
+                "value": "",
+                "type": "query",
+                "description": "Postal/zip code to specify which the region from which to fetch coupons."
+              },
+              {
+                "name": "store_code",
+                "value": "",
+                "type": "query",
+                "description": "Store code required for deep_link of the product."
+              }
+            ]
+          },
+          "docs": "Returns detailed information about the specified product. Text will be localized according to the locale of the product's publication."
+        },
+        {
+          "info": {
+            "name": "Returns detailed inventory information about a product's sub items get from MI9 Retail API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/product/:product_id/sub_items",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the product."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Contact your Flipp technical contact for your API access token."
+              },
+              {
+                "name": "store_code",
+                "value": "",
+                "type": "query",
+                "description": "Store code required for getting inventory data."
+              }
+            ]
+          },
+          "docs": "Returns detailed inventory information about the specified product's sub items in a certain store."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "stores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns closest stores to a postal/zip code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores/:merchant_identifier",
+            "params": [
+              {
+                "name": "merchant_identifier",
+                "value": "",
+                "type": "path",
+                "description": "Your merchant name identifier which can be obtained from your Flipp technical contact."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Contact your Flipp technical contact for your API access token."
+              },
+              {
+                "name": "postal_code",
+                "value": "",
+                "type": "query",
+                "description": "Postal/zip code of user."
+              }
+            ]
+          },
+          "docs": "Returns a list of the five closest stores to the specified postal/zip code."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "fsa",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find geo locate fsa by merchant and ip",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fsa/:merchant_name_identifier",
+            "params": [
+              {
+                "name": "merchant_name_identifier",
+                "value": "",
+                "type": "path",
+                "description": "Your merchant name identifier which can be obtained from your Flipp technical contact."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Contact your Flipp technical contact for your API access token."
+              },
+              {
+                "name": "ip_override",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter to override request remote IP."
+              }
+            ]
+          },
+          "docs": "Returns normalized geo locate fsa for a given merchant and optionally ip. Geo locate fsa is selected by country. "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "copyright",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns Flipp copyright",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/copyright"
+          },
+          "docs": "Returns Flipp copyright"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
