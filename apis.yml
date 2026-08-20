@@ -49,6 +49,21 @@ tags:
 - Advertising
 - Flyers
 - Coupons
+- E-Commerce
+- Shopping
+- Marketing
+- Digital Circulars
+- Publications
+- Merchandising
+- Product Data
+- Store Locator
+tags_raw:
+- Company
+- Retail
+- Retail Media
+- Advertising
+- Flyers
+- Coupons
 - E-commerce
 - Shopping
 - Marketing
@@ -72,6 +87,16 @@ apis:
   humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
   baseURL: https://api.flipp.com/flyerkit/v4.0
   tags:
+  - Retail Media
+  - Digital Circulars
+  - Flyers
+  - Publications
+  - Product Data
+  - Coupons
+  - Store Locator
+  - Merchandising
+  - Retail
+  tags_raw:
   - retail-media
   - digital-circulars
   - flyers
