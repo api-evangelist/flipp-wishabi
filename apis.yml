@@ -73,46 +73,20 @@ tags_raw:
 - Product Data
 - Store Locator
 apis:
-- name: Flipp FlyerKit API
-  description: >-
-    Public HTTPS/JSON API that gives retailers programmatic access to the structured
-    circular ("publication") data that powers the Flipp platform - publications by
-    merchant and store/postal code, publication pages, highlights, categories,
-    products across or within a publication, detailed product records with matched
-    coupons, sub-item inventory, the five closest stores to a postal/zip code, and
-    normalized geo FSA lookup. Responses are JSON, requests are authorized with an
-    access_token query parameter issued by a Flipp technical contact, CORS is
-    supported, and versions are pinned in the URI path (v2.0, v3.0, v4.0). v4.0 adds
-    multi-token permissions, future-publication visibility, and keyword/tag filtering.
+- aid: flipp-wishabi:flipp-wishabi-copyright-api
+  name: Flipp (Wishabi) Copyright API
+  description: The copyright API from Flipp (Wishabi) — 1 operation(s) for copyright.
   humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
   baseURL: https://api.flipp.com/flyerkit/v4.0
   tags:
-  - Retail Media
-  - Digital Circulars
-  - Flyers
-  - Publications
-  - Product Data
-  - Coupons
-  - Store Locator
-  - Merchandising
-  - Retail
-  tags_raw:
-  - retail-media
-  - digital-circulars
-  - flyers
-  - publications
-  - product-data
-  - coupons
-  - store-locator
-  - merchandising
-  - retail
+  - copyright
   properties:
+  - type: OpenAPI
+    url: openapi/flipp-wishabi-copyright-api-openapi.yml
   - type: Documentation
     url: https://api.flipp.com/flyerkit/v4.0/documentation
   - type: APIReference
     url: https://api.flipp.com/flyerkit/v4.0/documentation
-  - type: OpenAPI
-    url: openapi/flipp-wishabi-flyerkit-openapi.yml
   - type: Swagger
     url: openapi/_original/flipp-wishabi-flyerkit-v4-openapi-original.json
   - type: Authentication
@@ -123,8 +97,118 @@ apis:
     url: errors/flipp-wishabi-problem-types.yml
   - type: DataModel
     url: data-model/flipp-wishabi-data-model.yml
-  - type: Overlay
-    url: overlays/flipp-wishabi-flyerkit-overlay.yaml
+  - type: RateLimits
+    url: rate-limits/flipp-wishabi-rate-limits.yml
+  - type: Plans
+    url: plans/flipp-wishabi-plans-pricing.yml
+- aid: flipp-wishabi:flipp-wishabi-fsa-api
+  name: Flipp (Wishabi) Fsa API
+  description: The fsa API from Flipp (Wishabi) — 1 operation(s) for fsa.
+  humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
+  baseURL: https://api.flipp.com/flyerkit/v4.0
+  tags:
+  - fsa
+  properties:
+  - type: OpenAPI
+    url: openapi/flipp-wishabi-fsa-api-openapi.yml
+  - type: Documentation
+    url: https://api.flipp.com/flyerkit/v4.0/documentation
+  - type: APIReference
+    url: https://api.flipp.com/flyerkit/v4.0/documentation
+  - type: Swagger
+    url: openapi/_original/flipp-wishabi-flyerkit-v4-openapi-original.json
+  - type: Authentication
+    url: authentication/flipp-wishabi-authentication.yml
+  - type: Conventions
+    url: conventions/flipp-wishabi-conventions.yml
+  - type: ErrorCatalog
+    url: errors/flipp-wishabi-problem-types.yml
+  - type: DataModel
+    url: data-model/flipp-wishabi-data-model.yml
+  - type: RateLimits
+    url: rate-limits/flipp-wishabi-rate-limits.yml
+  - type: Plans
+    url: plans/flipp-wishabi-plans-pricing.yml
+- aid: flipp-wishabi:flipp-wishabi-products-api
+  name: Flipp (Wishabi) Products API
+  description: The products API from Flipp (Wishabi) — 4 operation(s) for products.
+  humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
+  baseURL: https://api.flipp.com/flyerkit/v4.0
+  tags:
+  - products
+  properties:
+  - type: OpenAPI
+    url: openapi/flipp-wishabi-products-api-openapi.yml
+  - type: Documentation
+    url: https://api.flipp.com/flyerkit/v4.0/documentation
+  - type: APIReference
+    url: https://api.flipp.com/flyerkit/v4.0/documentation
+  - type: Swagger
+    url: openapi/_original/flipp-wishabi-flyerkit-v4-openapi-original.json
+  - type: Authentication
+    url: authentication/flipp-wishabi-authentication.yml
+  - type: Conventions
+    url: conventions/flipp-wishabi-conventions.yml
+  - type: ErrorCatalog
+    url: errors/flipp-wishabi-problem-types.yml
+  - type: DataModel
+    url: data-model/flipp-wishabi-data-model.yml
+  - type: RateLimits
+    url: rate-limits/flipp-wishabi-rate-limits.yml
+  - type: Plans
+    url: plans/flipp-wishabi-plans-pricing.yml
+- aid: flipp-wishabi:flipp-wishabi-publications-api
+  name: Flipp (Wishabi) Publications API
+  description: The publications API from Flipp (Wishabi) — 5 operation(s) for publications.
+  humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
+  baseURL: https://api.flipp.com/flyerkit/v4.0
+  tags:
+  - publications
+  properties:
+  - type: OpenAPI
+    url: openapi/flipp-wishabi-publications-api-openapi.yml
+  - type: Documentation
+    url: https://api.flipp.com/flyerkit/v4.0/documentation
+  - type: APIReference
+    url: https://api.flipp.com/flyerkit/v4.0/documentation
+  - type: Swagger
+    url: openapi/_original/flipp-wishabi-flyerkit-v4-openapi-original.json
+  - type: Authentication
+    url: authentication/flipp-wishabi-authentication.yml
+  - type: Conventions
+    url: conventions/flipp-wishabi-conventions.yml
+  - type: ErrorCatalog
+    url: errors/flipp-wishabi-problem-types.yml
+  - type: DataModel
+    url: data-model/flipp-wishabi-data-model.yml
+  - type: RateLimits
+    url: rate-limits/flipp-wishabi-rate-limits.yml
+  - type: Plans
+    url: plans/flipp-wishabi-plans-pricing.yml
+- aid: flipp-wishabi:flipp-wishabi-stores-api
+  name: Flipp (Wishabi) Stores API
+  description: The stores API from Flipp (Wishabi) — 1 operation(s) for stores.
+  humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
+  baseURL: https://api.flipp.com/flyerkit/v4.0
+  tags:
+  - stores
+  properties:
+  - type: OpenAPI
+    url: openapi/flipp-wishabi-stores-api-openapi.yml
+  - type: Documentation
+    url: https://api.flipp.com/flyerkit/v4.0/documentation
+  - type: APIReference
+    url: https://api.flipp.com/flyerkit/v4.0/documentation
+  - type: Swagger
+    url: openapi/_original/flipp-wishabi-flyerkit-v4-openapi-original.json
+  - type: Authentication
+    url: authentication/flipp-wishabi-authentication.yml
+  - type: Conventions
+    url: conventions/flipp-wishabi-conventions.yml
+  - type: ErrorCatalog
+    url: errors/flipp-wishabi-problem-types.yml
+  - type: DataModel
+    url: data-model/flipp-wishabi-data-model.yml
   - type: RateLimits
     url: rate-limits/flipp-wishabi-rate-limits.yml
   - type: Plans
@@ -135,6 +219,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/flipp-wishabi-flyerkit-overlay.yaml
 - type: Website
   url: https://www.flipp.com/
 - type: CompanyWebsite
