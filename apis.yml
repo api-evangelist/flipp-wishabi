@@ -91,6 +91,8 @@ apis:
   humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
   baseURL: https://api.flipp.com/flyerkit/v4.0
   tags:
+  - Copyright
+  tags_raw:
   - copyright
   properties:
   - type: OpenAPI
@@ -119,6 +121,8 @@ apis:
   humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
   baseURL: https://api.flipp.com/flyerkit/v4.0
   tags:
+  - FSA
+  tags_raw:
   - fsa
   properties:
   - type: OpenAPI
@@ -147,6 +151,8 @@ apis:
   humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
   baseURL: https://api.flipp.com/flyerkit/v4.0
   tags:
+  - Product
+  tags_raw:
   - products
   properties:
   - type: OpenAPI
@@ -175,6 +181,8 @@ apis:
   humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
   baseURL: https://api.flipp.com/flyerkit/v4.0
   tags:
+  - Publications
+  tags_raw:
   - publications
   properties:
   - type: OpenAPI
@@ -203,6 +211,8 @@ apis:
   humanURL: https://api.flipp.com/flyerkit/v4.0/documentation
   baseURL: https://api.flipp.com/flyerkit/v4.0
   tags:
+  - Stores
+  tags_raw:
   - stores
   properties:
   - type: OpenAPI
