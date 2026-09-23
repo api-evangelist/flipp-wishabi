@@ -2,84 +2,18 @@ openapi: 3.2.0
 info:
   version: '4.0'
   title: FlyerKit Publications API
-  description: 'An API to access Flipp''s publication data for use in your applications.
-
-
-    ### Overview
-
-
-    The FlyerKit API gives retailers like yourself access to the structured data that powers the Flipp circular platform. With this API, Flipp empowers you and your teams to create new experiences for your web properties and applications. The FlyerKit API allows you to integrate your circular data by creating custom promotions and integrations (modules, search, emails, menus, etc.) with the goal of increasing circular readership.
-
-
-    For example, you could integrate items from your circular directly into an email campaign or display thumbnails of your most popular items from across your publications as part of a module on a landing page.
-
-    When used in conjunction with the FlyerKit mobile application SDKs (available for both Android and iOS), the FlyerKit API can be used to create a circular browsing experience within your native application.
-
-
-    This document is primarily created for development and product teams as a technical reference, but can be used by individuals with expertise in digital marketing, e-commerce and information technology to gain a high level overview of FlyerKit API capabilities and functionality.
-
-
-    ### Changes from FlyerKit v3.0
-
-
-    * Updated the access token model, allowing retailers to have multiple FlyerKit access tokens with different levels of permission.
-
-    NOTE: access tokens from previous FlyerKit versions will no longer work in v4.0 and new ones will need to be issued by your Flipp technical contact.
-
-
-    * Added the ability to view future publications and products which are not yet live. This requires an access token with special permissions issued by your Flipp technical contact.
-
-
-    * Added the ability to filter products by keywords and/or tags in all product endpoints.
-
-
-    * Changed the `category` field returned in item models from a string to an array containing all of the item''s categories and renamed it `categories`.
-
-
-    * Created a new endpoint `/flyerkit/v4.0/publications/{merchant_identifier}/products` which returns products across all of a retailer''s publications.
-
-
-    * Added deep_link url field to publications and product endpoints. These new fields will return a direct link to a publication or item on a retailer''s page.
-
-
-    ### Access Token Management
-
-
-    Access tokens are issued by your Flipp technical contact and if needed, multiple access tokens can be created for your various development teams or partners. Access tokens should always be kept secret and not shared.
-
-
-    Access tokens are passed to the FlyerKit API as URL parameters.
-
-
-    ### Supported Formats
-
-
-    ##### JSON
-
-
-    The FlyerKit API currently only returns data in JSON format. Example responses are provided for each of the FlyerKit endpoints.
-
-
-    ### Versioning
-
-
-    FlyerKit uses a semantic versioning scheme with a major and minor version number. Requests are made against a major version as part of the base path in the URI. All backward compatible changes will be made in minor versions. Clients will not be able to request a specific minor version as the server will always serve the latest version for a major release.
-
-
-    Any changes in the API that are not backward compatible will use an updated major version.
-
-    '
+  description: An API to access Flipp's publication data for use in your applications.
 servers:
 - url: https://api.flipp.com/flyerkit/v4.0
 tags:
-- name: publications
+- name: Publications
 paths:
   /publications/{merchant_identifier}:
     get:
       summary: Find publications by merchant and store or postal/zip code
       description: Returns a list of available publications for a given store and optionally postal/zip code. Publications are selected using the supplied store's location. The validity dates of a publication specify the period for which the content (sales, pricing, etc.) is valid. The availability dates specify the time that the publication should be accessible within an application.The sort order depends on order that should be manually set up on 'Flyers sorting' tab in Fadmin
       tags:
-      - publications
+      - Publications
       parameters:
       - name: merchant_identifier
         in: path
@@ -148,12 +82,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+      operationId: getPublicationsByMerchantIdentifier
+      x-operation-id-source: derived
   /publication/{publication_id}/pages:
     get:
       summary: Returns pages in a publication
       description: Returns the list of pages in the given publication.The width of the thumbnails in the response may vary to preserve image aspect ratios.
       tags:
-      - publications
+      - Publications
       parameters:
       - name: publication_id
         in: path
@@ -182,12 +118,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+      operationId: getPublicationByPublicationIdPages
+      x-operation-id-source: derived
   /publication/{publication_id}/highlights:
     get:
       summary: Returns highlights in a publication
       description: Returns the list of highlights in the given publication. Highlights are special tags given to items which allow them to be highlighted on the front end by darkening the surrounding items/areas of the publication. For example, some merchants like all items made in the USA to be given a "Made in USA" highlight.
       tags:
-      - publications
+      - Publications
       parameters:
       - name: publication_id
         in: path
@@ -216,12 +154,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+      operationId: getPublicationByPublicationIdHighlights
+      x-operation-id-source: derived
   /publication/{publication_id}/categories:
     get:
       summary: Returns categories in a publication
       description: Returns the list of categories in the given publication. The categories can be used to implement a feature that jumps to a specific category in the publication. For example, if the publication has a grocery section, then the grocery category would be used to scroll to the start of the grocery section.
       tags:
-      - publications
+      - Publications
       parameters:
       - name: publication_id
         in: path
@@ -250,12 +190,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+      operationId: getPublicationByPublicationIdCategories
+      x-operation-id-source: derived
   /publication/{publication_id}/products:
     get:
       summary: Returns products in a publication
       description: For a given publication ID, returns a list of products in the publication. The products in the response are sorted by position, from first page to last, then top to bottom, then left to right by default.Text will be localized according to the locale of the publication. If keywords or tags are provided, a maximum of 1000 items will be returned.
       tags:
-      - publications
+      - Publications
       parameters:
       - name: publication_id
         in: path
@@ -373,8 +315,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+      operationId: getPublicationByPublicationIdProducts
+      x-operation-id-source: derived
 components:
   schemas:
+    publication_highlight:
+      properties:
+        name:
+          type: string
+          description: The name of the highlight
+          example: Grocery Aisle
+        left:
+          type:
+          - float
+          - 'null'
+          description: The left coordinate of the highlight's bounding box
+          example: 10169.2
+        top:
+          type:
+          - float
+          - 'null'
+          description: The top coordinate of the highlight's bounding box
+          example: 1989.54
+        width:
+          type: float
+          description: The width of the highlight's bounding box
+          example: 556.5
+        height:
+          type: float
+          description: The height of the highlight's bounding box
+          example: 469.6700000000001
+    error:
+      properties:
+        message:
+          type: string
+          description: The error message
+          example: Invalid publication_id or access token
+        code:
+          type: string
+          description: HTTP status code
+          example: '422'
     product:
       properties:
         id:
@@ -647,58 +627,6 @@ components:
           description: Array of subitems for the item
           items:
             $ref: '#/components/schemas/sub_item'
-    publication_page:
-      properties:
-        page:
-          type: integer
-          description: The page number, beginning at 1
-          example: 1
-        flyer_id:
-          type: integer
-          description: The flyer ID of the page
-          example: 348864
-        flyer_run_id:
-          type: integer
-          description: The flyer run ID of the page
-          example: 47315
-        image_150h_url:
-          type:
-          - string
-          - 'null'
-          description: URL of page thumbnail 150 pixels high
-          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_150h_s3_key
-        image_400h_url:
-          type:
-          - string
-          - 'null'
-          description: URL of page thumbnail 400 pixels high
-          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_400h_s3_key
-        image_2000h_url:
-          type:
-          - string
-          - 'null'
-          description: URL of page thumbnail 2000 pixels high
-          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key
-        left:
-          type:
-          - float
-          - 'null'
-          description: The left coordinate of the page's bounding box
-          example: 0.0
-        top:
-          type:
-          - float
-          - 'null'
-          description: The top coordinate of the page's bounding box
-          example: 0.0
-        width:
-          type: float
-          description: The width of the page's bounding box
-          example: 2560.0
-        height:
-          type: float
-          description: The height of the page's bounding box
-          example: 2560.0
     correction_notice:
       properties:
         html:
@@ -711,32 +639,157 @@ components:
           - 'null'
           description: Image associated with the correction notice
           example: https://cdn.flippenterprise.net/flyers/348864/correction/1232923480.jpg
-    publication_highlight:
+    publication_category:
       properties:
         name:
           type: string
-          description: The name of the highlight
-          example: Grocery Aisle
+          description: The name of the category
+          example: Solid Surface Countertops
         left:
           type:
           - float
           - 'null'
-          description: The left coordinate of the highlight's bounding box
-          example: 10169.2
+          description: The left coordinate of the category's bounding box
+          example: 1997.98
         top:
           type:
           - float
           - 'null'
-          description: The top coordinate of the highlight's bounding box
-          example: 1989.54
+          description: The top coordinate of the category's bounding box
+          example: 22.6047
         width:
-          type: float
-          description: The width of the highlight's bounding box
-          example: 556.5
+          type:
+          - float
+          - 'null'
+          description: The width of the category's bounding box
+          example: 3905.3799999999997
         height:
-          type: float
-          description: The height of the highlight's bounding box
-          example: 469.6700000000001
+          type:
+          - float
+          - 'null'
+          description: The height of the category's bounding box
+          example: 2504.1353
+        thumbnail_image_url:
+          type:
+          - string
+          - 'null'
+          description: A thumbnail image intended for a listing
+          example: https://cdn.flippenterprise.net/flyers/348864/l_thumbnail/1425009356.jpg
+    sub_item:
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the subitem
+          example: 7775353
+        product_id:
+          type: integer
+          description: FlyerItem ID to which the subitem belongs
+          example: 47524
+        name:
+          type: string
+          description: Localized subitem name
+          example: Celestial Series Countertops
+        sale_story:
+          type:
+          - string
+          - 'null'
+          description: Localized news story for the subitem
+          example: SPECIAL 60% OFF
+        current_price:
+          type:
+          - float
+          - 'null'
+          description: The current price for the subitem
+          example: 19.99
+        original_price:
+          type:
+          - float
+          - 'null'
+          description: The original price for the subitem
+          example: 34.99
+        sku:
+          type:
+          - string
+          - 'null'
+          description: The subitem stock keeping unit
+          example: 780-4069
+        description:
+          type:
+          - string
+          - 'null'
+          description: Localized text describing the subitem
+          example: From Michael Michael Kors in tan or black.
+        brand:
+          type: string
+          description: The brand of the subitem
+          example: Corinthian
+        pre_price_text:
+          type: string
+          description: Localized text to place before price_text
+          example: '2 for '
+        price_text:
+          type: string
+          description: Localized text for the price
+          example: '5.47'
+        post_price_text:
+          type: string
+          description: Localized text to place after price_text
+          example: CAD
+        category:
+          type:
+          - string
+          - 'null'
+          description: The category of the subitem
+          example: Kitchen
+        small_image_url:
+          type:
+          - string
+          - 'null'
+          description: URL of a small image of the subitem
+          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg
+        medium_image_url:
+          type:
+          - string
+          - 'null'
+          description: URL of a medium image of the subitem
+          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg
+        large_image_url:
+          type:
+          - string
+          - 'null'
+          description: URL of a large image of the subitem
+          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg
+        x_large_image_url:
+          type:
+          - string
+          - 'null'
+          description: URL of a very large image of the subitem
+          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg
+        average_rating:
+          type:
+          - integer
+          - 'null'
+          description: Average rating of item
+          example: 4.8
+        images:
+          type: array
+          description: Array of subitem image URLs
+          items:
+            type: string
+          example:
+          - http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg
+        web_url:
+          type:
+          - string
+          - 'null'
+          description: Link to the external item page
+          example: https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016
+        web_commission_url:
+          type:
+          - string
+          - 'null'
+          description: Link to the external item page with tracking codes
+          example: http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd
     publication:
       properties:
         id:
@@ -929,167 +982,58 @@ components:
           - 'null'
           description: Print version of the publication in PDF format
           example: https://cdn.flippenterprise.net/flyers/26376715/711004c22f8216e4.pdf
-    error:
+    publication_page:
       properties:
-        message:
-          type: string
-          description: The error message
-          example: Invalid publication_id or access token
-        code:
-          type: string
-          description: HTTP status code
-          example: '422'
-    sub_item:
-      properties:
-        id:
+        page:
           type: integer
-          description: Unique identifier for the subitem
-          example: 7775353
-        product_id:
+          description: The page number, beginning at 1
+          example: 1
+        flyer_id:
           type: integer
-          description: FlyerItem ID to which the subitem belongs
-          example: 47524
-        name:
-          type: string
-          description: Localized subitem name
-          example: Celestial Series Countertops
-        sale_story:
+          description: The flyer ID of the page
+          example: 348864
+        flyer_run_id:
+          type: integer
+          description: The flyer run ID of the page
+          example: 47315
+        image_150h_url:
           type:
           - string
           - 'null'
-          description: Localized news story for the subitem
-          example: SPECIAL 60% OFF
-        current_price:
-          type:
-          - float
-          - 'null'
-          description: The current price for the subitem
-          example: 19.99
-        original_price:
-          type:
-          - float
-          - 'null'
-          description: The original price for the subitem
-          example: 34.99
-        sku:
+          description: URL of page thumbnail 150 pixels high
+          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_150h_s3_key
+        image_400h_url:
           type:
           - string
           - 'null'
-          description: The subitem stock keeping unit
-          example: 780-4069
-        description:
+          description: URL of page thumbnail 400 pixels high
+          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_400h_s3_key
+        image_2000h_url:
           type:
           - string
           - 'null'
-          description: Localized text describing the subitem
-          example: From Michael Michael Kors in tan or black.
-        brand:
-          type: string
-          description: The brand of the subitem
-          example: Corinthian
-        pre_price_text:
-          type: string
-          description: Localized text to place before price_text
-          example: '2 for '
-        price_text:
-          type: string
-          description: Localized text for the price
-          example: '5.47'
-        post_price_text:
-          type: string
-          description: Localized text to place after price_text
-          example: CAD
-        category:
-          type:
-          - string
-          - 'null'
-          description: The category of the subitem
-          example: Kitchen
-        small_image_url:
-          type:
-          - string
-          - 'null'
-          description: URL of a small image of the subitem
-          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg
-        medium_image_url:
-          type:
-          - string
-          - 'null'
-          description: URL of a medium image of the subitem
-          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg
-        large_image_url:
-          type:
-          - string
-          - 'null'
-          description: URL of a large image of the subitem
-          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg
-        x_large_image_url:
-          type:
-          - string
-          - 'null'
-          description: URL of a very large image of the subitem
-          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg
-        average_rating:
-          type:
-          - integer
-          - 'null'
-          description: Average rating of item
-          example: 4.8
-        images:
-          type: array
-          description: Array of subitem image URLs
-          items:
-            type: string
-          example:
-          - http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg
-        web_url:
-          type:
-          - string
-          - 'null'
-          description: Link to the external item page
-          example: https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016
-        web_commission_url:
-          type:
-          - string
-          - 'null'
-          description: Link to the external item page with tracking codes
-          example: http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd
-    publication_category:
-      properties:
-        name:
-          type: string
-          description: The name of the category
-          example: Solid Surface Countertops
+          description: URL of page thumbnail 2000 pixels high
+          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key
         left:
           type:
           - float
           - 'null'
-          description: The left coordinate of the category's bounding box
-          example: 1997.98
+          description: The left coordinate of the page's bounding box
+          example: 0.0
         top:
           type:
           - float
           - 'null'
-          description: The top coordinate of the category's bounding box
-          example: 22.6047
+          description: The top coordinate of the page's bounding box
+          example: 0.0
         width:
-          type:
-          - float
-          - 'null'
-          description: The width of the category's bounding box
-          example: 3905.3799999999997
+          type: float
+          description: The width of the page's bounding box
+          example: 2560.0
         height:
-          type:
-          - float
-          - 'null'
-          description: The height of the category's bounding box
-          example: 2504.1353
-        thumbnail_image_url:
-          type:
-          - string
-          - 'null'
-          description: A thumbnail image intended for a listing
-          example: https://cdn.flippenterprise.net/flyers/348864/l_thumbnail/1425009356.jpg
+          type: float
+          description: The height of the page's bounding box
+          example: 2560.0
     product_coupon:
       properties:
         flyer_item_id:

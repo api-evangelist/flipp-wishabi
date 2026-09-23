@@ -2,84 +2,18 @@ openapi: 3.2.0
 info:
   version: '4.0'
   title: FlyerKit Stores API
-  description: 'An API to access Flipp''s publication data for use in your applications.
-
-
-    ### Overview
-
-
-    The FlyerKit API gives retailers like yourself access to the structured data that powers the Flipp circular platform. With this API, Flipp empowers you and your teams to create new experiences for your web properties and applications. The FlyerKit API allows you to integrate your circular data by creating custom promotions and integrations (modules, search, emails, menus, etc.) with the goal of increasing circular readership.
-
-
-    For example, you could integrate items from your circular directly into an email campaign or display thumbnails of your most popular items from across your publications as part of a module on a landing page.
-
-    When used in conjunction with the FlyerKit mobile application SDKs (available for both Android and iOS), the FlyerKit API can be used to create a circular browsing experience within your native application.
-
-
-    This document is primarily created for development and product teams as a technical reference, but can be used by individuals with expertise in digital marketing, e-commerce and information technology to gain a high level overview of FlyerKit API capabilities and functionality.
-
-
-    ### Changes from FlyerKit v3.0
-
-
-    * Updated the access token model, allowing retailers to have multiple FlyerKit access tokens with different levels of permission.
-
-    NOTE: access tokens from previous FlyerKit versions will no longer work in v4.0 and new ones will need to be issued by your Flipp technical contact.
-
-
-    * Added the ability to view future publications and products which are not yet live. This requires an access token with special permissions issued by your Flipp technical contact.
-
-
-    * Added the ability to filter products by keywords and/or tags in all product endpoints.
-
-
-    * Changed the `category` field returned in item models from a string to an array containing all of the item''s categories and renamed it `categories`.
-
-
-    * Created a new endpoint `/flyerkit/v4.0/publications/{merchant_identifier}/products` which returns products across all of a retailer''s publications.
-
-
-    * Added deep_link url field to publications and product endpoints. These new fields will return a direct link to a publication or item on a retailer''s page.
-
-
-    ### Access Token Management
-
-
-    Access tokens are issued by your Flipp technical contact and if needed, multiple access tokens can be created for your various development teams or partners. Access tokens should always be kept secret and not shared.
-
-
-    Access tokens are passed to the FlyerKit API as URL parameters.
-
-
-    ### Supported Formats
-
-
-    ##### JSON
-
-
-    The FlyerKit API currently only returns data in JSON format. Example responses are provided for each of the FlyerKit endpoints.
-
-
-    ### Versioning
-
-
-    FlyerKit uses a semantic versioning scheme with a major and minor version number. Requests are made against a major version as part of the base path in the URI. All backward compatible changes will be made in minor versions. Clients will not be able to request a specific minor version as the server will always serve the latest version for a major release.
-
-
-    Any changes in the API that are not backward compatible will use an updated major version.
-
-    '
+  description: An API to access Flipp's publication data for use in your applications.
 servers:
 - url: https://api.flipp.com/flyerkit/v4.0
 tags:
-- name: stores
+- name: Stores
 paths:
   /stores/{merchant_identifier}:
     get:
       summary: Returns closest stores to a postal/zip code
       description: Returns a list of the five closest stores to the specified postal/zip code.
       tags:
-      - stores
+      - Stores
       parameters:
       - name: merchant_identifier
         in: path
@@ -114,18 +48,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+      operationId: getStoresByMerchantIdentifier
+      x-operation-id-source: derived
 components:
   schemas:
-    error:
-      properties:
-        message:
-          type: string
-          description: The error message
-          example: Invalid publication_id or access token
-        code:
-          type: string
-          description: HTTP status code
-          example: '422'
     store:
       properties:
         id:
@@ -274,3 +200,13 @@ components:
           - 'null'
           description: The store's distance from postal in miles(US) or kilometers(CA)
           example: 4mi
+    error:
+      properties:
+        message:
+          type: string
+          description: The error message
+          example: Invalid publication_id or access token
+        code:
+          type: string
+          description: HTTP status code
+          example: '422'

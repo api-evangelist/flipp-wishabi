@@ -1,0 +1,35 @@
+{
+  "provider": "flipp-wishabi",
+  "sources": [
+    "_original/flipp-wishabi-flyerkit-openapi.yml"
+  ],
+  "outputs": [
+    "flipp-wishabi-copyright-api-openapi.yml",
+    "flipp-wishabi-fsa-api-openapi.yml",
+    "flipp-wishabi-products-api-openapi.yml",
+    "flipp-wishabi-publications-api-openapi.yml",
+    "flipp-wishabi-stores-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "flipp-wishabi-flyerkit-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "flipp-wishabi-flyerkit-openapi.yml: declared missing tag: copyright",
+    "flipp-wishabi-flyerkit-openapi.yml: declared missing tag: fsa",
+    "flipp-wishabi-flyerkit-openapi.yml: declared missing tag: products",
+    "flipp-wishabi-flyerkit-openapi.yml: declared missing tag: publications",
+    "flipp-wishabi-flyerkit-openapi.yml: declared missing tag: stores",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/flipp-wishabi-flyerkit-v4-openapi-original.json: archived document superseded by a larger archived document",
+    "flipp-wishabi-copyright-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "flipp-wishabi-fsa-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "flipp-wishabi-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "flipp-wishabi-publications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "flipp-wishabi-stores-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
