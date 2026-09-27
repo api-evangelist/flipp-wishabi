@@ -627,54 +627,58 @@ components:
           description: Array of subitems for the item
           items:
             $ref: '#/components/schemas/sub_item'
-    correction_notice:
+    publication_page:
       properties:
-        html:
-          type: string
-          description: HTML content of the correction notice
-          example: <p>Correction</p>
-        image_url:
+        page:
+          type: integer
+          description: The page number, beginning at 1
+          example: 1
+        flyer_id:
+          type: integer
+          description: The flyer ID of the page
+          example: 348864
+        flyer_run_id:
+          type: integer
+          description: The flyer run ID of the page
+          example: 47315
+        image_150h_url:
           type:
           - string
           - 'null'
-          description: Image associated with the correction notice
-          example: https://cdn.flippenterprise.net/flyers/348864/correction/1232923480.jpg
-    publication_category:
-      properties:
-        name:
-          type: string
-          description: The name of the category
-          example: Solid Surface Countertops
+          description: URL of page thumbnail 150 pixels high
+          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_150h_s3_key
+        image_400h_url:
+          type:
+          - string
+          - 'null'
+          description: URL of page thumbnail 400 pixels high
+          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_400h_s3_key
+        image_2000h_url:
+          type:
+          - string
+          - 'null'
+          description: URL of page thumbnail 2000 pixels high
+          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key
         left:
           type:
           - float
           - 'null'
-          description: The left coordinate of the category's bounding box
-          example: 1997.98
+          description: The left coordinate of the page's bounding box
+          example: 0.0
         top:
           type:
           - float
           - 'null'
-          description: The top coordinate of the category's bounding box
-          example: 22.6047
+          description: The top coordinate of the page's bounding box
+          example: 0.0
         width:
-          type:
-          - float
-          - 'null'
-          description: The width of the category's bounding box
-          example: 3905.3799999999997
+          type: float
+          description: The width of the page's bounding box
+          example: 2560.0
         height:
-          type:
-          - float
-          - 'null'
-          description: The height of the category's bounding box
-          example: 2504.1353
-        thumbnail_image_url:
-          type:
-          - string
-          - 'null'
-          description: A thumbnail image intended for a listing
-          example: https://cdn.flippenterprise.net/flyers/348864/l_thumbnail/1425009356.jpg
+          type: float
+          description: The height of the page's bounding box
+          example: 2560.0
     sub_item:
       properties:
         id:
@@ -790,6 +794,42 @@ components:
           - 'null'
           description: Link to the external item page with tracking codes
           example: http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd
+    publication_category:
+      properties:
+        name:
+          type: string
+          description: The name of the category
+          example: Solid Surface Countertops
+        left:
+          type:
+          - float
+          - 'null'
+          description: The left coordinate of the category's bounding box
+          example: 1997.98
+        top:
+          type:
+          - float
+          - 'null'
+          description: The top coordinate of the category's bounding box
+          example: 22.6047
+        width:
+          type:
+          - float
+          - 'null'
+          description: The width of the category's bounding box
+          example: 3905.3799999999997
+        height:
+          type:
+          - float
+          - 'null'
+          description: The height of the category's bounding box
+          example: 2504.1353
+        thumbnail_image_url:
+          type:
+          - string
+          - 'null'
+          description: A thumbnail image intended for a listing
+          example: https://cdn.flippenterprise.net/flyers/348864/l_thumbnail/1425009356.jpg
     publication:
       properties:
         id:
@@ -982,58 +1022,6 @@ components:
           - 'null'
           description: Print version of the publication in PDF format
           example: https://cdn.flippenterprise.net/flyers/26376715/711004c22f8216e4.pdf
-    publication_page:
-      properties:
-        page:
-          type: integer
-          description: The page number, beginning at 1
-          example: 1
-        flyer_id:
-          type: integer
-          description: The flyer ID of the page
-          example: 348864
-        flyer_run_id:
-          type: integer
-          description: The flyer run ID of the page
-          example: 47315
-        image_150h_url:
-          type:
-          - string
-          - 'null'
-          description: URL of page thumbnail 150 pixels high
-          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_150h_s3_key
-        image_400h_url:
-          type:
-          - string
-          - 'null'
-          description: URL of page thumbnail 400 pixels high
-          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_400h_s3_key
-        image_2000h_url:
-          type:
-          - string
-          - 'null'
-          description: URL of page thumbnail 2000 pixels high
-          example: https://cdn.flippenterprise.net/sub_pages/thumbnail/60106d22-5b09-11e5-b5bd-22000bb3a4ba/thumbnail_image_xlarge_s3_key
-        left:
-          type:
-          - float
-          - 'null'
-          description: The left coordinate of the page's bounding box
-          example: 0.0
-        top:
-          type:
-          - float
-          - 'null'
-          description: The top coordinate of the page's bounding box
-          example: 0.0
-        width:
-          type: float
-          description: The width of the page's bounding box
-          example: 2560.0
-        height:
-          type: float
-          description: The height of the page's bounding box
-          example: 2560.0
     product_coupon:
       properties:
         flyer_item_id:
@@ -1102,3 +1090,15 @@ components:
           - 'null'
           description: URL of coupon image
           example: https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg
+    correction_notice:
+      properties:
+        html:
+          type: string
+          description: HTML content of the correction notice
+          example: <p>Correction</p>
+        image_url:
+          type:
+          - string
+          - 'null'
+          description: Image associated with the correction notice
+          example: https://cdn.flippenterprise.net/flyers/348864/correction/1232923480.jpg
