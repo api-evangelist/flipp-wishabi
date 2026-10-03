@@ -49,12 +49,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    fsa:
-      properties:
-        geo_locate_fsa:
-          type: string
-          description: Geo locate fsa for the merchant by ip
-          example: H3A
     error:
       properties:
         message:
@@ -65,3 +59,9 @@ components:
           type: string
           description: HTTP status code
           example: '422'
+    fsa:
+      properties:
+        geo_locate_fsa:
+          type: string
+          description: Geo locate fsa for the merchant by ip
+          example: H3A

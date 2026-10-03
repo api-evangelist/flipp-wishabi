@@ -362,30 +362,413 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    product_rich_media:
+    cart_button:
       properties:
-        id:
-          type: number
-          description: Id of media
-          example: '12132'
-        alt_text:
+        sku:
           type:
           - string
           - 'null'
-          description: Alternative text. Descriptive text about media.
-          example: Sizzling bbq.
-        type:
+          description: The sub item's stock keeping unit
+          example: 00062639343101
+        storeCode:
+          type:
+          - string
+          - 'null'
+          description: Retailer's store code
+          example: '990'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+          description: Is shopping cart functionality enabled
+          example: true
+        label:
+          type:
+          - string
+          - 'null'
+          description: Button label
+          example: ''
+        quantityControl:
+          type:
+          - boolean
+          - 'null'
+          description: Is quantity controls functionality enabled
+          example: false
+        quantityControlOption:
+          type:
+          - array
+          - 'null'
+          description: An object of quantity control options
+          $ref: '#/components/schemas/quantity_control_option'
+    inventory_sub_item:
+      properties:
+        sku:
+          type: string
+          description: The sub item's stock keeping unit
+          example: 00062639343101
+        storeCode:
+          type: string
+          description: Retailer's store code
+          example: '990'
+        name:
+          type:
+          - string
+          - 'null'
+          description: Sub item's name
+          example: Ginger Ale
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          description: URL of an sub item's image
+          example: https://imageresize.sof.stg.v8.mywebgrocer.com/api/ImageResize/00062639343118.jpg
+        description:
+          type:
+          - string
+          - 'null'
+          description: Text describing the sub item
+          example: A Bold, Robust, Effervescent Cola.
+        price:
+          type: string
+          description: Text for the sub item's price
+          example: $1.99
+        originalPrice:
+          type:
+          - string
+          - 'null'
+          description: The original price for the subitem
+          example: $1.99
+        promotionText:
+          type:
+          - string
+          - 'null'
+          description: News story for the subitem
+          example: SPECIAL 60% OFF
+        url:
+          type:
+          - string
+          - 'null'
+          description: The link to the subitem
+          example: ''
+        buttons:
+          type:
+          - array
+          - 'null'
+          description: Array of 'add to cart' buttons
+          items:
+            $ref: '#/components/schemas/cart_button'
+    product_feature:
+      properties:
+        text:
+          type:
+          - string
+          - 'null'
+          description: Text describing the feature
+          example: Cast iron plating for improved durability.
+    quantity_control_option:
+      properties:
+        unit:
+          type:
+          - string
+          - 'null'
+          description: Units to measure sub item's quantity
+          example: kg
+        interval:
           type:
           - integer
           - 'null'
-          description: Type of media. 0 = image.  1 = video. 2 = youtube video
-          example: '1'
-        thumbnail:
+          description: Interval (step) to increase/decrease item's quantity
+          example: 1
+        minimum:
+          type:
+          - integer
+          - 'null'
+          description: Minimum value for quantity
+          example: 1
+        maximum:
+          type:
+          - integer
+          - 'null'
+          description: Maximum value for quantity
+          example: 10
+        default:
+          type:
+          - integer
+          - 'null'
+          description: Default value for quantity
+          example: 1
+    product:
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the product
+          example: 7775353
+        flyer_id:
+          type: integer
+          description: Flyer ID to which the product belongs
+          example: 47524
+        flyer_run_id:
+          type: integer
+          description: Identifier for the circular
+          example: 8329
+        name:
+          type: string
+          description: Localized product name
+          example: Celestial Series Countertops
+        deep_link:
           type:
           - string
           - 'null'
-          description: Thumbnail of asset
-          example: http://example.com/thumb.png
+          description: Link to a flyer item on the merchant's website. Requires store_code. Publication must be live.
+          example: http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234
+        sale_story:
+          type:
+          - string
+          - 'null'
+          description: Localized news story for the product
+          example: SPECIAL 60% OFF
+        current_price:
+          type:
+          - float
+          - 'null'
+          description: The current price for the product
+          example: 19.99
+        original_price:
+          type:
+          - float
+          - 'null'
+          description: The original price for the product
+          example: 34.99
+        dollars_off:
+          type:
+          - float
+          - 'null'
+          description: The advertised number of dollars off
+          example: 240.01
+        percent_off:
+          type:
+          - float
+          - 'null'
+          description: The advertised percent savings
+          example: 69.01
+        sku:
+          type:
+          - string
+          - 'null'
+          description: The product stock keeping unit
+          example: 780-4069
+        custom_id_field_1:
+          type:
+          - string
+          - 'null'
+          description: Field used by merchants to store custom info
+          example: 0081341P
+        custom_id_field_2:
+          type:
+          - string
+          - 'null'
+          description: Field used by merchants to store custom info
+          example: '# BONUS Reward Miles when you buy 1'
+        custom_id_field_3:
+          type:
+          - string
+          - 'null'
+          description: Field used by merchants to store custom info
+          example: $0.75
+        description:
+          type:
+          - string
+          - 'null'
+          description: Localized text describing the product
+          example: From Michael Michael Kors in tan or black.
+        brand:
+          type: string
+          description: The brand of the product
+          example: Corinthian
+        pre_price_text:
+          type: string
+          description: Localized text to place before price_text
+          example: '2 for '
+        price_text:
+          type: string
+          description: Localized text for the price
+          example: '5.47'
+        post_price_text:
+          type: string
+          description: Localized text to place after price_text
+          example: CAD
+        valid_from:
+          type:
+          - date
+          - 'null'
+          description: Start of the product's validity period
+          example: '2014-01-01'
+        valid_to:
+          type:
+          - date
+          - 'null'
+          description: End of the product's validity period
+          example: '2015-12-31'
+        categories:
+          type:
+          - array
+          - 'null'
+          description: The categories of the product
+          items:
+            type: string
+          example:
+          - Kitchen
+        current_price_range:
+          type:
+          - string
+          - 'null'
+          description: Localized text of the product price range
+          example: $130 - $150
+        original_price_range:
+          type:
+          - string
+          - 'null'
+          description: Localized text of the original range
+          example: $130 - $150
+        small_image_url:
+          type:
+          - string
+          - 'null'
+          description: URL of a small image of the product
+          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/standard.jpg
+        medium_image_url:
+          type:
+          - string
+          - 'null'
+          description: URL of a medium image of the product
+          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/large.jpg
+        large_image_url:
+          type:
+          - string
+          - 'null'
+          description: URL of a large image of the product
+          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/plus_large.jpg
+        x_large_image_url:
+          type:
+          - string
+          - 'null'
+          description: URL of a very large image of the product
+          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        left:
+          type:
+          - float
+          - 'null'
+          description: The left coordinate of the product's bounding box
+          example: 3990.63
+        top:
+          type:
+          - float
+          - 'null'
+          description: The top coordinate of the product's bounding box
+          example: 1652.96
+        width:
+          type: float
+          description: The width of the product's bounding box
+          example: 1294.6899999999996
+        height:
+          type: float
+          description: The height of the product's bounding box
+          example: 857.8000000000002
+        item_type:
+          type:
+          - integer
+          - 'null'
+          description: Display type of the circular item
+          example: 1
+        page:
+          type: integer
+          description: Page the item is on
+          example: 3
+        page_width:
+          type: float
+          description: Page width
+          example: 1978
+        page_height:
+          type: float
+          description: Page height
+          example: 2560
+        page_relative_left_offset:
+          type:
+          - float
+          - 'null'
+          description: Relative left offset of page
+          example: 34.63000000000011
+        page_relative_top_offset:
+          type:
+          - float
+          - 'null'
+          description: Relative top offset of page
+          example: 1652.96
+        average_rating:
+          type:
+          - integer
+          - 'null'
+          description: Average rating of item
+          example: 4.8
+        images:
+          type: array
+          description: Array of product image URLs
+          items:
+            type: string
+          example:
+          - https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        video_type:
+          type:
+          - integer
+          - 'null'
+          description: 'Type of video: 0 is youtube embedded; 1 is mp4 URL'
+          example: 1
+        video_url:
+          type:
+          - string
+          - 'null'
+          description: Video of product
+          example: https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0
+        web_url:
+          type:
+          - string
+          - 'null'
+          description: Link to the external item page
+          example: https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016
+        web_commission_url:
+          type:
+          - string
+          - 'null'
+          description: Link to the external item page with tracking codes
+          example: http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd
+        hosted_coupon_image:
+          type:
+          - string
+          - 'null'
+          description: Image of coupon for hosted experiences
+          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        distribution_coupon_image:
+          type:
+          - string
+          - 'null'
+          description: Image of coupon for distribution experiences
+          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
+        page_destination:
+          type:
+          - integer
+          - 'null'
+          description: Number of page that the item points to
+          example: 26
+        coupons:
+          type: array
+          description: Array of coupons for the item
+          items:
+            $ref: '#/components/schemas/product_coupon'
+        sub_items:
+          type: array
+          description: Array of subitems for the item
+          items:
+            $ref: '#/components/schemas/sub_item'
     product_review:
       properties:
         title:
@@ -412,6 +795,98 @@ components:
           type: string
           description: The body of the review
           example: I really enjoyed using this wheelbarrow on my last job.
+    product_spec:
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the spec
+          example: Weight
+        value:
+          type:
+          - string
+          - 'null'
+          description: The value of the spec
+          example: 50 lbs
+    error:
+      properties:
+        message:
+          type: string
+          description: The error message
+          example: Invalid publication_id or access token
+        code:
+          type: string
+          description: HTTP status code
+          example: '422'
+    product_coupon:
+      properties:
+        flyer_item_id:
+          type: integer
+          description: ID of the circular item to which the coupon applies
+          example: 197289464
+        coupon_id:
+          type: integer
+          description: ID of the coupon
+          example: 155559
+        coupon_type:
+          type: string
+          description: Type of the coupon
+          example: amountoff
+        loyalty_program_coupon_id:
+          type: integer
+          description: ID of the coupon within its loyalty program
+          example: 198495
+        loyalty_program_id:
+          type: integer
+          description: ID of the coupon's loyalty program
+          example: 305
+        external_id:
+          type: string
+          description: External identifier for the coupon
+          example: '293218'
+        sale_story:
+          type:
+          - string
+          - 'null'
+          description: Localized news story for the coupon
+          example: save $0.50
+        promotion_text:
+          type:
+          - string
+          - 'null'
+          description: Localized text for the coupon
+          example: Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)
+        disclaimer_text:
+          type:
+          - string
+          - 'null'
+          description: Localized text for the coupon's disclaimer
+          example: 'Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498'
+        brand_display_name:
+          type:
+          - string
+          - 'null'
+          description: Coupon product brand name
+          example: Cottonelle
+        valid_from:
+          type:
+          - date
+          - 'null'
+          description: Start of coupon validity period
+          example: '2017-05-07T03:00:00-04:00'
+        valid_to:
+          type:
+          - date
+          - 'null'
+          description: End of coupon validity period
+          example: '2017-06-12T02:59:59-04:00'
+        image:
+          type:
+          - string
+          - 'null'
+          description: URL of coupon image
+          example: https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg
     merchant_product:
       properties:
         id:
@@ -692,117 +1167,53 @@ components:
           description: Array of subitems for the item
           items:
             $ref: '#/components/schemas/sub_item'
-    product_spec:
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The name of the spec
-          example: Weight
-        value:
-          type:
-          - string
-          - 'null'
-          description: The value of the spec
-          example: 50 lbs
-    error:
-      properties:
-        message:
-          type: string
-          description: The error message
-          example: Invalid publication_id or access token
-        code:
-          type: string
-          description: HTTP status code
-          example: '422'
-    product:
+    sub_item:
       properties:
         id:
           type: integer
-          description: Unique identifier for the product
+          description: Unique identifier for the subitem
           example: 7775353
-        flyer_id:
+        product_id:
           type: integer
-          description: Flyer ID to which the product belongs
+          description: FlyerItem ID to which the subitem belongs
           example: 47524
-        flyer_run_id:
-          type: integer
-          description: Identifier for the circular
-          example: 8329
         name:
           type: string
-          description: Localized product name
+          description: Localized subitem name
           example: Celestial Series Countertops
-        deep_link:
-          type:
-          - string
-          - 'null'
-          description: Link to a flyer item on the merchant's website. Requires store_code. Publication must be live.
-          example: http://retailersite.com?flyer_type_name=weekly&flyer_run=1984&store_code=1984&flyer_item_id=1234
         sale_story:
           type:
           - string
           - 'null'
-          description: Localized news story for the product
+          description: Localized news story for the subitem
           example: SPECIAL 60% OFF
         current_price:
           type:
           - float
           - 'null'
-          description: The current price for the product
+          description: The current price for the subitem
           example: 19.99
         original_price:
           type:
           - float
           - 'null'
-          description: The original price for the product
+          description: The original price for the subitem
           example: 34.99
-        dollars_off:
-          type:
-          - float
-          - 'null'
-          description: The advertised number of dollars off
-          example: 240.01
-        percent_off:
-          type:
-          - float
-          - 'null'
-          description: The advertised percent savings
-          example: 69.01
         sku:
           type:
           - string
           - 'null'
-          description: The product stock keeping unit
+          description: The subitem stock keeping unit
           example: 780-4069
-        custom_id_field_1:
-          type:
-          - string
-          - 'null'
-          description: Field used by merchants to store custom info
-          example: 0081341P
-        custom_id_field_2:
-          type:
-          - string
-          - 'null'
-          description: Field used by merchants to store custom info
-          example: '# BONUS Reward Miles when you buy 1'
-        custom_id_field_3:
-          type:
-          - string
-          - 'null'
-          description: Field used by merchants to store custom info
-          example: $0.75
         description:
           type:
           - string
           - 'null'
-          description: Localized text describing the product
+          description: Localized text describing the subitem
           example: From Michael Michael Kors in tan or black.
         brand:
           type: string
-          description: The brand of the product
+          description: The brand of the subitem
           example: Corinthian
         pre_price_text:
           type: string
@@ -816,113 +1227,36 @@ components:
           type: string
           description: Localized text to place after price_text
           example: CAD
-        valid_from:
-          type:
-          - date
-          - 'null'
-          description: Start of the product's validity period
-          example: '2014-01-01'
-        valid_to:
-          type:
-          - date
-          - 'null'
-          description: End of the product's validity period
-          example: '2015-12-31'
-        categories:
-          type:
-          - array
-          - 'null'
-          description: The categories of the product
-          items:
-            type: string
-          example:
-          - Kitchen
-        current_price_range:
+        category:
           type:
           - string
           - 'null'
-          description: Localized text of the product price range
-          example: $130 - $150
-        original_price_range:
-          type:
-          - string
-          - 'null'
-          description: Localized text of the original range
-          example: $130 - $150
+          description: The category of the subitem
+          example: Kitchen
         small_image_url:
           type:
           - string
           - 'null'
-          description: URL of a small image of the product
-          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/standard.jpg
+          description: URL of a small image of the subitem
+          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg
         medium_image_url:
           type:
           - string
           - 'null'
-          description: URL of a medium image of the product
-          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/large.jpg
+          description: URL of a medium image of the subitem
+          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg
         large_image_url:
           type:
           - string
           - 'null'
-          description: URL of a large image of the product
-          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/plus_large.jpg
+          description: URL of a large image of the subitem
+          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg
         x_large_image_url:
           type:
           - string
           - 'null'
-          description: URL of a very large image of the product
-          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
-        left:
-          type:
-          - float
-          - 'null'
-          description: The left coordinate of the product's bounding box
-          example: 3990.63
-        top:
-          type:
-          - float
-          - 'null'
-          description: The top coordinate of the product's bounding box
-          example: 1652.96
-        width:
-          type: float
-          description: The width of the product's bounding box
-          example: 1294.6899999999996
-        height:
-          type: float
-          description: The height of the product's bounding box
-          example: 857.8000000000002
-        item_type:
-          type:
-          - integer
-          - 'null'
-          description: Display type of the circular item
-          example: 1
-        page:
-          type: integer
-          description: Page the item is on
-          example: 3
-        page_width:
-          type: float
-          description: Page width
-          example: 1978
-        page_height:
-          type: float
-          description: Page height
-          example: 2560
-        page_relative_left_offset:
-          type:
-          - float
-          - 'null'
-          description: Relative left offset of page
-          example: 34.63000000000011
-        page_relative_top_offset:
-          type:
-          - float
-          - 'null'
-          description: Relative top offset of page
-          example: 1652.96
+          description: URL of a very large image of the subitem
+          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg
         average_rating:
           type:
           - integer
@@ -931,23 +1265,11 @@ components:
           example: 4.8
         images:
           type: array
-          description: Array of product image URLs
+          description: Array of subitem image URLs
           items:
             type: string
           example:
-          - https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
-        video_type:
-          type:
-          - integer
-          - 'null'
-          description: 'Type of video: 0 is youtube embedded; 1 is mp4 URL'
-          example: 1
-        video_url:
-          type:
-          - string
-          - 'null'
-          description: Video of product
-          example: https://www.youtube.com/watch?v=y03MqvSExy4&list=PLn2kV0B9P4xeaE1uTelWyQhFQe8Wlbkz3&index=36&rel=0
+          - http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg
         web_url:
           type:
           - string
@@ -960,34 +1282,30 @@ components:
           - 'null'
           description: Link to the external item page with tracking codes
           example: http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd
-        hosted_coupon_image:
+    product_rich_media:
+      properties:
+        id:
+          type: number
+          description: Id of media
+          example: '12132'
+        alt_text:
           type:
           - string
           - 'null'
-          description: Image of coupon for hosted experiences
-          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
-        distribution_coupon_image:
-          type:
-          - string
-          - 'null'
-          description: Image of coupon for distribution experiences
-          example: https://cdn.flippenterprise.net/flyer_items/7775353/1373462007/extra_large.jpg
-        page_destination:
+          description: Alternative text. Descriptive text about media.
+          example: Sizzling bbq.
+        type:
           type:
           - integer
           - 'null'
-          description: Number of page that the item points to
-          example: 26
-        coupons:
-          type: array
-          description: Array of coupons for the item
-          items:
-            $ref: '#/components/schemas/product_coupon'
-        sub_items:
-          type: array
-          description: Array of subitems for the item
-          items:
-            $ref: '#/components/schemas/sub_item'
+          description: Type of media. 0 = image.  1 = video. 2 = youtube video
+          example: '1'
+        thumbnail:
+          type:
+          - string
+          - 'null'
+          description: Thumbnail of asset
+          example: http://example.com/thumb.png
     detailed_product:
       properties:
         id:
@@ -1239,321 +1557,3 @@ components:
           type: boolean
           description: Whether the item is in store only
           example: true
-    inventory_sub_item:
-      properties:
-        sku:
-          type: string
-          description: The sub item's stock keeping unit
-          example: 00062639343101
-        storeCode:
-          type: string
-          description: Retailer's store code
-          example: '990'
-        name:
-          type:
-          - string
-          - 'null'
-          description: Sub item's name
-          example: Ginger Ale
-        imageUrl:
-          type:
-          - string
-          - 'null'
-          description: URL of an sub item's image
-          example: https://imageresize.sof.stg.v8.mywebgrocer.com/api/ImageResize/00062639343118.jpg
-        description:
-          type:
-          - string
-          - 'null'
-          description: Text describing the sub item
-          example: A Bold, Robust, Effervescent Cola.
-        price:
-          type: string
-          description: Text for the sub item's price
-          example: $1.99
-        originalPrice:
-          type:
-          - string
-          - 'null'
-          description: The original price for the subitem
-          example: $1.99
-        promotionText:
-          type:
-          - string
-          - 'null'
-          description: News story for the subitem
-          example: SPECIAL 60% OFF
-        url:
-          type:
-          - string
-          - 'null'
-          description: The link to the subitem
-          example: ''
-        buttons:
-          type:
-          - array
-          - 'null'
-          description: Array of 'add to cart' buttons
-          items:
-            $ref: '#/components/schemas/cart_button'
-    sub_item:
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the subitem
-          example: 7775353
-        product_id:
-          type: integer
-          description: FlyerItem ID to which the subitem belongs
-          example: 47524
-        name:
-          type: string
-          description: Localized subitem name
-          example: Celestial Series Countertops
-        sale_story:
-          type:
-          - string
-          - 'null'
-          description: Localized news story for the subitem
-          example: SPECIAL 60% OFF
-        current_price:
-          type:
-          - float
-          - 'null'
-          description: The current price for the subitem
-          example: 19.99
-        original_price:
-          type:
-          - float
-          - 'null'
-          description: The original price for the subitem
-          example: 34.99
-        sku:
-          type:
-          - string
-          - 'null'
-          description: The subitem stock keeping unit
-          example: 780-4069
-        description:
-          type:
-          - string
-          - 'null'
-          description: Localized text describing the subitem
-          example: From Michael Michael Kors in tan or black.
-        brand:
-          type: string
-          description: The brand of the subitem
-          example: Corinthian
-        pre_price_text:
-          type: string
-          description: Localized text to place before price_text
-          example: '2 for '
-        price_text:
-          type: string
-          description: Localized text for the price
-          example: '5.47'
-        post_price_text:
-          type: string
-          description: Localized text to place after price_text
-          example: CAD
-        category:
-          type:
-          - string
-          - 'null'
-          description: The category of the subitem
-          example: Kitchen
-        small_image_url:
-          type:
-          - string
-          - 'null'
-          description: URL of a small image of the subitem
-          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/small.jpg
-        medium_image_url:
-          type:
-          - string
-          - 'null'
-          description: URL of a medium image of the subitem
-          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/large.jpg
-        large_image_url:
-          type:
-          - string
-          - 'null'
-          description: URL of a large image of the subitem
-          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/plus_large.jpg
-        x_large_image_url:
-          type:
-          - string
-          - 'null'
-          description: URL of a very large image of the subitem
-          example: http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg
-        average_rating:
-          type:
-          - integer
-          - 'null'
-          description: Average rating of item
-          example: 4.8
-        images:
-          type: array
-          description: Array of subitem image URLs
-          items:
-            type: string
-          example:
-          - http://f.wishabi.ca/page_item_sub_items/6046508/1423731508/extra_large.jpg
-        web_url:
-          type:
-          - string
-          - 'null'
-          description: Link to the external item page
-          example: https://www.jcpenney.com/for-the-home/shop-departments/kitchen-dining/shop-kitchen/small-appliances/kitchen-aid/stand-mixers/_/N-1nohrcZ60Z1z141ux/cat.jump?id=cat100240104&deptId=dept20000011&subcatId=cat100240016
-        web_commission_url:
-          type:
-          - string
-          - 'null'
-          description: Link to the external item page with tracking codes
-          example: http://www.homedepot.com/webapp/wcs/stores/servlet/BuildLinkToHomeDepot?linktype=product&id=202193246&cm_sp=1hdcom2online_catalog-_-product_feed-_-D30X-_-202193246&site=wishabi|hd
-    product_feature:
-      properties:
-        text:
-          type:
-          - string
-          - 'null'
-          description: Text describing the feature
-          example: Cast iron plating for improved durability.
-    product_coupon:
-      properties:
-        flyer_item_id:
-          type: integer
-          description: ID of the circular item to which the coupon applies
-          example: 197289464
-        coupon_id:
-          type: integer
-          description: ID of the coupon
-          example: 155559
-        coupon_type:
-          type: string
-          description: Type of the coupon
-          example: amountoff
-        loyalty_program_coupon_id:
-          type: integer
-          description: ID of the coupon within its loyalty program
-          example: 198495
-        loyalty_program_id:
-          type: integer
-          description: ID of the coupon's loyalty program
-          example: 305
-        external_id:
-          type: string
-          description: External identifier for the coupon
-          example: '293218'
-        sale_story:
-          type:
-          - string
-          - 'null'
-          description: Localized news story for the coupon
-          example: save $0.50
-        promotion_text:
-          type:
-          - string
-          - 'null'
-          description: Localized text for the coupon
-          example: Save $0.50 on any ONE (1) package of COTTONELLE Toilet Paper (6-pack or larger)
-        disclaimer_text:
-          type:
-          - string
-          - 'null'
-          description: Localized text for the coupon's disclaimer
-          example: 'Reproduction, alteration, proliferation, or sale of this coupon or its contents is strictly prohibited. Civil and criminal penalties up to $2,000,000 and/or imprisonment may apply. CONSUMER: LIMIT ONE (1) COUPON PER PURCHASE on product/quantity specified. CANNOT BE COMBINED with any other coupon. Any other use constitutes fraud. VOID IF COPIED, SCANNED, TRANSFERRED, AUCTIONED, PURCHASED OR SOLD. RETAILER: K-C will reimburse you the face value of this coupon plus $.08 handling if submitted in compliance with our Coupon Redemption Policy. Mail coupons or requests for Policy to: Kimberly-Clark 1112 P.O. Box 880001 El Paso, TX 88588-0001. Void where prohibited or restricted. Cash value 1/100 cent. Valid only in the USA, its Territories and Possessions. Registered Trademark and * Trademark of Kimberly-Clark Worldwide, Inc. KCWW. C-016498'
-        brand_display_name:
-          type:
-          - string
-          - 'null'
-          description: Coupon product brand name
-          example: Cottonelle
-        valid_from:
-          type:
-          - date
-          - 'null'
-          description: Start of coupon validity period
-          example: '2017-05-07T03:00:00-04:00'
-        valid_to:
-          type:
-          - date
-          - 'null'
-          description: End of coupon validity period
-          example: '2017-06-12T02:59:59-04:00'
-        image:
-          type:
-          - string
-          - 'null'
-          description: URL of coupon image
-          example: https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg
-    cart_button:
-      properties:
-        sku:
-          type:
-          - string
-          - 'null'
-          description: The sub item's stock keeping unit
-          example: 00062639343101
-        storeCode:
-          type:
-          - string
-          - 'null'
-          description: Retailer's store code
-          example: '990'
-        enabled:
-          type:
-          - boolean
-          - 'null'
-          description: Is shopping cart functionality enabled
-          example: true
-        label:
-          type:
-          - string
-          - 'null'
-          description: Button label
-          example: ''
-        quantityControl:
-          type:
-          - boolean
-          - 'null'
-          description: Is quantity controls functionality enabled
-          example: false
-        quantityControlOption:
-          type:
-          - array
-          - 'null'
-          description: An object of quantity control options
-          $ref: '#/components/schemas/quantity_control_option'
-    quantity_control_option:
-      properties:
-        unit:
-          type:
-          - string
-          - 'null'
-          description: Units to measure sub item's quantity
-          example: kg
-        interval:
-          type:
-          - integer
-          - 'null'
-          description: Interval (step) to increase/decrease item's quantity
-          example: 1
-        minimum:
-          type:
-          - integer
-          - 'null'
-          description: Minimum value for quantity
-          example: 1
-        maximum:
-          type:
-          - integer
-          - 'null'
-          description: Maximum value for quantity
-          example: 10
-        default:
-          type:
-          - integer
-          - 'null'
-          description: Default value for quantity
-          example: 1
