@@ -52,6 +52,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    error:
+      properties:
+        message:
+          type: string
+          description: The error message
+          example: Invalid publication_id or access token
+        code:
+          type: string
+          description: HTTP status code
+          example: '422'
     store:
       properties:
         id:
@@ -200,13 +210,3 @@ components:
           - 'null'
           description: The store's distance from postal in miles(US) or kilometers(CA)
           example: 4mi
-    error:
-      properties:
-        message:
-          type: string
-          description: The error message
-          example: Invalid publication_id or access token
-        code:
-          type: string
-          description: HTTP status code
-          example: '422'
