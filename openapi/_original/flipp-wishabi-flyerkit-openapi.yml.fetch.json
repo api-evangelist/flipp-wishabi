@@ -1,0 +1,12 @@
+{
+ "url": "https://api.flipp.com/flyerkit/apidocs_v4",
+ "requested_url": "https://api.flipp.com/flyerkit/apidocs_v4",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 64515,
+ "sha256": "4b2839b65cef1160732e8e0ee3beb706bba9c5f71d82e7ac5ece3e58adf0507b",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
