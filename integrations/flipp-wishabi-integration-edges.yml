@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/flipp-wishabi/integrations
+- https://n8n.io/integrations/flipp-wishabi/
+- https://composio.dev/toolkits/flipp-wishabi
+- https://monid.ai/tools/flipp-wishabi
+checked:
+- https://composio.dev/toolkits/flipp-wishabi
+- https://monid.ai/tools/flipp-wishabi
+- https://n8n.io/integrations/flipp-wishabi/
+- https://zapier.com/apps/flipp-wishabi/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
