@@ -18,3 +18,9 @@ paths:
           description: Copyright response
       operationId: getCopyright
       x-operation-id-source: derived
+x-provenance:
+  method: harvested
+  publisher: Flipp (Wishabi)
+  source: https://api.flipp.com/flyerkit/apidocs_v4
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

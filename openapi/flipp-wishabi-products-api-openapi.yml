@@ -1557,3 +1557,9 @@ components:
           - 'null'
           description: URL of coupon image
           example: https://cdn.flippenterprise.net/page_items/60084151/1476968396/extra_large.jpg
+x-provenance:
+  method: harvested
+  publisher: Flipp (Wishabi)
+  source: https://api.flipp.com/flyerkit/apidocs_v4
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
