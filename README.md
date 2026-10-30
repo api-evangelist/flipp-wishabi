@@ -64,6 +64,119 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Flipp (Wishabi) is a company surfaced as a portfolio company of insight-partners and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Flipp (operated by Wishabi) is a Toronto-based retail media and digital merchandising company that connects retailers, brands, and consumers through shoppable digital experiences. Its consumer app aggregates weekly digital flyers, coupons, and shopping lists from more than 2,000 retailers including Walmart, Kroger, Home Depot, CVS, and Publix, helping shoppers find local deals and clip offers to loyalty cards. For businesses, Flipp runs a retail media platform - content collection, curation, and distribution of "full fidelity" shoppable merchandising experiences reaching over 100 million high-intent households - plus sponsored video and shoppable-item ad solutions built on 400B+ intent-based shopping signals. For retail partners Flipp publishes the FlyerKit API - a public, versioned HTTPS/JSON API at api.flipp.com that exposes publications, pages, highlights, categories, products, store locators and geo lookup so retailers can embed their own circular content in web, email and native experiences - alongside the Flipp Platform SDKs (FlyerKit for iOS/Android, StorefrontsKit/SKit for SFML rendering, and the DVM digital-visual-merchandising SDK) distributed from github.com/wishabi and a credentialed JFrog Artifactory. Access tokens are issued by a Flipp technical contact rather than through self-service signup.
 
-Backed by: insight-partners — https://www.flipp.com/
+**Areas:** Company · Retail · Retail Media · Advertising · Flyers · Coupons · E-Commerce · Shopping · Marketing · Digital Circulars · Publications · Merchandising
+
+## Flipp (Wishabi) on APIs.io
+
+Everything profiled for Flipp (Wishabi) is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/flipp-wishabi/](https://apis.io/providers/flipp-wishabi/)** — or go straight to one of the APIs or properties below.
+
+### APIs (5)
+
+- [Flipp (Wishabi) Copyright API](https://apis.io/apis/flipp-wishabi/flipp-wishabi-copyright-api/) — The copyright API from Flipp (Wishabi) — 1 operation(s) for copyright.
+- [Flipp (Wishabi) Fsa API](https://apis.io/apis/flipp-wishabi/flipp-wishabi-fsa-api/) — The fsa API from Flipp (Wishabi) — 1 operation(s) for fsa.
+- [Flipp (Wishabi) Products API](https://apis.io/apis/flipp-wishabi/flipp-wishabi-products-api/) — The products API from Flipp (Wishabi) — 4 operation(s) for products.
+- [Flipp (Wishabi) Publications API](https://apis.io/apis/flipp-wishabi/flipp-wishabi-publications-api/) — The publications API from Flipp (Wishabi) — 5 operation(s) for publications.
+- [Flipp (Wishabi) Stores API](https://apis.io/apis/flipp-wishabi/flipp-wishabi-stores-api/) — The stores API from Flipp (Wishabi) — 1 operation(s) for stores.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Collections (1)
+
+Postman and Open Collection request collections.
+
+- [FlyerKit](https://apis.io/collections/flipp-wishabi/open-flipp-wishabi-flyerkit/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Flipp Wishabi Flyerkit Overlay](https://apis.io/overlays/flipp-wishabi/flipp-wishabi-flyerkit-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Flipp Wishabi Authentication](https://apis.io/security/flipp-wishabi/flipp-wishabi-authentication/)
+- [Flipp Wishabi Domain Security](https://apis.io/security/flipp-wishabi/flipp-wishabi-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Flipp Wishabi Plans Pricing](https://apis.io/plans/flipp-wishabi/flipp-wishabi-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Flipp Wishabi Rate Limits](https://apis.io/rate-limits/flipp-wishabi/flipp-wishabi-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.flipp.com/)
+- [Documentation](https://api.flipp.com/flyerkit/v4.0/documentation)
+- [API reference](https://api.flipp.com/flyerkit/v4.0/documentation)
+- [Support](https://help.flipp.com/hc/en-ca)
+- [Blog](https://blog.flipp.com/)
+- [Terms of service](https://corp.flipp.com/legal/terms_of_use/)
+- [Privacy policy](https://corp.flipp.com/legal/privacy/)
+- [GitHub](https://github.com/wishabi)
+
+## API Evangelist rating
+
+**Kin Score 32.2** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 41.1 |
+| Contract governance | 4.5 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 44.6 |
+| Access clarity | 10.5 |
+
+**Agent readiness 28.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 20.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/flipp-wishabi/](https://apis.io/providers/flipp-wishabi/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Flipp (Wishabi): the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/flipp-wishabi/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
